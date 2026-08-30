@@ -2,6 +2,7 @@
 title: "A production serverless architecture that isn't a toy"
 description: "Fifty-plus Lambda functions, hexagonal architecture, SQS-driven batch pipelines, and multi-region DR on AWS — what enterprise serverless actually looks like beyond the hello-world tutorials."
 pubDate: "Jul 26 2026"
+heroImage: "/blog/hero-serverless.svg"
 ---
 
 Most serverless content stops at "here's a Lambda behind API Gateway." That works right up until you're building a system where enterprise customers upload files that must be validated against master data, registered into external backend systems over SFTP, and reported back in real time — with an RTO measured in hours and an auditor reading your VPC Flow Logs.
@@ -48,6 +49,8 @@ Design choices that mattered:
 
 - **One queue per stage, not one big queue.** Each stage scales, throttles, and fails independently. Registration is gated by an external system's business hours; validation isn't. Separate queues let registration back up overnight without blocking validation.
 - **DLQs everywhere, with redrive as a runbook step.** Every consumer has a dead-letter queue and an alarm on DLQ depth. Poison messages stop the record, not the pipeline.
+
+![Animated diagram: records flow through parse, validate, and register stages; a poison message drops from the validate stage into a DLQ, an alarm fires, and healthy records keep flowing](/blog/inline-dlq.svg)
 - **Validation against cached master data.** Existence checks (branch codes, address masters) hammered the same lookups, so we layered caching in front of Postgres — including **negative-result caching**, because in a validation workload, "this code does not exist" is queried just as often as "it does" and is just as cacheable. That one change removed a whole class of database load spikes during bulk uploads.
 - **WebSocket progress events.** Long-running batch work with a silent UI generates support tickets. Each stage publishes progress, a small Lambda broadcasts over the WebSocket API, and the SPA renders live status. Cheap to build, disproportionate UX payoff.
 

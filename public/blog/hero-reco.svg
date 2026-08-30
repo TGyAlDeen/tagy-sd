@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 510" font-family="ui-monospace,Menlo,monospace">
+  <style>
+    .box{fill:#12131b;stroke:#23252f;stroke-width:1.5}
+    .lbl{fill:#e5e7eb;font-size:16px;font-weight:600}
+    .sub{fill:#71717a;font-size:12.5px}
+    .cap{fill:#71717a;font-size:13px}
+    .line{stroke:#30333f;stroke-width:1.5;fill:none}
+    .dot{fill:#38bdf8;opacity:0}
+    .card{fill:#181a24;stroke:#23252f;stroke-width:1.2;animation:cardglow 12s linear infinite}
+    @keyframes d1{0%,2%{transform:translate(145px,128px);opacity:0}4%{opacity:1}10%{transform:translate(145px,196px);opacity:1}12%,100%{opacity:0}}
+    @keyframes d2{0%,14%{transform:translate(244px,232px);opacity:0}16%{opacity:1}24%{transform:translate(336px,232px);opacity:1}26%,100%{opacity:0}}
+    @keyframes d3{0%,28%{transform:translate(336px,262px);opacity:0}30%{opacity:1}38%{transform:translate(244px,262px);opacity:1}40%,100%{opacity:0}}
+    @keyframes d4{0%,42%{transform:translate(145px,294px);opacity:0}44%{opacity:1}50%{transform:translate(145px,376px);opacity:1}52%,100%{opacity:0}}
+    @keyframes d5{0%,55%{transform:translate(244px,415px);opacity:0}57%{opacity:1}62%{transform:translate(336px,415px);opacity:1}64%,100%{opacity:0}}
+    @keyframes d6{0%,66%{transform:translate(504px,415px);opacity:0}68%{opacity:1}74%{transform:translate(636px,415px);opacity:1}76%,100%{opacity:0}}
+    @keyframes cards{0%,74%{opacity:0.92}80%,90%{opacity:1}100%{opacity:0.92}}
+    @keyframes cardglow{0%,74%{stroke:#23252f}78%,88%{stroke:#38bdf8}94%,100%{stroke:#23252f}}
+    @keyframes tap{0%,88%{opacity:0}91%{opacity:0.85}97%{opacity:0}100%{opacity:0}}
+    @keyframes scr{0%,26%{opacity:0}30%,36%{opacity:1}40%,100%{opacity:0}}
+    .a1{animation:d1 12s linear infinite}.a2{animation:d2 12s linear infinite}
+    .a3{animation:d3 12s linear infinite}.a4{animation:d4 12s linear infinite}
+    .a5{animation:d5 12s linear infinite}.a6{animation:d6 12s linear infinite}
+    .acards{animation:cards 12s linear infinite}
+    .atap{animation:tap 12s linear infinite}
+    .ascr{animation:scr 12s linear infinite}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.dot{opacity:0}.acards{opacity:1}}
+  </style>
+  <rect width="1020" height="510" fill="#0f1017"/>
+
+  <!-- data -->
+  <rect class="box" x="50" y="60" width="190" height="68" rx="10"/>
+  <text class="lbl" x="145" y="89" text-anchor="middle" font-size="15">Aurora MySQL</text>
+  <text class="sub" x="145" y="110" text-anchor="middle">users · listings</text>
+  <line class="line" x1="145" y1="128" x2="145" y2="196"/><path d="M140 190 L145 200 L150 190" class="line"/>
+
+  <!-- batch -->
+  <rect class="box" x="50" y="200" width="190" height="94" rx="10"/>
+  <text class="lbl" x="145" y="236" text-anchor="middle">Nightly batch</text>
+  <text class="sub" x="145" y="258" text-anchor="middle">ECS scheduled task</text>
+  <text class="sub" x="145" y="276" text-anchor="middle">candidates → scoring</text>
+
+  <!-- inference -->
+  <line class="line" x1="240" y1="232" x2="336" y2="232"/><path d="M330 227 L340 232 L330 237" class="line"/>
+  <line class="line" x1="340" y1="262" x2="244" y2="262" stroke-dasharray="4 5"/><path d="M250 257 L240 262 L250 267" class="line"/>
+  <rect class="box" x="340" y="200" width="200" height="94" rx="10"/>
+  <text class="lbl" x="440" y="236" text-anchor="middle">Inference API</text>
+  <text class="sub" x="440" y="258" text-anchor="middle">FastAPI · XGBoost</text>
+  <text class="sub ascr" x="440" y="276" text-anchor="middle" fill="#818cf8" opacity="0">score(user, property)</text>
+
+  <!-- cache -->
+  <line class="line" x1="145" y1="294" x2="145" y2="372"/><path d="M140 366 L145 376 L150 366" class="line"/>
+  <rect class="box" x="50" y="380" width="190" height="70" rx="10"/>
+  <text class="lbl" x="145" y="409" text-anchor="middle" font-size="15">MySQL + Redis</text>
+  <text class="sub" x="145" y="431" text-anchor="middle">ranked results</text>
+
+  <!-- api -->
+  <line class="line" x1="240" y1="415" x2="336" y2="415"/><path d="M330 410 L340 415 L330 420" class="line"/>
+  <rect class="box" x="340" y="380" width="160" height="70" rx="10"/>
+  <text class="lbl" x="420" y="409" text-anchor="middle" font-size="15">Go API</text>
+  <text class="sub" x="420" y="431" text-anchor="middle">indexed read</text>
+  <line class="line" x1="500" y1="415" x2="632" y2="415" stroke-dasharray="4 5"/><path d="M626 410 L636 415 L626 420" class="line"/>
+
+  <!-- phone -->
+  <rect x="640" y="40" width="330" height="440" rx="26" fill="#12131b" stroke="#30333f" stroke-width="2"/>
+  <rect x="656" y="60" width="298" height="44" rx="10" fill="#181a24"/>
+  <text class="sub" x="805" y="87" text-anchor="middle" fill="#a1a1aa">chat — property assistant</text>
+  <rect x="668" y="126" width="212" height="54" rx="12" fill="#181a24"/>
+  <text class="sub" x="684" y="149">3 new places match</text>
+  <text class="sub" x="684" y="167">your profile ↓</text>
+
+  <!-- carousel (clipped to screen) -->
+  <clipPath id="scr"><rect x="656" y="200" width="298" height="200"/></clipPath>
+  <g clip-path="url(#scr)">
+    <g class="acards">
+      <g>
+        <rect class="card" x="668" y="210" width="88" height="150" rx="10"/>
+        <rect x="676" y="218" width="72" height="52" rx="6" fill="#23252f"/>
+        <rect x="676" y="282" width="56" height="8" rx="4" fill="#30333f"/>
+        <rect x="676" y="298" width="40" height="8" rx="4" fill="#30333f"/>
+        <rect x="676" y="330" width="72" height="18" rx="9" fill="#0e7490" opacity="0.55"/>
+      </g>
+      <g>
+        <rect class="card" x="768" y="210" width="88" height="150" rx="10"/>
+        <rect x="776" y="218" width="72" height="52" rx="6" fill="#23252f"/>
+        <rect x="776" y="282" width="56" height="8" rx="4" fill="#30333f"/>
+        <rect x="776" y="298" width="40" height="8" rx="4" fill="#30333f"/>
+        <rect x="776" y="330" width="72" height="18" rx="9" fill="#0e7490" opacity="0.55"/>
+      </g>
+      <g>
+        <rect class="card" x="868" y="210" width="88" height="150" rx="10"/>
+        <rect x="876" y="218" width="72" height="52" rx="6" fill="#23252f"/>
+        <rect x="876" y="282" width="56" height="8" rx="4" fill="#30333f"/>
+        <rect x="876" y="298" width="40" height="8" rx="4" fill="#30333f"/>
+        <rect x="876" y="330" width="72" height="18" rx="9" fill="#0e7490" opacity="0.55"/>
+      </g>
+    </g>
+  </g>
+  <circle class="atap" cx="712" cy="340" r="6" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0"/>
+  <rect x="656" y="416" width="298" height="40" rx="10" fill="#181a24"/>
+  <text class="sub" x="805" y="441" text-anchor="middle">LIFF mini-app · search · booking</text>
+
+  <!-- dots -->
+  <circle class="dot a1" r="5.5"/>
+  <circle class="dot a2" r="5.5"/>
+  <circle class="dot a3" r="5" fill="#818cf8"/>
+  <circle class="dot a4" r="5.5"/>
+  <circle class="dot a5" r="5.5"/>
+  <circle class="dot a6" r="5.5"/>
+
+  <text class="cap" x="50" y="500">scored at 3 a.m. ▸ cached ▸ tapped at lunch — ML availability never blocks the product</text>
+</svg>

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 340" font-family="ui-monospace,Menlo,monospace">
+  <style>
+    .box{fill:#12131b;stroke:#23252f;stroke-width:1.5}
+    .lbl{fill:#e5e7eb;font-size:16px;font-weight:600}
+    .sub{fill:#71717a;font-size:13px}
+    .line{stroke:#30333f;stroke-width:1.5;fill:none}
+    .dot{fill:#38bdf8;opacity:0}
+    .tag{fill:#71717a;font-size:12px;opacity:0}
+    @keyframes f1{0%,4%{transform:translate(226px,160px);opacity:0}6%{opacity:1}22%{transform:translate(426px,160px);opacity:1}24%,100%{opacity:0}}
+    @keyframes t1{0%,4%{transform:translate(226px,160px);opacity:0}6%{opacity:1}22%{transform:translate(426px,160px);opacity:1}24%,100%{opacity:0}}
+    @keyframes rowsg{0%,24%{stroke:#23252f}27%,38%{stroke:#34d399}44%,100%{stroke:#23252f}}
+    @keyframes ok1{0%,27%{opacity:0}30%,42%{opacity:1}48%,100%{opacity:0}}
+    @keyframes f2{0%,52%{transform:translate(226px,160px);opacity:0}54%{opacity:1}68%{transform:translate(426px,160px)}74%{transform:translate(396px,160px);opacity:1}78%,100%{opacity:0}}
+    @keyframes t2{0%,52%{transform:translate(226px,160px);opacity:0}54%{opacity:1}68%{transform:translate(426px,160px)}74%{transform:translate(396px,160px);opacity:1}78%,100%{opacity:0}}
+    @keyframes dup{0%,68%{opacity:0}72%,86%{opacity:1}92%,100%{opacity:0}}
+    .af1{animation:f1 10s linear infinite}
+    .at1{animation:t1 10s linear infinite}
+    .af2{animation:f2 10s linear infinite}
+    .at2{animation:t2 10s linear infinite}
+    .args{animation:rowsg 10s linear infinite}
+    .aok{animation:ok1 10s linear infinite}
+    .adup{animation:dup 10s linear infinite}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.dot,.tag{opacity:0}}
+  </style>
+  <rect width="1020" height="340" fill="#0f1017"/>
+
+  <rect class="box" x="60" y="120" width="160" height="80" rx="10"/>
+  <text class="lbl" x="140" y="154" text-anchor="middle" font-size="15">Task queue</text>
+  <text class="sub" x="140" y="176" text-anchor="middle">delivers ≥ once</text>
+
+  <line class="line" x1="220" y1="160" x2="426" y2="160" stroke-dasharray="4 5"/>
+  <path d="M420 155 L430 160 L420 165" class="line"/>
+
+  <rect class="box" x="430" y="60" width="340" height="200" rx="12"/>
+  <text class="lbl" x="600" y="94" text-anchor="middle">Consumer — one transaction</text>
+  <rect class="args" x="450" y="112" width="300" height="44" rx="8" fill="#181a24" stroke="#23252f" stroke-width="1.2"/>
+  <text class="sub" x="600" y="139" text-anchor="middle" fill="#a1a1aa">dedupe: TryRecordEvent(e-42)</text>
+  <rect class="args" x="450" y="170" width="300" height="44" rx="8" fill="#181a24" stroke="#23252f" stroke-width="1.2"/>
+  <text class="sub" x="600" y="197" text-anchor="middle" fill="#a1a1aa">apply state change</text>
+  <text class="sub" x="600" y="242" text-anchor="middle">commit both, or neither</text>
+
+  <text class="tag aok" x="815" y="120" fill="#34d399" font-size="14" font-weight="600">✓ applied</text>
+  <text class="tag adup" x="815" y="170" fill="#71717a" font-size="14">duplicate — ignored</text>
+
+  <circle class="dot af1" r="6"/>
+  <text class="tag at1" y="-12" text-anchor="middle" fill="#38bdf8">e-42</text>
+  <circle class="dot af2" r="6" fill="#818cf8"/>
+  <text class="tag at2" y="-12" text-anchor="middle" fill="#818cf8">e-42 (redelivery)</text>
+
+  <text class="sub" x="60" y="312">the same event arrives twice — the dedupe row makes the second delivery a no-op</text>
+</svg>

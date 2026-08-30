@@ -2,6 +2,7 @@
 title: "Event-driven microservices without losing events: the transactional outbox in practice"
 description: "How we kept orders, payments, and downstream services consistent on Cloud Run and Spanner using the transactional outbox pattern and task-queue relay workers — and what we'd do differently."
 pubDate: "Jun 14 2026"
+heroImage: "/blog/hero-outbox.svg"
 ---
 
 Every event-driven architecture demo starts the same way: a service commits a row, then publishes an event. Two lines of code, two different systems — and a failure mode hiding between them. If the process dies after the commit but before the publish, downstream services never hear about the order. If you publish first and the commit rolls back, they hear about an order that doesn't exist.
@@ -59,6 +60,8 @@ if err != nil || !applied {
 ```
 
 The dedup record and the state change commit atomically, which means the consumer has its own miniature outbox-in-reverse. Once every service did this, duplicates became a non-event — literally.
+
+![Animated diagram: a task queue redelivers event e-42 to a consumer; the first delivery commits the dedupe row and the state change in one transaction, the redelivery is recognized and ignored](/blog/inline-idempotent.svg)
 
 ## Orchestrating multi-step flows
 

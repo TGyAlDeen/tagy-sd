@@ -2,6 +2,7 @@
 title: "Serving ML recommendations inside a LINE mini-app"
 description: "The architecture behind a property-search platform delivered entirely through LINE — Go backend, LIFF mini-apps, an XGBoost inference service, and the batch pipelines that keep recommendations fresh."
 pubDate: "Aug 22 2026"
+heroImage: "/blog/hero-reco.svg"
 ---
 
 Recommendation systems get written about as if they end at the model. In practice the model is the small part: the interesting engineering is everything that gets a score from a Python process into a chat message that a user actually taps — reliably, cheaply, and within a chat platform's constraints.
@@ -41,6 +42,8 @@ Cold start — most users, since people don't shop for homes weekly — degraded
 The single most important architectural decision: **recommendations were computed by scheduled batch, not at request time.**
 
 A nightly ECS task walked active users, assembled candidate sets (geography and budget filters cut a few thousand listings to a few hundred per user), called the inference API in batches, and wrote ranked results to MySQL with Redis caching the hot path. The API tier then served recommendations as a simple indexed read — the same latency profile as any other endpoint.
+
+![Animated diagram: two decoupled lanes — a slow 3 a.m. batch lane scoring candidates and writing ranked results to cache, and a fast lunchtime request lane reading the cache and rendering a card carousel](/blog/inline-precompute.svg)
 
 Real-time scoring would have been the résumé-driven choice. Precompute won on every axis that mattered:
 

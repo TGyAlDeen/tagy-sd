@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 340" font-family="ui-monospace,Menlo,monospace">
+  <style>
+    .box{fill:#12131b;stroke:#23252f;stroke-width:1.5}
+    .lbl{fill:#e5e7eb;font-size:15px;font-weight:600}
+    .sub{fill:#71717a;font-size:12.5px}
+    .line{stroke:#30333f;stroke-width:1.5;fill:none}
+    .dot{fill:#34d399;opacity:0}
+    .red{fill:#f87171;opacity:0}
+    @keyframes g1{0%,2%{transform:translate(232px,120px);opacity:0}4%{opacity:1}16%{transform:translate(348px,120px);opacity:1}18%,100%{opacity:0}}
+    @keyframes g2{0%,22%{transform:translate(552px,120px);opacity:0}24%{opacity:1}36%{transform:translate(668px,120px);opacity:1}38%,100%{opacity:0}}
+    @keyframes g3{0%,42%{transform:translate(232px,120px);opacity:0}44%{opacity:1}56%{transform:translate(348px,120px);opacity:1}58%,100%{opacity:0}}
+    @keyframes r1{0%,62%{transform:translate(450px,162px);opacity:0}64%{opacity:1}74%{transform:translate(450px,226px);opacity:1}76%,100%{opacity:0}}
+    @keyframes dlqp{0%,72%{stroke:#23252f}76%,88%{stroke:#f87171}94%,100%{stroke:#23252f}}
+    @keyframes alarm{0%,76%{opacity:0}80%,92%{opacity:1}98%,100%{opacity:0}}
+    .ag1{animation:g1 9s linear infinite}
+    .ag2{animation:g2 9s linear infinite}
+    .ag3{animation:g3 9s linear infinite}
+    .ar1{animation:r1 9s linear infinite}
+    .adlq{animation:dlqp 9s linear infinite}
+    .aal{animation:alarm 9s linear infinite}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.dot,.red{opacity:0}}
+  </style>
+  <rect width="1020" height="340" fill="#0f1017"/>
+
+  <rect class="box" x="80" y="82" width="150" height="76" rx="10"/>
+  <text class="lbl" x="155" y="114" text-anchor="middle">λ parse</text>
+  <text class="sub" x="155" y="136" text-anchor="middle">stage 1</text>
+  <line class="line" x1="230" y1="120" x2="346" y2="120"/><path d="M340 115 L350 120 L340 125" class="line"/>
+
+  <rect class="box adlq" x="350" y="82" width="200" height="76" rx="10"/>
+  <text class="lbl" x="450" y="114" text-anchor="middle">λ validate</text>
+  <text class="sub" x="450" y="136" text-anchor="middle">poison message here</text>
+  <line class="line" x1="550" y1="120" x2="666" y2="120"/><path d="M660 115 L670 120 L660 125" class="line"/>
+
+  <rect class="box" x="670" y="82" width="150" height="76" rx="10"/>
+  <text class="lbl" x="745" y="114" text-anchor="middle">λ register</text>
+  <text class="sub" x="745" y="136" text-anchor="middle">stage 3</text>
+
+  <line class="line" x1="450" y1="158" x2="450" y2="222" stroke-dasharray="3 4"/>
+  <path d="M445 216 L450 226 L455 216" class="line"/>
+  <rect class="box adlq" x="370" y="226" width="160" height="56" rx="9"/>
+  <text class="sub" x="450" y="252" text-anchor="middle" fill="#f87171">DLQ</text>
+  <text class="sub" x="450" y="270" text-anchor="middle">stops the record</text>
+
+  <text class="sub aal" x="560" y="252" fill="#f87171" opacity="0" font-weight="600">⚠ alarm: dlq_depth &gt; 0</text>
+  <text class="sub" x="560" y="272" opacity="0.001"> </text>
+
+  <circle class="dot ag1" r="5.5"/>
+  <circle class="dot ag2" r="5.5"/>
+  <circle class="dot ag3" r="5.5"/>
+  <circle class="red ar1" r="5.5"/>
+
+  <text class="sub" x="80" y="316">healthy records keep flowing — the poison message parks in the DLQ and pages a human, the pipeline never stalls</text>
+</svg>
