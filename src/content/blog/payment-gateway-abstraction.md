@@ -5,7 +5,7 @@ pubDate: "Jun 28 2026"
 heroImage: "/blog/hero-payments.svg"
 ---
 
-The first payment method is easy to integrate anywhere. It's the third one that teaches you regret. By then the provider's callback vocabulary, retry timing, and error taxonomy have soaked into your order service, and every new method multiplies the mess. On the e-commerce platform I worked on — Go microservices on Cloud Run, orchestrating purchases across several downstream services — we supported four: credit card with 3DS, a wallet, convenience-store payment, and direct debit. What kept that manageable was one decision made early: **no service talks to the payment provider except the payment gateway service.**
+The first payment method is easy to integrate anywhere. It's the third one that teaches you regret. By then the provider's callback vocabulary, retry timing, and error taxonomy have soaked into your order service, and every new method multiplies the mess. On the e-commerce platform I worked on — Go microservices on Cloud Run, orchestrating purchases across several downstream services — we supported four: credit card with 3DS, a wallet, convenience-store payment, and direct debit. What kept that manageable was one decision made early: **provider vocabulary stops at the payment domain.** A dedicated gateway service owned the translation, and the commerce services — orders, identity, community — never saw a provider payload.
 
 ## The shape of the boundary
 
@@ -14,7 +14,7 @@ The gateway service owns two translations:
 - **Outbound**: internal payment intents (`authorize`, `capture`, `refund`, method-specific parameters) become provider API calls.
 - **Inbound**: provider callbacks — success, failure, pending, and every provider-specific in-between — become the same clean internal events every other service already consumes.
 
-Everything upstream of the gateway speaks one language. The order service knows that a payment was authorized; it does not know what a 3DS challenge redirect is, what a convenience-store payment slip number looks like, or that direct debit settles on a different calendar than cards.
+Everything outside the payment domain speaks one language. The order service knows that a payment was authorized; it does not know what a 3DS challenge redirect is, what a convenience-store payment slip number looks like, or that direct debit settles on a different calendar than cards.
 
 ```go
 // What the rest of the platform sees — one vocabulary, four methods.
@@ -50,7 +50,8 @@ The alternative on rule 3 — publishing directly from the callback handler — 
 
 ## What I'd tell someone building this
 
-- **Put the boundary in from method one**, even when it feels like ceremony. The gateway service was small when it wrapped only cards; it stayed small in concept as three more methods arrived, because each one only touched the gateway.
+- **Put the boundary in from method one**, even when it feels like ceremony. The gateway was small when it wrapped only cards; it stayed small in concept as three more methods arrived, because each one only touched the payment domain.
+- **Expect the boundary to be argued with.** Under delivery pressure, a second service will eventually grow its own provider client — every credential it copies is a place your abstraction no longer protects. The boundary holds only as long as review enforces it, which is a reason to write it down, not a reason to skip it.
 - **Design the internal vocabulary around your order flow, not the provider's API.** If a provider field doesn't change what your platform does, it doesn't belong in the internal event.
 - **Give pending a deadline.** Convenience-store flows taught us that any state a human must act on needs an expiry and a scheduled sweep — "waiting" is a state you manage, not a state you're stuck in.
 - **Keep the raw payloads.** When a settlement question arrives weeks later, the stored provider payload answers it; your normalized event was never meant to.

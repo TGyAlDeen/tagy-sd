@@ -12,8 +12,8 @@ The strangest design review I've been part of had no screens in it. The "UI" und
 The product surface decomposed into three primitives, each with backend consequences:
 
 - **The rich menu** — the persistent tap-target grid pinned under the conversation — was the navigation bar. Every entry deep-links into either a chatbot flow or a mini-app view. Navigation design here is configuration, not code, but the backend defines every destination.
-- **Chatbot flows** handled quick interactions: structured messages in, template responses out. Think of each flow as a route with a tiny state machine behind it.
-- **LIFF mini-apps** (the platform's embedded web views) carried anything form-like — search filters, comparisons, booking calendars. From the backend's perspective these are ordinary web clients: our service exposed 60+ REST endpoints, and the mini-apps consumed them like any SPA would.
+- **Chatbot flows** handled quick interactions: keyword-routed messages in, template responses out. Think of each flow as a route with a tiny state machine behind it.
+- **LIFF mini-apps** (the platform's embedded web views) carried anything form-like — search filters, comparisons, booking calendars. From the backend's perspective these are ordinary web clients: our service exposed close to sixty REST endpoints, and the mini-apps consumed them like any SPA would.
 
 The engineering insight is that all three share one backend identity model, which is where the real work starts.
 
@@ -21,9 +21,9 @@ The engineering insight is that all three share one backend identity model, whic
 
 A mini-app arrives holding a platform-issued ID token. The temptation is to read the user ID out of it and move on. The rules that kept this safe:
 
-1. **Verify the token server-side on every session start** — signature, audience, expiry — against the platform's published keys. The client-side SDK's claims are a convenience, not an authority.
+1. **Verify the token server-side, every time.** We handed the client's token to the platform's verification endpoint and resolved the user from the verified profile — validating the signature locally against the platform's published keys is the other legitimate route. Either way, the client-side SDK's claims are a convenience, not an authority.
 2. **Map the platform identity to your own user record**, created on first contact. Our internal ID, not the platform's, flowed through the rest of the system — which later made it possible to reconcile users across the chatbot, the mini-apps, and an external property-management system without the platform ID leaking into every table.
-3. **Webhook events get the same skepticism**: signature verification on every inbound event, idempotent handling keyed on the event ID, because the platform redelivers.
+3. **Webhook events get the same skepticism**: signature verification on every inbound event, and handlers written to be safely re-runnable, because the platform can redeliver.
 
 None of this is exotic OAuth — but a chat platform hands you *three* entry surfaces (webhook, mini-app, bot API) and the discipline is making them converge on one identity path instead of three.
 
@@ -32,7 +32,7 @@ None of this is exotic OAuth — but a chat platform hands you *three* entry sur
 Recommendation and search results went out as **Flex Message carousels** — swipeable card stacks rendered natively in the thread. Building them well felt exactly like server-side rendering:
 
 - **The backend composes the view.** A card is a JSON document (image, title, price band, action buttons) assembled per user. There is no client code to patch later — what you send is what exists, forever, in that thread.
-- **Every button is a deep link with intent.** Card taps carried structured postback data or opened a LIFF view at a specific listing, so the backend always knew *which* card in *which* context drove the tap — the analytics story is designed into the message, or it doesn't exist.
+- **Every button is a deep link with intent.** Card buttons opened a LIFF view at a specific listing (bot-side navigation rode on keyword-matched messages), so the backend always knew *which* card drove the tap — the analytics story is designed into the message, or it doesn't exist.
 - **Templates need versioning discipline.** Old messages don't re-render when your format evolves; a thread is an immutable history of every template version you ever shipped. We kept template composition in one module, treated like a public contract.
 
 The immutability point deserves emphasis: in a web app you fix the UI and everyone gets it. In a chat thread, **you can only fix the future**. Rollouts of message formats got the caution normally reserved for database migrations.

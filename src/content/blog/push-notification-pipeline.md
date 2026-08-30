@@ -1,38 +1,41 @@
 ---
 title: "The push pipeline that didn't get blocked"
-description: "Notification campaigns on scheduled batch jobs: throttling against platform quotas, dedup against recent sends, per-user caps — treating the messaging channel as a reputation you can spend only once."
+description: "Notification campaigns as scheduled batch jobs: eligibility and dedup pushed into the audience query, a send log that doubles as the resume checkpoint, throttling against platform quotas — and the two gates I'd add today."
 pubDate: "Aug 28 2026"
 heroImage: "/blog/hero-push.svg"
 ---
 
-The scariest failure mode of a notification system isn't an outage. An outage you notice, fix, and apologize for. What kept me careful was the quiet failure: send a little too much, a little too often, and users don't file a complaint — they tap "block," and the entire channel to that person closes permanently. On a chat-platform product where messaging *was* the product surface, the push pipeline was effectively holding the company's only key to every customer relationship. We built it like that key could not be re-cut.
+The scariest failure mode of a notification system isn't an outage. An outage you notice, fix, and apologize for. What kept me careful was the quiet failure: send a little too much, a little too often, and users don't file a complaint — they tap "block," and the entire channel to that person closes permanently. On a chat-platform product where messaging *was* the product surface, the push pipeline was effectively holding the company's only key to every customer relationship. We built it like that key could not be re-cut — and, as you'll see at the end, left two locks unbuilt that I'd add today.
 
-## The architecture: campaigns are batch jobs
+## The architecture: campaigns are scheduled batch jobs
 
-All outbound campaigns — new-listing matches, tour reminders, re-engagement — ran as **scheduled batch jobs on ECS**, not as ad-hoc sends from application code. One pipeline, several campaign types, one enforcement point. The job walked eligible users, assembled personalized payloads (for match campaigns, reading the [precomputed recommendation scores](/blog/recommendation-system-line-miniapp/) — the same batch philosophy applied to delivery), and pushed through the messaging API. Alongside push, the platform ran transactional email; the combined notification service held a **99% delivery rate**, and the practices below are most of why.
+All outbound campaigns ran as **scheduled batch jobs on ECS**, each on its own cadence: tour reminders every half hour, a satisfaction-survey push daily in the evening, new-listing recommendation pushes weekly, a second recommendation flavor twice a week, with a nightly master-data-and-scoring pass feeding them. Ad-hoc sends from application code weren't a thing — product code raised state; the jobs decided who hears about it.
 
-The single-enforcement-point decision matters more than it looks. The moment product code can call `push.Send()` directly, every quota, cap, and dedup rule becomes advisory. Routing everything through the pipeline made the safety rules *structural* — there was no second door.
+Two pieces were structural rather than per-campaign:
 
-## The four gates
+- **One send gateway.** Every push, from every job, went through the same send function — which also carried an environment-level allowlist gate, so non-production environments physically couldn't message real users. Safety rules you route around aren't rules; the single door made them structural.
+- **The database as both audience and ledger.** Each campaign's targets came from a SQL query, and each send was recorded in a notification/status table. That one design choice quietly powers most of what follows.
 
-Every candidate message passed four gates, in order, cheapest rejection first:
+## The gates that did the work
 
-1. **Eligibility** — is this user still opted in, still active, still matching the campaign's criteria *at send time*? Criteria evaluated at enqueue time go stale; we re-checked at the gate.
-2. **Dedup against recent sends** — has this user already received this campaign, or a message about this same listing, within the window? The send log was the source of truth, keyed by `(user, campaign, subject)`. Retries and overlapping campaign definitions both funnel into the same check, so neither can double-send.
-3. **Per-user frequency caps** — a hard ceiling on messages per user per period, across *all* campaign types. Individually reasonable campaigns sum to an unreasonable inbox; the cap is what represents the user's total experience, so it outranks every campaign owner's local logic.
-4. **Rate throttling** — sends metered against the platform's API quotas with headroom to spare, spreading a large campaign over minutes instead of slamming the limit and eating 429s mid-batch.
+1. **Eligibility, evaluated at send time.** The audience query ran when the job ran — opt-outs, completed reservations, stale profiles all fell out naturally. Criteria evaluated at enqueue time go stale; evaluating at the gate means never messaging someone about a thing that's no longer true.
+2. **Dedup, pushed into the audience query.** "Already sent" wasn't an application-level check — it was a `NOT EXISTS` clause against the prior-sends table, so a user who'd already received this campaign never entered the batch at all. Cheapest possible rejection: the duplicate is filtered before a single row of work is done.
+3. **The send log as resume checkpoint.** Jobs recorded per-notification status and only ever selected not-yet-done rows. A campaign that died mid-run could be re-run without re-sending to the first half of the audience — restart-safety as a property of the query, not a recovery procedure. Batch jobs fail; pipelines that assume otherwise page you at the worst hour.
+4. **Throttle against the platform's quota, with headroom.** The heavy campaign ran on a bounded worker pool and deliberately paused after every thousand pushes, staying well inside the messaging platform's documented rate limit instead of slamming it and eating errors mid-batch.
 
-The ordering is deliberate: reputation-protecting gates (2, 3) run before the expensive network call, and the throttle shapes only what survived them.
+Templates got the same discipline as everywhere else on this platform: composed server-side, versioned like code — a campaign message with a broken deep link cannot be patched, only regretted.
 
-## Operational details that earned their place
+## The two gates I'd add today
 
-- **Idempotent resume.** A campaign job that dies mid-run must be re-runnable without re-sending to the first half of the audience. The send log doubles as the checkpoint: on restart, gate 2 silently skips everyone already delivered. Batch jobs fail; pipelines that assume otherwise page you at the worst hour.
-- **Delivery accounting per message.** Each send recorded its outcome — accepted, failed, retried — which is what makes a number like 99% *knowable* rather than vibes. The undeliverable tail (revoked permissions, blocked accounts) fed back into eligibility so we stopped paying quota for dead addresses.
-- **Templates composed server-side, versioned like code.** Same rule as everywhere else on this platform: what you send into a chat thread is immutable history. A campaign message with a broken deep link cannot be patched — only regretted.
-- **A kill switch per campaign type.** When something looks wrong mid-run — spiking failures, a bad template — operators pause one campaign without freezing transactional messages. Granular brakes get used; global brakes get debated while the damage continues.
+Honesty section. Two protections this pipeline *didn't* have, and the design lesson in each:
+
+- **A per-user frequency cap across all campaigns.** Each job had its own sensible windows and exclusions, but nothing represented the user's *total* inbox: four individually-reasonable campaigns can still sum to an unreasonable week. The cap belongs above every campaign, in the shared gateway, precisely because no single campaign owner is positioned to enforce it.
+- **A per-campaign kill switch.** The environment allowlist could stop *everything*, but there was no brake for *one* misbehaving campaign while transactional messages kept flowing. Granular brakes get used; global brakes get debated while the damage continues. It's a small feature with an outsized incident-response payoff, and the shared send gateway is exactly where it slots in.
+
+Neither gap ever burned us — cadences were conservative and audiences well-cut — but both are the kind of control you want *before* the incident that proves you needed it.
 
 ## The mental model
 
-The durable lesson: **treat the messaging channel as a budget denominated in user patience, spent through platform quotas.** Quotas are the platform telling you the hard ceiling; the block button is users telling you the real one, and it's lower. Every gate in the pipeline exists to keep spending under the second ceiling, not the first.
+The durable lesson: **treat the messaging channel as a budget denominated in user patience, spent through platform quotas.** Quotas are the platform telling you the hard ceiling; the block button is users telling you the real one, and it's lower. Every gate above — and both missing ones — exists to keep spending under the second ceiling, not the first.
 
-If you're building one of these: centralize sending so the rules are structural, make the send log the backbone (dedup, resume, and accounting are all the same table), evaluate eligibility late, and give the per-user cap authority over every campaign. The pipeline's job isn't to deliver as many messages as possible — it's to still be welcome next month.
+If you're building one of these: centralize sending so rules are structural, make the send log the backbone (dedup, resume, and accounting want to be the same table), evaluate eligibility late, push exclusions into the audience query — and build the cross-campaign cap and the kill switch on day one, while they're cheap. The pipeline's job isn't to deliver as many messages as possible — it's to still be welcome next month.
