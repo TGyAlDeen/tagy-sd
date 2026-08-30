@@ -13,7 +13,14 @@ const { title, description, pubDate, updatedDate, heroImage, readingTime } = Ast
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} image={heroImage} />
+		<BaseHead
+			title={title}
+			description={description}
+			image={heroImage}
+			type="article"
+			publishedTime={pubDate}
+			modifiedTime={updatedDate}
+		/>
 	</head>
 
 	<body>
