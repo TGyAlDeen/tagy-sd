@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 510" font-family="ui-monospace,Menlo,monospace">
+  <style>
+    .box{fill:#12131b;stroke:#23252f;stroke-width:1.5}
+    .lbl{fill:#e5e7eb;font-size:15px;font-weight:600}
+    .sub{fill:#71717a;font-size:12.5px}
+    .cap{fill:#71717a;font-size:13px}
+    .line{stroke:#30333f;stroke-width:1.5;fill:none}
+    .dot{fill:#38bdf8;opacity:0}
+    @keyframes tapmenu{0%,4%{opacity:0;r:6}7%{opacity:0.85;r:10}12%{opacity:0;r:16}100%{opacity:0}}
+    @keyframes liff{0%,10%{opacity:0}16%,100%{opacity:1}}
+    @keyframes token{0%,18%{transform:translate(360px,235px);opacity:0}20%{opacity:1}32%{transform:translate(560px,235px);opacity:1}34%,100%{opacity:0}}
+    @keyframes verify{0%,32%{stroke:#23252f}36%,46%{stroke:#34d399}52%,100%{stroke:#23252f}}
+    @keyframes vtext{0%,34%{opacity:0}38%,50%{opacity:1}56%,100%{opacity:0}}
+    @keyframes resp{0%,52%{transform:translate(560px,275px);opacity:0}54%{opacity:1}66%{transform:translate(360px,275px);opacity:1}68%,100%{opacity:0}}
+    @keyframes cards2{0%,66%{opacity:0}72%,100%{opacity:1}}
+    .atap{animation:tapmenu 12s linear infinite}
+    .aliff{animation:liff 12s linear infinite}
+    .atoken{animation:token 12s linear infinite}
+    .averify{animation:verify 12s linear infinite}
+    .avtext{animation:vtext 12s linear infinite}
+    .aresp{animation:resp 12s linear infinite}
+    .acards{animation:cards2 12s linear infinite}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.dot{opacity:0}.aliff,.acards{opacity:1}.atap,.avtext{opacity:0}}
+  </style>
+  <rect width="1020" height="510" fill="#0f1017"/>
+
+  <!-- phone -->
+  <rect x="60" y="40" width="300" height="430" rx="26" fill="#12131b" stroke="#30333f" stroke-width="2"/>
+  <rect x="76" y="58" width="268" height="40" rx="10" fill="#181a24"/>
+  <text class="sub" x="210" y="83" text-anchor="middle" fill="#a1a1aa">chat thread — the UI</text>
+
+  <!-- LIFF panel -->
+  <g class="aliff" opacity="0">
+    <rect x="76" y="112" width="268" height="228" rx="12" fill="#181a24" stroke="#30333f" stroke-width="1.2"/>
+    <text class="sub" x="92" y="138" fill="#a1a1aa">LIFF mini-app</text>
+    <rect x="92" y="152" width="236" height="24" rx="6" fill="#23252f"/>
+    <text class="sub" x="102" y="169" font-size="11">area · price · layout</text>
+    <g class="acards" opacity="0">
+      <rect x="92" y="190" width="110" height="120" rx="9" fill="#12131b" stroke="#38bdf8" stroke-width="1"/>
+      <rect x="100" y="198" width="94" height="44" rx="5" fill="#23252f"/>
+      <rect x="100" y="252" width="70" height="7" rx="3.5" fill="#30333f"/>
+      <rect x="100" y="266" width="50" height="7" rx="3.5" fill="#30333f"/>
+      <rect x="218" y="190" width="110" height="120" rx="9" fill="#12131b" stroke="#23252f" stroke-width="1"/>
+      <rect x="226" y="198" width="94" height="44" rx="5" fill="#23252f"/>
+      <rect x="226" y="252" width="70" height="7" rx="3.5" fill="#30333f"/>
+      <rect x="226" y="266" width="50" height="7" rx="3.5" fill="#30333f"/>
+    </g>
+  </g>
+
+  <!-- rich menu -->
+  <rect x="76" y="356" width="268" height="98" rx="12" fill="#181a24"/>
+  <text class="sub" x="210" y="378" text-anchor="middle">rich menu — navigation</text>
+  <g fill="#23252f">
+    <rect x="90" y="390" width="76" height="50" rx="7"/>
+    <rect x="172" y="390" width="76" height="50" rx="7"/>
+    <rect x="254" y="390" width="76" height="50" rx="7"/>
+  </g>
+  <text class="sub" x="128" y="420" text-anchor="middle" font-size="11">search</text>
+  <text class="sub" x="210" y="420" text-anchor="middle" font-size="11">favorites</text>
+  <text class="sub" x="292" y="420" text-anchor="middle" font-size="11">tours</text>
+  <circle class="atap" cx="128" cy="415" r="6" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0"/>
+
+  <!-- backend -->
+  <line class="line" x1="360" y1="235" x2="556" y2="235" stroke-dasharray="4 5"/>
+  <path d="M550 230 L560 235 L550 240" class="line"/>
+  <text class="sub" x="458" y="222" text-anchor="middle">ID token</text>
+  <line class="line" x1="560" y1="275" x2="364" y2="275" stroke-dasharray="4 5"/>
+  <path d="M370 270 L360 275 L370 280" class="line"/>
+  <text class="sub" x="458" y="296" text-anchor="middle">JSON view</text>
+
+  <rect class="box averify" x="560" y="150" width="200" height="200" rx="12"/>
+  <text class="lbl" x="660" y="188" text-anchor="middle">Go backend</text>
+  <text class="sub" x="660" y="214" text-anchor="middle">verify signature</text>
+  <text class="sub" x="660" y="234" text-anchor="middle">map to internal user</text>
+  <text class="sub" x="660" y="254" text-anchor="middle">compose Flex JSON</text>
+  <text class="sub avtext" x="660" y="290" text-anchor="middle" fill="#34d399" opacity="0">✓ token valid · user #4821</text>
+
+  <rect class="box" x="800" y="150" width="170" height="94" rx="10"/>
+  <text class="lbl" x="885" y="186" text-anchor="middle" font-size="14">60+ REST</text>
+  <text class="sub" x="885" y="208" text-anchor="middle">one identity path</text>
+  <rect class="box" x="800" y="266" width="170" height="84" rx="10"/>
+  <text class="lbl" x="885" y="300" text-anchor="middle" font-size="14">webhooks</text>
+  <text class="sub" x="885" y="320" text-anchor="middle">verified · idempotent</text>
+  <line class="line" x1="760" y1="200" x2="800" y2="197"/>
+  <line class="line" x1="760" y1="300" x2="800" y2="305"/>
+
+  <circle class="dot atoken" r="5.5"/>
+  <circle class="dot aresp" r="5.5" fill="#818cf8"/>
+
+  <text class="cap" x="60" y="492">tap ▸ mini-app ▸ token verified ▸ server-composed view — the backend owns the UX</text>
+</svg>

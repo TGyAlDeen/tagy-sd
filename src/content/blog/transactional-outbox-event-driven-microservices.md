@@ -90,3 +90,7 @@ If I were starting again, I'd generate the outbox plumbing. We hand-wrote the re
 I'd also introduce the pattern *before* the first consistency incident, not after. The outbox costs one extra table and one small worker. The alternative costs you a weekend reconciling order and payment records with a SQL script — and your users' trust in checkout.
 
 Dual writes are a bug you haven't hit yet. Write the event in the transaction.
+
+---
+
+*This post anchors a short series on the same platform: [One interface, four ways to pay](/blog/payment-gateway-abstraction/), [Service-to-service auth without a service mesh](/blog/cloud-run-sidecar-auth/), and [When a goroutine is the wrong tool](/blog/context-cancellation-postmortem/).*

@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 510" font-family="ui-monospace,Menlo,monospace">
+  <style>
+    .lbl{fill:#e5e7eb;font-size:15px;font-weight:600}
+    .sub{fill:#71717a;font-size:12.5px}
+    .cap{fill:#71717a;font-size:13px}
+    .track{fill:#12131b;stroke:#23252f;stroke-width:1.2}
+    @keyframes reqbar{0%{width:0}28%{width:340px}100%{width:340px}}
+    @keyframes gobar{0%,6%{width:0}60%{width:560px}100%{width:560px}}
+    @keyframes cancel{0%,26%{opacity:0}30%,100%{opacity:1}}
+    @keyframes ghost{0%,58%{opacity:0}62%,80%{opacity:1}86%,100%{opacity:0}}
+    @keyframes fixbar{0%,6%{width:0}30%{width:288px}100%{width:288px}}
+    @keyframes fixnote{0%,30%{opacity:0}34%,100%{opacity:1}}
+    .areq{animation:reqbar 12s linear infinite}
+    .ago{animation:gobar 12s linear infinite}
+    .acancel{animation:cancel 12s linear infinite}
+    .aghost{animation:ghost 12s linear infinite}
+    .afix{animation:fixbar 12s linear infinite}
+    .afixn{animation:fixnote 12s linear infinite}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}
+      .areq{width:340px}.ago{width:560px}.afix{width:288px}
+      .acancel,.afixn{opacity:1}.aghost{opacity:0}}
+  </style>
+  <rect width="1020" height="510" fill="#0f1017"/>
+
+  <text class="lbl" x="60" y="60">the bug — a goroutine that outlives its request</text>
+
+  <text class="sub" x="60" y="105">request ctx</text>
+  <rect class="track" x="200" y="88" width="560" height="26" rx="7"/>
+  <rect class="areq" x="200" y="88" height="26" rx="7" fill="#38bdf8" opacity="0.75"/>
+  <g class="acancel" opacity="0">
+    <line x1="540" y1="76" x2="540" y2="200" stroke="#f87171" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <text class="sub" x="548" y="82" fill="#f87171">ctx cancelled — handler returns</text>
+  </g>
+
+  <text class="sub" x="60" y="165">goroutine</text>
+  <rect class="track" x="200" y="148" width="560" height="26" rx="7"/>
+  <rect class="ago" x="200" y="148" height="26" rx="7" fill="#f87171" opacity="0.7"/>
+  <g class="aghost" opacity="0">
+    <text class="sub" x="775" y="166" fill="#f87171">still running →</text>
+    <text class="sub" x="775" y="184" fill="#f87171">cache.Set() for a dead request</text>
+  </g>
+
+  <line x1="60" y1="248" x2="960" y2="248" stroke="#23252f" stroke-width="1.5" stroke-dasharray="6 8"/>
+
+  <text class="lbl" x="60" y="296">the fix — the call lives and dies with the request</text>
+
+  <text class="sub" x="60" y="341">request ctx</text>
+  <rect class="track" x="200" y="324" width="560" height="26" rx="7"/>
+  <rect class="afix" x="200" y="324" height="26" rx="7" fill="#38bdf8" opacity="0.75"/>
+
+  <text class="sub" x="60" y="401">upstream call</text>
+  <rect class="track" x="200" y="384" width="560" height="26" rx="7"/>
+  <rect class="afix" x="200" y="384" height="26" rx="7" fill="#34d399" opacity="0.7"/>
+  <g class="afixn" opacity="0">
+    <line x1="488" y1="312" x2="488" y2="422" stroke="#34d399" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <text class="sub" x="496" y="440" fill="#34d399">cancellation propagates — both stop together</text>
+  </g>
+
+  <text class="cap" x="60" y="492">go func + context.Background() = work nobody is waiting for · pass ctx and the transport aborts with the caller</text>
+</svg>

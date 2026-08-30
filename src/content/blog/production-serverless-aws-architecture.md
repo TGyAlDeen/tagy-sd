@@ -80,3 +80,7 @@ Serverless was the right call here — spiky batch workloads, enterprise securit
 - **Fifty small functions** are operationally heavier than five services. The compensation is that each function has one job, one queue, one alarm — when something breaks, the blast radius names itself.
 
 None of this is exotic. At the center there is still a Lambda behind an API Gateway — production is everything wrapped around it: structure inside the functions, queues between them, a proxy in front of the database, a second region, and the discipline to test the parts you hope never run.
+
+---
+
+*This post anchors a short series on the same platform: [Hexagonal architecture inside Lambda, with code](/blog/hexagonal-architecture-lambda/), [Multi-region DR you actually rehearse](/blog/multi-region-dr-terraform/), and [Design your logs like an API](/blog/design-logs-like-an-api/).*

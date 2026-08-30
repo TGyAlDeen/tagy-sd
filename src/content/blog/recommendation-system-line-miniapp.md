@@ -71,3 +71,7 @@ Looking back, the system's quality came from three boundaries, not from the mode
 3. **The channel is a first-class constraint** — recommendations were designed for how people actually receive them (a card carousel in a chat thread), not as an afterthought bolted onto a generic API.
 
 The model was maybe 20% of the work. The other 80% was making sure a score computed at 3 a.m. became a card a user tapped at lunch — and that nothing between those two moments could take the product down.
+
+---
+
+*This post anchors a short series on the same platform: [Building a product where the UI is a chat thread](/blog/chat-thread-as-ui/), [The push pipeline that didn't get blocked](/blog/push-notification-pipeline/), and [The lock contention that wasn't in the query plan](/blog/innodb-lock-contention/).*

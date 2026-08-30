@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 510" font-family="ui-monospace,Menlo,monospace">
+  <style>
+    .box{fill:#12131b;stroke:#23252f;stroke-width:1.5}
+    .lbl{fill:#e5e7eb;font-size:15px;font-weight:600}
+    .sub{fill:#71717a;font-size:12.5px}
+    .cap{fill:#71717a;font-size:13px}
+    .line{stroke:#30333f;stroke-width:1.5;fill:none}
+    .dot{opacity:0}
+    @keyframes m1{0%,2%{transform:translate(240px,95px);opacity:0}4%{opacity:1}16%{transform:translate(420px,205px);opacity:1}18%,100%{opacity:0}}
+    @keyframes m2{0%,22%{transform:translate(240px,205px);opacity:0}24%{opacity:1}34%{transform:translate(420px,230px);opacity:1}36%,100%{opacity:0}}
+    @keyframes m3{0%,40%{transform:translate(240px,315px);opacity:0}42%{opacity:1}52%{transform:translate(420px,255px);opacity:1}54%,100%{opacity:0}}
+    @keyframes m4{0%,58%{transform:translate(240px,425px);opacity:0}60%{opacity:1}70%{transform:translate(420px,280px);opacity:1}72%,100%{opacity:0}}
+    @keyframes gw{0%,14%{stroke:#23252f}17%,20%{stroke:#818cf8}23%,32%{stroke:#23252f}35%,38%{stroke:#818cf8}41%,50%{stroke:#23252f}53%,56%{stroke:#818cf8}59%,68%{stroke:#23252f}71%,74%{stroke:#818cf8}78%,100%{stroke:#23252f}}
+    @keyframes out{0%,76%{transform:translate(620px,242px);opacity:0}78%{opacity:1}90%{transform:translate(800px,242px);opacity:1}92%,100%{opacity:0}}
+    @keyframes okp{0%,90%{stroke:#23252f}93%,97%{stroke:#34d399}100%{stroke:#23252f}}
+    .am1{animation:m1 11s linear infinite}.am2{animation:m2 11s linear infinite}
+    .am3{animation:m3 11s linear infinite}.am4{animation:m4 11s linear infinite}
+    .agw{animation:gw 11s linear infinite}.aout{animation:out 11s linear infinite}
+    .aok{animation:okp 11s linear infinite}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.dot{opacity:0}}
+  </style>
+  <rect width="1020" height="510" fill="#0f1017"/>
+
+  <!-- provider callbacks -->
+  <text class="sub" x="60" y="48">provider callbacks — four vocabularies</text>
+  <rect class="box" x="60" y="66" width="180" height="58" rx="10"/>
+  <text class="lbl" x="150" y="91" text-anchor="middle">card · 3DS</text>
+  <text class="sub" x="150" y="110" text-anchor="middle">redirect, challenge</text>
+  <rect class="box" x="60" y="176" width="180" height="58" rx="10"/>
+  <text class="lbl" x="150" y="201" text-anchor="middle">wallet</text>
+  <text class="sub" x="150" y="220" text-anchor="middle">app-switch callback</text>
+  <rect class="box" x="60" y="286" width="180" height="58" rx="10"/>
+  <text class="lbl" x="150" y="311" text-anchor="middle">convenience store</text>
+  <text class="sub" x="150" y="330" text-anchor="middle">slip · pays later</text>
+  <rect class="box" x="60" y="396" width="180" height="58" rx="10"/>
+  <text class="lbl" x="150" y="421" text-anchor="middle">direct debit</text>
+  <text class="sub" x="150" y="440" text-anchor="middle">bank timelines</text>
+
+  <line class="line" x1="240" y1="95" x2="418" y2="205" stroke-dasharray="4 5"/>
+  <line class="line" x1="240" y1="205" x2="418" y2="230" stroke-dasharray="4 5"/>
+  <line class="line" x1="240" y1="315" x2="418" y2="255" stroke-dasharray="4 5"/>
+  <line class="line" x1="240" y1="425" x2="418" y2="280" stroke-dasharray="4 5"/>
+
+  <!-- gateway -->
+  <rect class="box agw" x="420" y="180" width="200" height="125" rx="12"/>
+  <text class="lbl" x="520" y="220" text-anchor="middle">Payment gateway</text>
+  <text class="sub" x="520" y="243" text-anchor="middle">verify · dedupe</text>
+  <text class="sub" x="520" y="261" text-anchor="middle">translate · outbox</text>
+
+  <!-- clean event out -->
+  <line class="line" x1="620" y1="242" x2="796" y2="242"/>
+  <path d="M790 237 L800 242 L790 247" class="line"/>
+  <text class="sub" x="708" y="230" text-anchor="middle">one vocabulary</text>
+
+  <rect class="box aok" x="800" y="200" width="170" height="85" rx="10"/>
+  <text class="lbl" x="885" y="235" text-anchor="middle">Order service</text>
+  <text class="sub" x="885" y="258" text-anchor="middle">CAPTURED · FAILED</text>
+
+  <!-- dots -->
+  <circle class="dot am1" r="5.5" fill="#818cf8"/>
+  <circle class="dot am2" r="5.5" fill="#f87171"/>
+  <circle class="dot am3" r="5.5" fill="#71717a"/>
+  <circle class="dot am4" r="5.5" fill="#818cf8"/>
+  <circle class="dot aout" r="5.5" fill="#38bdf8"/>
+
+  <text class="cap" x="60" y="492">four provider state machines in ▸ one internal event out — only the gateway knows the difference</text>
+</svg>

@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 510" font-family="ui-monospace,Menlo,monospace">
+  <style>
+    .box{fill:#12131b;stroke:#23252f;stroke-width:1.5}
+    .side{fill:#181a24;stroke:#30333f;stroke-width:1.2}
+    .lbl{fill:#e5e7eb;font-size:15px;font-weight:600}
+    .sub{fill:#71717a;font-size:12.5px}
+    .cap{fill:#71717a;font-size:13px}
+    .line{stroke:#30333f;stroke-width:1.5;fill:none}
+    .dot{fill:#38bdf8;opacity:0}
+    .red{fill:#f87171;opacity:0}
+    @keyframes hop{
+      0%,2%{transform:translate(205px,205px);opacity:0}4%{opacity:1}
+      16%{transform:translate(345px,205px)}22%{transform:translate(430px,205px)}
+      34%{transform:translate(510px,258px)}40%{transform:translate(590px,258px)}
+      52%{transform:translate(672px,258px)}58%{transform:translate(672px,205px)}
+      64%{transform:translate(760px,205px);opacity:1}66%,100%{opacity:0}}
+    @keyframes chk{0%,52%{stroke:#30333f}56%,64%{stroke:#34d399}70%,100%{stroke:#30333f}}
+    @keyframes hub{0%,32%{stroke:#23252f}36%,52%{stroke:#818cf8}58%,100%{stroke:#23252f}}
+    @keyframes bad{0%,72%{transform:translate(672px,430px);opacity:0}74%{opacity:1}82%{transform:translate(672px,320px);opacity:1}84%{opacity:0}100%{opacity:0}}
+    @keyframes deny{0%,82%{opacity:0}85%,94%{opacity:1}100%{opacity:0}}
+    .ahop{animation:hop 12s linear infinite}
+    .achk{animation:chk 12s linear infinite}
+    .ahub{animation:hub 12s linear infinite}
+    .abad{animation:bad 12s linear infinite}
+    .adeny{animation:deny 12s linear infinite}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.dot,.red{opacity:0}}
+  </style>
+  <rect width="1020" height="510" fill="#0f1017"/>
+
+  <!-- service A -->
+  <rect class="box" x="60" y="140" width="290" height="130" rx="12"/>
+  <text class="lbl" x="88" y="192">Service A</text>
+  <text class="sub" x="88" y="214">app container</text>
+  <rect class="side" x="230" y="160" width="110" height="90" rx="9"/>
+  <text class="sub" x="285" y="196" text-anchor="middle" fill="#a1a1aa">sidecar</text>
+  <text class="sub" x="285" y="214" text-anchor="middle">egress</text>
+  <text class="sub" x="80" y="252">localhost →</text>
+
+  <!-- hub -->
+  <line class="line" x1="350" y1="205" x2="432" y2="205" stroke-dasharray="4 5"/>
+  <path d="M426 200 L436 205 L426 210" class="line"/>
+  <rect class="box ahub" x="436" y="205" width="150" height="106" rx="12"/>
+  <text class="lbl" x="511" y="245" text-anchor="middle">API hub</text>
+  <text class="sub" x="511" y="267" text-anchor="middle">routes · policy</text>
+  <text class="sub" x="511" y="285" text-anchor="middle">dependency map</text>
+  <line class="line" x1="586" y1="258" x2="668" y2="258" stroke-dasharray="4 5"/>
+  <path d="M662 253 L672 258 L662 263" class="line"/>
+
+  <!-- service B -->
+  <rect class="box" x="620" y="140" width="350" height="130" rx="12"/>
+  <rect class="side achk" x="636" y="160" width="110" height="90" rx="9"/>
+  <text class="sub" x="691" y="196" text-anchor="middle" fill="#a1a1aa">sidecar</text>
+  <text class="sub" x="691" y="214" text-anchor="middle">ingress auth</text>
+  <text class="lbl" x="860" y="196" text-anchor="middle">Service B</text>
+  <text class="sub" x="860" y="216" text-anchor="middle">app container</text>
+
+  <!-- unauthorized caller -->
+  <rect class="box" x="590" y="430" width="165" height="52" rx="9"/>
+  <text class="sub" x="672" y="461" text-anchor="middle" fill="#a1a1aa">unlisted caller</text>
+  <line class="line" x1="672" y1="430" x2="672" y2="324" stroke-dasharray="3 4"/>
+  <text class="adeny" x="700" y="330" fill="#f87171" font-size="14" font-weight="600" opacity="0">✗ not on allowlist</text>
+
+  <text class="sub" x="60" y="72" fill="#a1a1aa">trust model: identity token at ingress · egress via the hub · app code stays plain HTTP</text>
+
+  <circle class="dot ahop" r="5.5"/>
+  <circle class="red abad" r="5.5"/>
+
+  <text class="cap" x="60" y="492">A ▸ sidecar ▸ hub ▸ sidecar (verify caller) ▸ B — the unlisted caller never reaches the app</text>
+</svg>
