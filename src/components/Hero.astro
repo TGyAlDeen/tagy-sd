@@ -1,0 +1,69 @@
+---
+import Icon from './Icon.astro';
+import { SITE_AUTHOR, SITE_ROLE, SITE_LOCATION, SITE_TAGLINE, SOCIALS } from '../consts';
+const github = SOCIALS.find((s) => s.icon === 'github');
+---
+
+<section class="hero">
+	<div class="glow" aria-hidden="true"></div>
+	<p class="eyebrow">{SITE_ROLE} · {SITE_LOCATION}</p>
+	<h1>Hi, I'm <span class="name">{SITE_AUTHOR}</span>.</h1>
+	<p class="lede">{SITE_TAGLINE}</p>
+	<div class="cta">
+		<a class="btn primary" href="/blog">Read the blog <Icon name="arrow" size={16} /></a>
+		{github && (
+			<a class="btn" href={github.href} target="_blank" rel="noopener noreferrer">
+				<Icon name="github" size={16} /> GitHub
+			</a>
+		)}
+	</div>
+	<pre class="term" aria-hidden="true"><span class="p">$</span> trino --execute <span class="s">"SELECT count(*) FROM iceberg.lake.events"</span>
+<span class="c">— 4.2B rows · 1.8s · 312 splits</span></pre>
+</section>
+
+<style>
+	.hero {
+		position: relative;
+		padding: 4.5rem 0 4rem;
+		background-image: radial-gradient(var(--grid) 1px, transparent 1px);
+		background-size: 22px 22px;
+		mask-image: linear-gradient(to bottom, black 70%, transparent);
+		-webkit-mask-image: linear-gradient(to bottom, black 70%, transparent);
+	}
+	.glow {
+		position: absolute;
+		inset: -20% 0 auto 10%;
+		height: 60%;
+		width: 60%;
+		background: radial-gradient(closest-side, var(--accent-soft), transparent);
+		filter: blur(40px);
+		pointer-events: none;
+	}
+	.hero > * { position: relative; }
+	h1 { margin-bottom: 1.25rem; }
+	.name {
+		background: linear-gradient(90deg, var(--accent), var(--accent-2));
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+	}
+	.lede {
+		max-width: 640px;
+		font-size: 1.125rem;
+		color: var(--text-2);
+		margin-bottom: 1.75rem;
+	}
+	.cta { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+	.term {
+		display: inline-block;
+		margin: 0;
+		font-size: 0.8rem;
+		padding: 0.85rem 1.1rem;
+		max-width: 100%;
+		background: var(--surface);
+	}
+	.p { color: var(--accent-text); }
+	.s { color: var(--accent-2); }
+	.c { color: var(--muted); }
+	@media (max-width: 600px) { .hero { padding: 3rem 0 2.5rem; } }
+</style>

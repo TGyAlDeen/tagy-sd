@@ -1,0 +1,32 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+import Icon from './Icon.astro';
+
+type Props = { post: CollectionEntry<'blog'>; showImage?: boolean };
+const { post, showImage = false } = Astro.props;
+const { title, description, pubDate, heroImage } = post.data;
+---
+
+<a class="card post" href={`/blog/${post.id}/`}>
+	{showImage && heroImage && <img class="cover" src={heroImage} alt="" width={720} height={360} loading="lazy" />}
+	<div class="date mono muted"><FormattedDate date={pubDate} /></div>
+	<h3>{title}</h3>
+	<p>{description}</p>
+	<span class="read">Read <Icon name="arrow" size={14} /></span>
+</a>
+
+<style>
+	.cover { width: 100%; aspect-ratio: 2 / 1; object-fit: cover; margin-bottom: 0.25rem; }
+	h3 { margin: 0; font-size: 1.05rem; }
+	p { margin: 0; font-size: 0.925rem; color: var(--text-2); flex: 1; }
+	.read {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		font-size: 0.85rem;
+		font-weight: 600;
+		color: var(--accent-text);
+	}
+	.card:hover h3 { color: var(--accent-text); }
+</style>
