@@ -27,8 +27,8 @@
   <text class="sub" x="150" y="106" text-anchor="middle">geo + budget filter</text>
   <line class="line" x1="240" y1="90" x2="466" y2="90"/><path d="M460 85 L470 90 L460 95" class="line"/>
   <rect class="box" x="470" y="60" width="180" height="60" rx="10"/>
-  <text class="lbl" x="560" y="86" text-anchor="middle">score (XGBoost)</text>
-  <text class="sub" x="560" y="106" text-anchor="middle">batched inference</text>
+  <text class="lbl" x="560" y="86" text-anchor="middle">compose ranked</text>
+  <text class="sub" x="560" y="106" text-anchor="middle">from stored scores</text>
   <line class="line" x1="650" y1="90" x2="786" y2="90"/><path d="M780 85 L790 90 L780 95" class="line"/>
   <rect class="box" x="790" y="60" width="170" height="60" rx="10"/>
   <text class="lbl" x="875" y="86" text-anchor="middle">write ranked</text>

@@ -34,16 +34,16 @@
   <text class="sub" x="385" y="228" text-anchor="middle">at send time</text>
   <rect class="gate" x="470" y="150" width="110" height="110" rx="10"/>
   <text class="sub" x="525" y="186" text-anchor="middle" fill="#a1a1aa">gate 2</text>
-  <text class="sub" x="525" y="208" text-anchor="middle">dedup vs</text>
-  <text class="sub" x="525" y="228" text-anchor="middle">send log</text>
+  <text class="sub" x="525" y="208" text-anchor="middle">dedup in the</text>
+  <text class="sub" x="525" y="228" text-anchor="middle">audience query</text>
   <rect class="gate" x="610" y="150" width="110" height="110" rx="10"/>
   <text class="sub" x="665" y="186" text-anchor="middle" fill="#a1a1aa">gate 3</text>
-  <text class="sub" x="665" y="208" text-anchor="middle">per-user cap</text>
-  <text class="sub" x="665" y="228" text-anchor="middle">all campaigns</text>
+  <text class="sub" x="665" y="208" text-anchor="middle">send log</text>
+  <text class="sub" x="665" y="228" text-anchor="middle">resume + account</text>
   <rect class="gate" x="750" y="150" width="80" height="110" rx="10"/>
   <text class="sub" x="790" y="192" text-anchor="middle" fill="#a1a1aa">throttle</text>
-  <text class="sub" x="790" y="214" text-anchor="middle">quota −</text>
-  <text class="sub" x="790" y="232" text-anchor="middle">headroom</text>
+  <text class="sub" x="790" y="214" text-anchor="middle">pause per</text>
+  <text class="sub" x="790" y="232" text-anchor="middle">1000 sends</text>
 
   <line class="line" x1="215" y1="205" x2="330" y2="205" stroke-dasharray="4 5"/>
   <line class="line" x1="440" y1="205" x2="470" y2="205" stroke-dasharray="4 5"/>
@@ -57,13 +57,13 @@
   <rect class="box" x="330" y="330" width="280" height="56" rx="10"/>
   <text class="sub" x="470" y="356" text-anchor="middle" fill="#a1a1aa">rejected — cheap and early</text>
   <text class="sub ad2x" x="440" y="300" fill="#f87171" opacity="0">already sent</text>
-  <text class="sub ad3x" x="620" y="300" fill="#f87171" opacity="0">over cap</text>
+  <text class="sub ad3x" x="620" y="300" fill="#f87171" opacity="0">already done</text>
 
   <!-- phone -->
   <rect x="850" y="120" width="120" height="190" rx="18" fill="#12131b" stroke="#30333f" stroke-width="2"/>
   <rect x="862" y="150" width="96" height="42" rx="8" fill="#181a24" class="aping" opacity="0"/>
   <text class="sub aping" x="910" y="176" text-anchor="middle" fill="#38bdf8" opacity="0">1 match ✓</text>
-  <text class="sub" x="910" y="290" text-anchor="middle">99% delivered</text>
+  <text class="sub" x="910" y="290" text-anchor="middle">delivered ✓</text>
 
   <circle class="ad1" r="5.5" fill="#34d399" opacity="0"/>
   <circle class="ad2" r="5.5" fill="#f87171" opacity="0"/>

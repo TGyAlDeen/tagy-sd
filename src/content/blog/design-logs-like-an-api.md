@@ -39,6 +39,6 @@ Backward compatibility was also the same problem it always is: in-flight message
 
 ## Make it a team asset
 
-The queries themselves became a maintained, bilingual manual in the repo: each recipe with the question it answers, the message code it depends on, and its known limits. Two effects. Tribal knowledge stopped being tribal — the person who wrote the query stopped being a dependency. And the manual functions as a **consumer registry**: before anyone edits a log line, one grep shows which questions break.
+The queries themselves became a maintained, bilingual manual kept with the project: each recipe with the question it answers, the message code it depends on, and its known limits. Two effects. Tribal knowledge stopped being tribal — the person who wrote the query stopped being a dependency. And the manual functions as a **consumer registry**: before anyone edits a log line, one grep shows which questions break.
 
 The checklist I now apply to any log line that might ever be counted: stable code, self-contained payload, emitted at a boundary, evolved by widening, verified against stored reality, documented with its consumers. It's fifteen minutes of care per line — purchased at that price, or later at the price of a question you can no longer answer.

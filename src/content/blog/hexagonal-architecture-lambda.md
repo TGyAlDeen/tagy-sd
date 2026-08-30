@@ -1,11 +1,11 @@
 ---
 title: "Hexagonal architecture inside Lambda, with code"
-description: "How fifty TypeScript Lambda functions stayed testable and consistent: ten-line handlers, ports and adapters, and one use case serving API, queue, and batch entrypoints."
+description: "How fifty-plus TypeScript Lambda functions stayed testable and consistent: ten-line handlers, ports and adapters, and one use case serving API, queue, and batch entrypoints."
 pubDate: "Aug 5 2026"
 heroImage: "/blog/hero-hexagonal.svg"
 ---
 
-The moment I knew the structure had paid for itself was unglamorous: a validation rule changed, one use case got edited, and three different execution paths — the synchronous API check, the bulk SQS pass, and the pre-registration re-validation — all picked it up with no further work. On a platform of roughly fifty TypeScript Lambda functions, that's the whole game: the code that changes must live in exactly one place, and the fifty entrypoints must be too thin to hide anything.
+The moment I knew the structure had paid for itself was unglamorous: a validation rule changed, one use case got edited, and three different execution paths — the synchronous API check, the bulk SQS pass, and the pre-registration re-validation — all picked it up with no further work. On a platform of more than fifty TypeScript Lambda functions, that's the whole game: the code that changes must live in exactly one place, and the fifty entrypoints must be too thin to hide anything.
 
 This is the layout that got us there, with the real shape of the code.
 
@@ -15,21 +15,23 @@ Every function in the codebase follows the same directories:
 
 ```
 src/
-  domains/        # entities, value objects, domain errors
-  usecases/       # application logic — one class per operation
-  interfaces/
-    handlers/     # Lambda entrypoints: parse, call, format
-    repositories/ # Prisma implementations of domain ports
-  infrastructure/ # SQS/S3/SFTP clients, config
+  core/domains/<domain>/
+    domain/       # entities, value objects, domain errors
+    application/  # use cases — one class per operation
+    ports/        # interfaces the domain defines
+  adapters/
+    primary/      # entrypoints: http handlers, schemas, presenters
+    secondary/    # implementations: persistence (Prisma), storage, queues
+  containers/     # use-case factories — wiring, one place
 ```
 
 The load-bearing rule is about the handlers: **a handler is ten lines.** Parse the event, invoke the use case, map the result to the transport. If a handler grows an `if`, business logic is leaking into the transport layer.
 
 ```ts
-// interfaces/handlers/validate-record.ts
+// adapters/primary/http/handlers/validate-record.ts
 export const handler = async (event: APIGatewayProxyEvent) => {
   const input = parseValidateRequest(event);        // throws typed 400s
-  const result = await validateRecordUseCase.run(input);
+  const result = await getValidateRecordUsecase().run(input); // from containers/
   return toApiResponse(result);                     // status + body mapping
 };
 ```
@@ -39,7 +41,7 @@ export const handler = async (event: APIGatewayProxyEvent) => {
 The use case knows nothing about Lambda, Prisma, or SQS. It depends on **ports** — interfaces the domain defines:
 
 ```ts
-// usecases/validate-record.ts
+// core/domains/records/application/validate-record.usecase.ts
 export class ValidateRecordUseCase {
   constructor(
     private readonly masters: MasterDataPort,   // existence checks
@@ -54,7 +56,7 @@ export class ValidateRecordUseCase {
 }
 ```
 
-Adapters implement the ports: a Prisma-backed repository in production, an in-memory fake in tests. The payoff shows up in two places:
+Secondary adapters implement the ports: a Prisma-backed repository in production, an in-memory fake in tests; primary adapters (handlers, schemas, presenters) own the transport edge. The payoff shows up in two places:
 
 **Tests run in milliseconds.** Unit tests exercise use cases against fakes — no Lambda emulator, no Docker database, no AWS in the loop. The suite stayed in the hundreds-of-milliseconds range even as the platform grew, which is the difference between tests people run before every commit and tests people run before every release.
 

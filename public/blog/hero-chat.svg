@@ -76,7 +76,7 @@
   <text class="sub avtext" x="660" y="290" text-anchor="middle" fill="#34d399" opacity="0">✓ token valid · user #4821</text>
 
   <rect class="box" x="800" y="150" width="170" height="94" rx="10"/>
-  <text class="lbl" x="885" y="186" text-anchor="middle" font-size="14">60+ REST</text>
+  <text class="lbl" x="885" y="186" text-anchor="middle" font-size="14">~60 REST</text>
   <text class="sub" x="885" y="208" text-anchor="middle">one identity path</text>
   <rect class="box" x="800" y="266" width="170" height="84" rx="10"/>
   <text class="lbl" x="885" y="300" text-anchor="middle" font-size="14">webhooks</text>

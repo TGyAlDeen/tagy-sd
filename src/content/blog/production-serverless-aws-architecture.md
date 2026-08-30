@@ -11,7 +11,7 @@ I led the technical delivery of a B2B data-intake platform with exactly those re
 
 ## The shape of the system
 
-- **~50 Lambda functions** (TypeScript, Node.js 22) split between a synchronous API tier and asynchronous batch processing, built and deployed with AWS SAM
+- **50+ Lambda functions** (TypeScript, Node.js 22) split between a synchronous API tier and asynchronous batch processing, built and deployed with AWS SAM
 - **Aurora PostgreSQL** through **Prisma**, fronted by **RDS Proxy**
 - **SQS queues** driving the multi-stage validation and registration pipeline
 - **SFTP integration** with external legacy systems for final registration
@@ -25,12 +25,11 @@ Fifty functions sharing one codebase will rot fast without structure. Every func
 
 ```
 src/
-  domains/        # entities, value objects, domain errors
-  usecases/       # application logic, one class per operation
-  interfaces/
-    handlers/     # Lambda entrypoints — parse, call usecase, format
-    repositories/ # Prisma implementations of domain ports
-  infrastructure/ # SQS/S3/SFTP clients, config
+  core/domains/<domain>/   # domain, application (use cases), ports
+  adapters/
+    primary/               # http handlers, schemas, presenters
+    secondary/             # persistence (Prisma), storage, queues
+  containers/              # use-case factories — wiring, one place
 ```
 
 The rule that made it stick: **handlers are ten lines**. Parse the event, invoke the use case, map the result. All business logic lives in use cases that take ports (interfaces), which means unit tests run against in-memory fakes with no AWS emulation. Local test suites stayed in the hundreds-of-milliseconds range, and the same use case could be fronted by an API Gateway handler today and an SQS handler tomorrow.
@@ -65,7 +64,7 @@ The platform deployed to Tokyo as primary and Osaka as standby: Terraform applie
 1. **DR is a product feature, not an infra afterthought.** The failover runbook — DNS, database promotion, queue drain order — was written and rehearsed, because untested DR is a diagram, not a capability.
 2. **Terraform modules earn their keep at region two.** Standing up Osaka was a variables file, not a project. If we had hand-built Tokyo, the DR region would have drifted from day one.
 
-The network layout was similarly unglamorous but load-bearing: a four-tier VPC (public / application / data / management subnets), Network Firewall for egress control, and the full audit stack — CloudTrail, GuardDuty, Security Hub, Config — with **Athena queries over VPC Flow Logs** as the answer to "prove what talked to what."
+The network layout was similarly unglamorous but load-bearing: a four-tier VPC (firewall / public / protected / private subnets), Network Firewall for egress control, and the full audit stack — CloudTrail, GuardDuty, Security Hub, Config — with **Athena queries over VPC Flow Logs** as the answer to "prove what talked to what."
 
 ## Observability
 

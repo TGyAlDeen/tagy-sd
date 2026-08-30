@@ -7,7 +7,7 @@ heroImage: "/blog/hero-outbox.svg"
 
 My least favorite class of production bug doesn't crash anything. A payment gets captured, an order stays frozen, no alarm fires — the system just quietly disagrees with itself. And nearly every time I've chased one, it traced back to two innocent-looking lines of code: commit the row, then publish the event. If the process dies between those two lines, downstream services never hear about the order. Flip the order, and a rollback means they hear about an order that doesn't exist.
 
-On a consumer e-commerce platform I worked on — Go microservices on Cloud Run, Cloud Spanner as the primary database, roughly a dozen services orchestrating multi-step purchase flows against several downstream systems including a payment gateway — we hit this exact class of bug in production before we fixed the architecture. Order records and payment records would drift apart under load: a payment captured with no corresponding order transition, or an order stuck waiting for an event that was never published.
+On a consumer e-commerce platform I worked on — Go microservices on Cloud Run, Cloud Spanner as the primary database, roughly a dozen services orchestrating multi-step purchase flows against several downstream systems including a payment gateway — the dual write was exactly the failure mode the money path could not afford: a payment captured with no corresponding order transition, or an order stuck waiting for an event that was never published — drift you discover in a reconciliation query, not an alert.
 
 The fix was boring, well-documented, and completely effective: the **transactional outbox**.
 
@@ -48,7 +48,7 @@ That comment on the last error path is the whole contract: **the outbox gives yo
 
 ## Idempotent consumers are half the pattern
 
-Every consumer keyed its processing on the event ID:
+At-least-once delivery only works if redelivery is harmless, and each domain enforced that in its own terms — the relay checks a published flag before enqueuing and swallows the task queue's duplicate error; the payment path dedupes on an idempotency key per request. The shape that generalizes, and the one worth copying, is a dedupe record committed with the state change:
 
 ```go
 // Inside the consumer's own transaction
@@ -59,7 +59,7 @@ if err != nil || !applied {
 // ... apply the state change in the same transaction
 ```
 
-The dedup record and the state change commit atomically, which means the consumer has its own miniature outbox-in-reverse. Once every service did this, duplicates became a non-event — literally.
+The dedup record and the state change commit atomically, which means the consumer has its own miniature outbox-in-reverse. Wherever a consumer held this line, duplicates became a non-event — literally.
 
 ![Animated diagram: a task queue redelivers event e-42 to a consumer; the first delivery commits the dedupe row and the state change in one transaction, the redelivery is recognized and ignored](/blog/inline-idempotent.svg)
 

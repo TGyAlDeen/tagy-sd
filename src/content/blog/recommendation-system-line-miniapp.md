@@ -5,7 +5,7 @@ pubDate: "Aug 22 2026"
 heroImage: "/blog/hero-reco.svg"
 ---
 
-Ask me what powers a recommendation system, and the honest answer is: mostly not the model. The part of this one I'm proudest of isn't the scoring — it's that a number computed by a Python process at 3 a.m. reliably became a card someone tapped in a chat thread at lunch. That path — score to message, cheap, dependable, inside a chat platform's constraints — is where most of the engineering lives.
+Ask me what powers a recommendation system, and the honest answer is: mostly not the model. The part of this one I'm proudest of isn't the scoring — it's that a score computed long before anyone asked reliably became a card someone tapped in a chat thread at lunch. That path — score to message, cheap, dependable, inside a chat platform's constraints — is where most of the engineering lives.
 
 I built and ran the backend of a real-estate discovery platform delivered entirely through **LINE** — no native app, no standalone website for end users. Search, favorites, tour booking, and personalized property recommendations all lived inside chat and LIFF mini-apps. Here's how the recommendation path actually worked, end to end.
 
@@ -15,12 +15,12 @@ Four services, each with one job:
 
 | Component | Stack | Role |
 |---|---|---|
-| Main backend | Go / Echo | 60+ REST endpoints for the LIFF apps; owns users, listings, reservations |
-| Inference service | Python / FastAPI / XGBoost | Scores (user, property) pairs |
+| Main backend | Go / Echo | ~60 REST endpoints for the LIFF apps; owns users, listings, reservations |
+| Inference service | Python / FastAPI / XGBoost | Scores a user's attributes into a stored preference profile |
 | Admin panel | PHP / Laravel | Internal ops: listings, reservations, staff |
 | Batch jobs | Go on ECS (scheduled tasks) | Recommendation precompute, notification campaigns, master-data import |
 
-Data lived in Aurora MySQL with ElastiCache Redis in front; infrastructure was ECS Fargate behind an ALB with WAF and CloudFront, all managed with Terraform, with an external property-management system integrated over authenticated REST for listing data and reservation sync.
+Data lived in Aurora MySQL; infrastructure was ECS Fargate behind an ALB with WAF and CloudFront, all managed with Terraform, with an external property-management system integrated over authenticated REST for listing data and reservation sync.
 
 The Go/Python split was deliberate. The data-science side needed the Python ecosystem — the model was XGBoost, trained on user demographics, geography, and interaction history. The product side needed Go's concurrency and deployment simplicity for the API tier. Drawing the boundary at *"the inference service scores; the backend decides"* kept both teams fast.
 
@@ -39,16 +39,16 @@ Cold start — most users, since people don't shop for homes weekly — degraded
 
 ## Precompute, don't score at request time
 
-The single most important architectural decision: **recommendations were computed by scheduled batch, not at request time.**
+The single most important architectural decision: **recommendations were computed ahead of the request, not during it.**
 
-A nightly ECS task walked active users, assembled candidate sets (geography and budget filters cut a few thousand listings to a few hundred per user), called the inference API in batches, and wrote ranked results to MySQL with Redis caching the hot path. The API tier then served recommendations as a simple indexed read — the same latency profile as any other endpoint.
+The model ran once per user — at profile registration, scoring their attributes into a preference profile stored alongside the user. Scheduled ECS jobs then did the assembly: walk users, build candidate sets (geography and budget filters cut thousands of listings down per user), match them against the stored profile, and write ranked results to a recommendation log in MySQL. The API tier — and the chat bot — served recommendations as an indexed read over that log, recomputing from the stored profile only on a miss. The inference service never sat on the read path at all.
 
 ![Animated diagram: two decoupled lanes — a slow 3 a.m. batch lane scoring candidates and writing ranked results to cache, and a fast lunchtime request lane reading the cache and rendering a card carousel](/blog/inline-precompute.svg)
 
 Real-time scoring was the more sophisticated-sounding option. Precompute won on every axis that mattered here:
 
-- **Freshness didn't require it.** Property inventory changes daily, not per-second. A nightly cycle plus event-triggered refreshes on catalog changes was genuinely fresh enough.
-- **Failure isolation.** If the inference service fell over at 3 a.m., the batch retried; users never saw an error. In a request-path design, an ML outage becomes a product outage.
+- **Freshness didn't require it.** Property inventory changes daily, not per-second. Weekly and twice-weekly recommendation passes over a nightly master-data-and-scoring refresh were genuinely fresh enough.
+- **Failure isolation.** If the inference service fell over, profile updates degraded — but recommendations kept serving from stored results, and users never saw an error. In a request-path design, an ML outage becomes a product outage.
 - **Push notifications need batch anyway.** The campaign pipeline — "new properties match your profile" — walks users, checks scores, and sends messages. That *is* a batch job; making the serving path share its output meant one recommendation source of truth instead of two drifting ones.
 
 ## The LINE delivery layer
@@ -70,7 +70,7 @@ Looking back, the system's quality came from three boundaries, not from the mode
 2. **Serving is decoupled from scoring** — batch precompute means user-facing latency and ML availability are independent problems.
 3. **The channel is a first-class constraint** — recommendations were designed for how people actually receive them (a card carousel in a chat thread), not as an afterthought bolted onto a generic API.
 
-The model was maybe 20% of the work. The other 80% was making sure a score computed at 3 a.m. became a card a user tapped at lunch — and that nothing between those two moments could take the product down.
+The model was maybe 20% of the work. The other 80% was making sure a score computed ahead of time became a card a user tapped at lunch — and that nothing between those two moments could take the product down.
 
 ---
 
