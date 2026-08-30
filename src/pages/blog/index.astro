@@ -22,7 +22,7 @@ const posts = (await getCollection('blog')).sort(
 			<header class="page-head">
 				<p class="eyebrow">Blog</p>
 				<h1>Notes & writing</h1>
-				<p class="muted">{posts.length} posts on data engineering, systems, and whatever I'm building.</p>
+				<p class="muted">{posts.length} posts on backend architecture, production systems, and applied AI.</p>
 			</header>
 			<div class="grid">
 				{posts.map((post) => <PostCard post={post} showImage />)}

@@ -17,8 +17,8 @@ const github = SOCIALS.find((s) => s.icon === 'github');
 			</a>
 		)}
 	</div>
-	<pre class="term" aria-hidden="true"><span class="p">$</span> trino --execute <span class="s">"SELECT count(*) FROM iceberg.lake.events"</span>
-<span class="c">— 4.2B rows · 1.8s · 312 splits</span></pre>
+	<pre class="term" aria-hidden="true"><span class="p">$</span> curl -s api/health | jq <span class="s">.uptime</span>
+<span class="c">"99.9%"  # multi-region · p95 160ms · 1.4M tx/day</span></pre>
 </section>
 
 <style>
