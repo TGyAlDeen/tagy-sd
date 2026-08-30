@@ -5,7 +5,7 @@ pubDate: "Jun 14 2026"
 heroImage: "/blog/hero-outbox.svg"
 ---
 
-Every event-driven architecture demo starts the same way: a service commits a row, then publishes an event. Two lines of code, two different systems — and a failure mode hiding between them. If the process dies after the commit but before the publish, downstream services never hear about the order. If you publish first and the commit rolls back, they hear about an order that doesn't exist.
+My least favorite class of production bug doesn't crash anything. A payment gets captured, an order stays frozen, no alarm fires — the system just quietly disagrees with itself. And nearly every time I've chased one, it traced back to two innocent-looking lines of code: commit the row, then publish the event. If the process dies between those two lines, downstream services never hear about the order. Flip the order, and a rollback means they hear about an order that doesn't exist.
 
 On a consumer e-commerce platform I worked on — Go microservices on Cloud Run, Cloud Spanner as the primary database, roughly a dozen services orchestrating multi-step purchase flows against several downstream systems including a payment gateway — we hit this exact class of bug in production before we fixed the architecture. Order records and payment records would drift apart under load: a payment captured with no corresponding order transition, or an order stuck waiting for an event that was never published.
 

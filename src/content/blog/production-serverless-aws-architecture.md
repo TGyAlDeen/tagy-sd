@@ -5,7 +5,7 @@ pubDate: "Jul 26 2026"
 heroImage: "/blog/hero-serverless.svg"
 ---
 
-Consider the requirements: enterprise customers upload files that must be validated against master data, registered into external backend systems over SFTP, and reported back in real time — with an RTO measured in hours and an auditor reading your VPC Flow Logs.
+I've learned to respect requirements that sound boring. "Corporate customers upload CSV files" reads like a weekend project — right up until those files must be validated against master data, registered into external backend systems over SFTP, and reported back in real time, on a platform that has to survive a regional outage with an RTO measured in hours and satisfy an auditor reading your VPC Flow Logs.
 
 I led the technical delivery of a B2B data-intake platform with exactly those requirements, built entirely serverless on AWS. This post walks through the architecture decisions that made it work — and the ones whose value only showed up later.
 
