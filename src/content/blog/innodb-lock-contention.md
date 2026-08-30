@@ -1,52 +1,50 @@
 ---
 title: "The lock contention that wasn't in the query plan"
-description: "Concurrent Go workers updating different rows kept blocking each other in MySQL. A debugging story about InnoDB locking more than the row you asked for — and a deliberately boring fix."
+description: "Up to a thousand concurrent Go workers, each upserting its own user's rows in MySQL — and InnoDB kept detecting deadlocks between them. What was actually locked, and the deliberately boring fix."
 pubDate: "Aug 30 2026"
 heroImage: "/blog/hero-locks.svg"
 ---
 
-Of every bug I've debugged, my favorite — in the way you can only love a bug after it's fixed — is the one where the database was doing exactly what it promised and I simply didn't believe it. The setup: a notification dispatcher in Go, running several concurrent workers, each updating *its own* rows in a MySQL (InnoDB) table. Different workers, different rows, no overlap by construction. And yet: workers stalling on lock waits, dispatch throughput collapsing under load, and the occasional lock-wait timeout in the logs. Updates to distinct rows were blocking one another. That's not supposed to happen — everyone knows InnoDB does row-level locking.
+Of every bug I've debugged, my favorite — in the way you can only love a bug after it's fixed — is the one where the database was doing exactly what it promised and I simply didn't believe it. The setup: a nightly recommendation-notification job in Go, fanning out across as many as a thousand concurrent goroutines, each one writing *its own user's* rows in a MySQL (InnoDB) table — an upsert of that user's schedule row, plus a few log inserts, in a short transaction. Different workers, different users, different rows, no overlap by construction. And yet under load the job kept tripping over itself: **deadlocks detected by InnoDB**, transactions picked as victims and rolled back, workers waiting on locks for rows no other worker was touching. That's not supposed to happen — everyone knows InnoDB does row-level locking.
 
 "Row-level locking" turned out to be a phrase I'd been using without owning the details.
 
 ## The symptom, precisely
 
-- Each worker ran a modest transaction: `UPDATE ... SET status = ... WHERE <its own criteria>`, touching rows disjoint from every other worker's.
-- Under low traffic, everything was fine. As concurrency rose, workers spent more time waiting than working.
-- Nothing about it looked like a deadlock; it was serialization — the system quietly degrading to one-worker throughput with extra overhead.
+- Each worker ran a modest transaction: `INSERT ... ON DUPLICATE KEY UPDATE` on the schedule table, keyed by its own user ID, followed by log inserts.
+- At low concurrency, everything was fine. As the fan-out grew, deadlock errors appeared — InnoDB detecting a cycle and rolling one transaction back — alongside plain lock waits.
+- Retrying the victims "worked," which is exactly the trap: the job limped through while spending its time re-running rolled-back work.
 
-The instinctive suspects (long transactions, missing commits, application-level locks) all checked out clean. The blocking was real and it was inside InnoDB.
+The instinctive suspects (long transactions, missing commits, application-level locks) all checked out clean. The collisions were real and they were inside InnoDB.
 
 ## What was actually locking
 
-The diagnosis came from looking at the engine's own account of its locks — `SHOW ENGINE INNODB STATUS` and the lock tables (`performance_schema.data_locks` on modern versions, `information_schema.innodb_locks` back then) during a stall. The locks held were not one record lock per updated row. They were ranges.
+The diagnosis starts with reading the engine's own account instead of theorizing above it — `SHOW ENGINE INNODB STATUS` prints the full story of the latest detected deadlock, including which lock each transaction held and which it was waiting for. The mechanism, once you read it plainly:
 
-The mechanism, once you read it plainly:
+- InnoDB locks **index entries and the gaps between them**, not abstract rows. What gets locked depends on the index the statement traverses.
+- An upsert is not a point write. `INSERT ... ON DUPLICATE KEY UPDATE` has to check the unique key and defend the result, and at the default `REPEATABLE READ` isolation that involves **next-key and gap locks** on the index range around the key — plus an **insert-intention lock** when inserting into a gap.
+- Run hundreds of those concurrently against neighboring keys and you get the textbook cycle: worker A holds a gap lock covering the range worker B wants to insert into, B holds one covering A's, and each is now waiting for the other's insert-intention to clear. Deadlock — detected, one victim rolled back.
 
-- InnoDB locks **index entries, not abstract rows**. What gets locked depends on which index the `UPDATE` traverses.
-- If the `WHERE` clause is not served by a selective index, the engine scans — and **every index entry the scan examines gets locked**, not just the entries that match. A poorly-indexed update on a busy table is a rolling lockdown.
-- At the default `REPEATABLE READ` isolation, range scans also take **gap / next-key locks** — locks on the *spaces between* index entries, there to keep phantoms out. Two workers whose target rows are distinct can still collide because one worker's next-key range covers the gap the other needs.
-
-Our dispatcher hit the combination: worker criteria that didn't align with a selective index, plus range locking at the default isolation level. "Different rows" was true at the logical level and irrelevant at the index level — the workers were fighting over overlapping index ranges the whole time.
+"Different rows" was true at the logical level and irrelevant at the index level: the workers weren't fighting over rows at all, but over *overlapping ranges* of the same unique index.
 
 ## The fix menu, and the boring choice
 
-Textbook options, roughly in ascending order of cleverness:
+Options, roughly in ascending order of cleverness:
 
-1. **Serialize the writers** — one writer at a time behind an application-level mutex.
-2. **Index for the access path** so each worker's update touches a narrow, disjoint index range.
-3. **Restructure the claim pattern** — e.g., claim rows by primary key first (`SELECT ... FOR UPDATE` on exact keys, or `SKIP LOCKED` where available), then update by key.
+1. **Serialize the conflicting writes** — one writer at a time through the critical section, behind an application-level mutex.
+2. **Batch the writes into one statement** — a single multi-row upsert instead of hundreds of concurrent single-row ones.
+3. **Restructure the claim pattern** — separate insert and update paths, or claim by exact primary key before writing.
 4. **Drop to `READ COMMITTED`** for the transaction, which disables most gap locking — with its own semantics to re-review.
 
-We chose option 1: **serialize the writes behind a mutex in the dispatcher.** It reads like an anti-climax, and that's why I'm writing it up. The honest inputs to the decision: write volume was modest (notification state transitions, not a firehose); the contention cost was already worse than single-writer throughput — the "concurrency" being defended was negative-sum; and options 2–4 each meant riskier changes (schema migration on a hot table, rework of claim logic, isolation-level semantics review) for a performance envelope we did not need.
+We chose option 1, plus one honest admission: **cap the fan-out**. The final shape was a bounded worker pool with a process-wide `sync.Mutex` held around the transaction's DB writes — and, just as importantly, the push-message send moved *outside* the critical section, so the lock guarded milliseconds of SQL rather than a network call to the messaging platform.
 
-The concurrency had been decorative. Removing it was the fix.
+It reads like an anti-climax, and that's why I'm writing it up. The honest inputs: this was a nightly batch whose deadline was "before morning," not a latency-critical path; the parallelism being defended was *already* negative-sum — the workers spent their concurrency waiting on each other's gap locks and re-running rolled-back transactions; and options 2–4 each meant riskier changes to a working job for a performance envelope nobody needed. Concurrency for the expensive part (composing and sending messages) stayed; concurrency for the cheap part (two SQL statements) was decorative, and removing it was the fix.
 
 ## What I keep from this one
 
-- **"Row-level locking" is index-level locking.** The question is never "which rows does this update?" but "which index does it walk, and what does that walk lock?" `EXPLAIN` your writes, not just your reads.
-- **The engine will tell you what it locked** — the lock tables name the index and the lock mode. Twenty minutes there beats a day of theorizing above the database.
-- **Gap locks are a feature working as designed.** The default isolation level is defending consistency you may not know you're relying on; turning it off is a real decision, not a tuning knob.
-- **Match the fix to the required envelope, not to your pride.** A mutex that meets the throughput target with one line of reviewable code beats an elegant redesign that meets a target nobody set. We wrote the ceiling into a comment — if volume grows past the single-writer envelope, option 3 is the planned successor.
+- **"Row-level locking" is index-level locking.** The question is never "which rows does this statement change?" but "which index does it walk, and what ranges does that walk lock?" Upserts and inserts are range operations in disguise.
+- **The engine will tell you what it locked.** `SHOW ENGINE INNODB STATUS` names the indexes, lock modes, and the exact waits in a detected deadlock; `performance_schema.data_locks` shows the live picture. Twenty minutes there beats a day of theorizing.
+- **Gap locks are a feature working as designed.** `REPEATABLE READ` is defending consistency you may not know you're relying on; turning it off is a real decision, not a tuning knob.
+- **Match the fix to the required envelope, not to your pride.** A mutex plus a concurrency cap met the batch's deadline with a handful of reviewable lines. The elegant redesign (option 2) stayed on record as the planned successor if volume ever outgrew the single-writer envelope — it hasn't needed to happen.
 
-The bug cost us a stretch of confused staring precisely because the mental model was *almost* right. That's the class of bug worth writing down: the fix was one line; the understanding was the deliverable.
+The bug cost us a stretch of confused staring precisely because the mental model was *almost* right. That's the class of bug worth writing down: the fix was small; the understanding was the deliverable.
