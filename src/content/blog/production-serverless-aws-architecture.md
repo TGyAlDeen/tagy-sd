@@ -1,13 +1,13 @@
 ---
-title: "A production serverless architecture that isn't a toy"
-description: "Fifty-plus Lambda functions, hexagonal architecture, SQS-driven batch pipelines, and multi-region DR on AWS — what enterprise serverless actually looks like beyond the hello-world tutorials."
+title: "Serverless in production: lessons from an enterprise AWS platform"
+description: "Fifty-plus Lambda functions, hexagonal architecture, SQS-driven batch pipelines, and multi-region DR on AWS — the structure, queue design, and operational decisions behind an enterprise serverless platform."
 pubDate: "Jul 26 2026"
 heroImage: "/blog/hero-serverless.svg"
 ---
 
-Most serverless content stops at "here's a Lambda behind API Gateway." That works right up until you're building a system where enterprise customers upload files that must be validated against master data, registered into external backend systems over SFTP, and reported back in real time — with an RTO measured in hours and an auditor reading your VPC Flow Logs.
+Consider the requirements: enterprise customers upload files that must be validated against master data, registered into external backend systems over SFTP, and reported back in real time — with an RTO measured in hours and an auditor reading your VPC Flow Logs.
 
-I led the technical delivery of exactly that kind of platform: a B2B data-intake system built entirely serverless on AWS. This post is a tour of the architecture decisions that made it work at enterprise grade — and the ones that only revealed their value later.
+I led the technical delivery of a B2B data-intake platform with exactly those requirements, built entirely serverless on AWS. This post walks through the architecture decisions that made it work — and the ones whose value only showed up later.
 
 ## The shape of the system
 
@@ -79,4 +79,4 @@ Serverless was the right call here — spiky batch workloads, enterprise securit
 - **Local development** needs investment. Hexagonal architecture rescued unit testing, but end-to-end flows still required a deployed environment; ten Terraform-managed environments existed precisely so every engineer and stage had one.
 - **Fifty small functions** are operationally heavier than five services. The compensation is that each function has one job, one queue, one alarm — when something breaks, the blast radius names itself.
 
-The tutorials aren't wrong — Lambda behind API Gateway really is the starting point. Production is everything you wrap around it: structure inside the functions, queues between them, a proxy in front of the database, a second region, and the discipline to test the parts you hope never run.
+None of this is exotic. At the center there is still a Lambda behind an API Gateway — production is everything wrapped around it: structure inside the functions, queues between them, a proxy in front of the database, a second region, and the discipline to test the parts you hope never run.

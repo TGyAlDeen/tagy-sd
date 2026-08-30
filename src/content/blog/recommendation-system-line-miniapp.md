@@ -5,9 +5,9 @@ pubDate: "Aug 22 2026"
 heroImage: "/blog/hero-reco.svg"
 ---
 
-Recommendation systems get written about as if they end at the model. In practice the model is the small part: the interesting engineering is everything that gets a score from a Python process into a chat message that a user actually taps — reliably, cheaply, and within a chat platform's constraints.
+In a production recommendation system, the model is the smallest moving part. Most of the engineering lives in the path that turns a score from a Python process into a chat message a user actually taps — reliably, cheaply, and within a chat platform's constraints.
 
-I spent nearly three years building the backend of a real-estate discovery platform delivered entirely through **LINE** — no native app, no standalone website for end users. Search, favorites, tour booking, and personalized property recommendations all lived inside chat and LIFF mini-apps. Here's how the recommendation path actually worked, end to end.
+I built and ran the backend of a real-estate discovery platform delivered entirely through **LINE** — no native app, no standalone website for end users. Search, favorites, tour booking, and personalized property recommendations all lived inside chat and LIFF mini-apps. Here's how the recommendation path actually worked, end to end.
 
 ## The overall architecture
 
@@ -45,7 +45,7 @@ A nightly ECS task walked active users, assembled candidate sets (geography and 
 
 ![Animated diagram: two decoupled lanes — a slow 3 a.m. batch lane scoring candidates and writing ranked results to cache, and a fast lunchtime request lane reading the cache and rendering a card carousel](/blog/inline-precompute.svg)
 
-Real-time scoring would have been the résumé-driven choice. Precompute won on every axis that mattered:
+Real-time scoring was the more sophisticated-sounding option. Precompute won on every axis that mattered here:
 
 - **Freshness didn't require it.** Property inventory changes daily, not per-second. A nightly cycle plus event-triggered refreshes on catalog changes was genuinely fresh enough.
 - **Failure isolation.** If the inference service fell over at 3 a.m., the batch retried; users never saw an error. In a request-path design, an ML outage becomes a product outage.
