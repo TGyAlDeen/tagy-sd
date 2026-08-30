@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 510" font-family="ui-monospace,Menlo,monospace">
+  <style>
+    .box{fill:#12131b;stroke:#23252f;stroke-width:1.5}
+    .core{fill:#181a24;stroke:#30333f;stroke-width:1.5}
+    .lbl{fill:#e5e7eb;font-size:15px;font-weight:600}
+    .sub{fill:#71717a;font-size:12.5px}
+    .cap{fill:#71717a;font-size:13px}
+    .line{stroke:#30333f;stroke-width:1.5;fill:none}
+    .dot{fill:#38bdf8;opacity:0}
+    @keyframes e1{0%,2%{transform:translate(220px,120px);opacity:0}4%{opacity:1}16%{transform:translate(415px,215px);opacity:1}18%,100%{opacity:0}}
+    @keyframes e2{0%,30%{transform:translate(220px,255px);opacity:0}32%{opacity:1}44%{transform:translate(415px,255px);opacity:1}46%,100%{opacity:0}}
+    @keyframes e3{0%,58%{transform:translate(220px,390px);opacity:0}60%{opacity:1}72%{transform:translate(415px,295px);opacity:1}74%,100%{opacity:0}}
+    @keyframes uc{0%,14%{stroke:#30333f}18%,24%{stroke:#38bdf8}28%,42%{stroke:#30333f}46%,52%{stroke:#38bdf8}56%,70%{stroke:#30333f}74%,80%{stroke:#38bdf8}84%,100%{stroke:#30333f}}
+    @keyframes port{0%,18%{transform:translate(620px,255px);opacity:0}20%{opacity:1}30%{transform:translate(780px,255px);opacity:1}32%,44%{opacity:0}
+      46%{transform:translate(620px,255px);opacity:1}56%{transform:translate(780px,255px);opacity:1}58%,72%{opacity:0}
+      74%{transform:translate(620px,255px);opacity:1}84%{transform:translate(780px,255px);opacity:1}86%,100%{opacity:0}}
+    .ae1{animation:e1 12s linear infinite}.ae2{animation:e2 12s linear infinite}.ae3{animation:e3 12s linear infinite}
+    .auc{animation:uc 12s linear infinite}.aport{animation:port 12s linear infinite}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.dot{opacity:0}}
+  </style>
+  <rect width="1020" height="510" fill="#0f1017"/>
+
+  <!-- entrypoints -->
+  <text class="sub" x="60" y="66">three entrypoints — handlers stay 10 lines</text>
+  <rect class="box" x="60" y="90" width="160" height="60" rx="10"/>
+  <text class="lbl" x="140" y="115" text-anchor="middle">API handler</text>
+  <text class="sub" x="140" y="135" text-anchor="middle">sync, single</text>
+  <rect class="box" x="60" y="225" width="160" height="60" rx="10"/>
+  <text class="lbl" x="140" y="250" text-anchor="middle">SQS handler</text>
+  <text class="sub" x="140" y="270" text-anchor="middle">bulk, async</text>
+  <rect class="box" x="60" y="360" width="160" height="60" rx="10"/>
+  <text class="lbl" x="140" y="385" text-anchor="middle">batch step</text>
+  <text class="sub" x="140" y="405" text-anchor="middle">re-validate</text>
+
+  <line class="line" x1="220" y1="120" x2="412" y2="215" stroke-dasharray="4 5"/>
+  <line class="line" x1="220" y1="255" x2="412" y2="255" stroke-dasharray="4 5"/>
+  <line class="line" x1="220" y1="390" x2="412" y2="295" stroke-dasharray="4 5"/>
+
+  <!-- use case -->
+  <rect class="core auc" x="415" y="185" width="205" height="140" rx="12"/>
+  <text class="lbl" x="517" y="228" text-anchor="middle">Use case</text>
+  <text class="sub" x="517" y="250" text-anchor="middle">the rules, once</text>
+  <text class="sub" x="517" y="272" text-anchor="middle">no Lambda, no Prisma</text>
+  <text class="sub" x="517" y="294" text-anchor="middle">depends on ports</text>
+
+  <!-- ports/adapters -->
+  <line class="line" x1="620" y1="255" x2="776" y2="255" stroke-dasharray="4 5"/>
+  <path d="M770 250 L780 255 L770 260" class="line"/>
+  <text class="sub" x="700" y="242" text-anchor="middle">ports</text>
+  <rect class="box" x="780" y="160" width="190" height="60" rx="10"/>
+  <text class="lbl" x="875" y="185" text-anchor="middle" font-size="14">Prisma adapter</text>
+  <text class="sub" x="875" y="205" text-anchor="middle">production</text>
+  <rect class="box" x="780" y="290" width="190" height="60" rx="10"/>
+  <text class="lbl" x="875" y="315" text-anchor="middle" font-size="14">in-memory fake</text>
+  <text class="sub" x="875" y="335" text-anchor="middle">tests, in ms</text>
+  <line class="line" x1="875" y1="220" x2="875" y2="290" stroke-dasharray="2 5" opacity="0.6"/>
+
+  <circle class="dot ae1" r="5.5"/>
+  <circle class="dot ae2" r="5.5"/>
+  <circle class="dot ae3" r="5.5"/>
+  <circle class="dot aport" r="4.5" fill="#818cf8"/>
+
+  <text class="cap" x="60" y="492">three transports ▸ one use case ▸ swappable adapters — a rule change is one edit</text>
+</svg>

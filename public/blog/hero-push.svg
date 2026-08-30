@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 510" font-family="ui-monospace,Menlo,monospace">
+  <style>
+    .box{fill:#12131b;stroke:#23252f;stroke-width:1.5}
+    .gate{fill:#181a24;stroke:#30333f;stroke-width:1.2}
+    .lbl{fill:#e5e7eb;font-size:15px;font-weight:600}
+    .sub{fill:#71717a;font-size:12px}
+    .cap{fill:#71717a;font-size:13px}
+    .line{stroke:#30333f;stroke-width:1.5;fill:none}
+    @keyframes d1{0%,2%{transform:translate(215px,205px);opacity:0}4%{opacity:1}14%{transform:translate(330px,205px)}24%{transform:translate(470px,205px)}34%{transform:translate(610px,205px)}44%{transform:translate(725px,205px)}54%{transform:translate(830px,205px);opacity:1}56%,100%{opacity:0}}
+    @keyframes d2{0%,10%{transform:translate(215px,205px);opacity:0}12%{opacity:1}22%{transform:translate(385px,205px)}30%{transform:translate(525px,205px);opacity:1}34%{transform:translate(525px,330px);opacity:1}36%,100%{opacity:0}}
+    @keyframes d2x{0%,32%{opacity:0}36%,46%{opacity:1}52%,100%{opacity:0}}
+    @keyframes d3{0%,20%{transform:translate(215px,205px);opacity:0}22%{opacity:1}32%{transform:translate(385px,205px)}42%{transform:translate(525px,205px)}48%{transform:translate(665px,205px);opacity:1}52%{transform:translate(665px,330px);opacity:1}54%,100%{opacity:0}}
+    @keyframes d3x{0%,50%{opacity:0}54%,64%{opacity:1}70%,100%{opacity:0}}
+    @keyframes d4{0%,40%{transform:translate(215px,205px);opacity:0}42%{opacity:1}52%{transform:translate(330px,205px)}62%{transform:translate(470px,205px)}72%{transform:translate(610px,205px)}84%{transform:translate(725px,205px)}96%{transform:translate(830px,205px);opacity:1}98%,100%{opacity:0}}
+    @keyframes phoneping{0%,52%{opacity:0}56%,64%{opacity:1}70%,94%{opacity:0}98%{opacity:1}100%{opacity:0}}
+    .ad1{animation:d1 13s linear infinite}
+    .ad2{animation:d2 13s linear infinite}.ad2x{animation:d2x 13s linear infinite}
+    .ad3{animation:d3 13s linear infinite}.ad3x{animation:d3x 13s linear infinite}
+    .ad4{animation:d4 13s linear infinite}
+    .aping{animation:phoneping 13s linear infinite}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}circle{opacity:0}.ad2x,.ad3x,.aping{opacity:0}}
+  </style>
+  <rect width="1020" height="510" fill="#0f1017"/>
+
+  <rect class="box" x="60" y="150" width="155" height="120" rx="12"/>
+  <text class="lbl" x="137" y="192" text-anchor="middle">campaign</text>
+  <text class="sub" x="137" y="214" text-anchor="middle">ECS batch job</text>
+  <text class="sub" x="137" y="234" text-anchor="middle">walks audience</text>
+
+  <!-- gates -->
+  <rect class="gate" x="330" y="150" width="110" height="110" rx="10"/>
+  <text class="sub" x="385" y="186" text-anchor="middle" fill="#a1a1aa">gate 1</text>
+  <text class="sub" x="385" y="208" text-anchor="middle">eligible?</text>
+  <text class="sub" x="385" y="228" text-anchor="middle">at send time</text>
+  <rect class="gate" x="470" y="150" width="110" height="110" rx="10"/>
+  <text class="sub" x="525" y="186" text-anchor="middle" fill="#a1a1aa">gate 2</text>
+  <text class="sub" x="525" y="208" text-anchor="middle">dedup vs</text>
+  <text class="sub" x="525" y="228" text-anchor="middle">send log</text>
+  <rect class="gate" x="610" y="150" width="110" height="110" rx="10"/>
+  <text class="sub" x="665" y="186" text-anchor="middle" fill="#a1a1aa">gate 3</text>
+  <text class="sub" x="665" y="208" text-anchor="middle">per-user cap</text>
+  <text class="sub" x="665" y="228" text-anchor="middle">all campaigns</text>
+  <rect class="gate" x="750" y="150" width="80" height="110" rx="10"/>
+  <text class="sub" x="790" y="192" text-anchor="middle" fill="#a1a1aa">throttle</text>
+  <text class="sub" x="790" y="214" text-anchor="middle">quota −</text>
+  <text class="sub" x="790" y="232" text-anchor="middle">headroom</text>
+
+  <line class="line" x1="215" y1="205" x2="330" y2="205" stroke-dasharray="4 5"/>
+  <line class="line" x1="440" y1="205" x2="470" y2="205" stroke-dasharray="4 5"/>
+  <line class="line" x1="580" y1="205" x2="610" y2="205" stroke-dasharray="4 5"/>
+  <line class="line" x1="720" y1="205" x2="750" y2="205" stroke-dasharray="4 5"/>
+  <line class="line" x1="830" y1="205" x2="850" y2="205" stroke-dasharray="4 5"/>
+  <line class="line" x1="525" y1="260" x2="525" y2="330" stroke-dasharray="3 4" opacity="0.6"/>
+  <line class="line" x1="665" y1="260" x2="665" y2="330" stroke-dasharray="3 4" opacity="0.6"/>
+
+  <!-- rejects -->
+  <rect class="box" x="330" y="330" width="280" height="56" rx="10"/>
+  <text class="sub" x="470" y="356" text-anchor="middle" fill="#a1a1aa">rejected — cheap and early</text>
+  <text class="sub ad2x" x="440" y="300" fill="#f87171" opacity="0">already sent</text>
+  <text class="sub ad3x" x="620" y="300" fill="#f87171" opacity="0">over cap</text>
+
+  <!-- phone -->
+  <rect x="850" y="120" width="120" height="190" rx="18" fill="#12131b" stroke="#30333f" stroke-width="2"/>
+  <rect x="862" y="150" width="96" height="42" rx="8" fill="#181a24" class="aping" opacity="0"/>
+  <text class="sub aping" x="910" y="176" text-anchor="middle" fill="#38bdf8" opacity="0">1 match ✓</text>
+  <text class="sub" x="910" y="290" text-anchor="middle">99% delivered</text>
+
+  <circle class="ad1" r="5.5" fill="#34d399" opacity="0"/>
+  <circle class="ad2" r="5.5" fill="#f87171" opacity="0"/>
+  <circle class="ad3" r="5.5" fill="#f87171" opacity="0"/>
+  <circle class="ad4" r="5.5" fill="#34d399" opacity="0"/>
+
+  <text class="sub" x="60" y="430">send log = dedup + resume checkpoint + delivery accounting — one table, three jobs</text>
+  <text class="cap" x="60" y="492">four gates before the network call — the channel is a budget of user patience</text>
+</svg>

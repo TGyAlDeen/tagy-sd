@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 510" font-family="ui-monospace,Menlo,monospace">
+  <style>
+    .lbl{fill:#e5e7eb;font-size:15px;font-weight:600}
+    .sub{fill:#71717a;font-size:12.5px}
+    .cap{fill:#71717a;font-size:13px}
+    .pane{fill:#12131b;stroke:#23252f;stroke-width:1.5}
+    .logline{fill:#71717a;font-size:12px}
+    @keyframes hl1{0%,6%{opacity:0.45}10%,16%{opacity:1}20%,100%{opacity:0.45}}
+    @keyframes hl2{0%,22%{opacity:0.45}26%,32%{opacity:1}36%,100%{opacity:0.45}}
+    @keyframes hl3{0%,38%{opacity:0.45}42%,48%{opacity:1}52%,100%{opacity:0.45}}
+    @keyframes mark1{0%,8%{opacity:0}12%,100%{opacity:1}}
+    @keyframes mark2{0%,24%{opacity:0}28%,100%{opacity:1}}
+    @keyframes mark3{0%,40%{opacity:0}44%,100%{opacity:1}}
+    @keyframes c0{0%,10%{opacity:1}12%,100%{opacity:0}}
+    @keyframes c1{0%,12%{opacity:0}14%,28%{opacity:1}30%,100%{opacity:0}}
+    @keyframes c2{0%,28%{opacity:0}30%,44%{opacity:1}46%,100%{opacity:0}}
+    @keyframes c3{0%,44%{opacity:0}46%,92%{opacity:1}94%,100%{opacity:0}}
+    @keyframes fieldglow{0%,55%{opacity:0}60%,90%{opacity:1}96%,100%{opacity:0}}
+    .ahl1{animation:hl1 13s linear infinite}.ahl2{animation:hl2 13s linear infinite}.ahl3{animation:hl3 13s linear infinite}
+    .am1{animation:mark1 13s linear infinite}.am2{animation:mark2 13s linear infinite}.am3{animation:mark3 13s linear infinite}
+    .ac0{animation:c0 13s linear infinite}.ac1{animation:c1 13s linear infinite}
+    .ac2{animation:c2 13s linear infinite}.ac3{animation:c3 13s linear infinite}
+    .afield{animation:fieldglow 13s linear infinite}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}
+      .ahl1,.ahl2,.ahl3{opacity:0.45}.am1,.am2,.am3{opacity:1}
+      .ac0,.ac1,.ac2{opacity:0}.ac3{opacity:1}.afield{opacity:1}}
+  </style>
+  <rect width="1020" height="510" fill="#0f1017"/>
+
+  <!-- log stream -->
+  <rect class="pane" x="50" y="60" width="560" height="290" rx="12"/>
+  <text class="lbl" x="70" y="92">log stream</text>
+  <text class="logline" x="70" y="128" opacity="0.45">.. MSG_AUTH_OK  {"user":"…"}</text>
+  <g class="ahl1"><text class="logline" x="70" y="158" fill="#a1a1aa">.. MSG_RESULT_SUMMARY  {"id":519,"status":"REGISTER_ERROR"<tspan class="afield" fill="#38bdf8" opacity="0">,"type":"admin"</tspan>}</text></g>
+  <text class="logline" x="70" y="188" opacity="0.45">.. MSG_MAIL_SENT  to=&lt;address&gt;</text>
+  <g class="ahl2"><text class="logline" x="70" y="218" fill="#a1a1aa">.. MSG_RESULT_SUMMARY  {"id":520,"status":"REGISTER_OK"<tspan class="afield" fill="#38bdf8" opacity="0">,"type":"user"</tspan>}</text></g>
+  <text class="logline" x="70" y="248" opacity="0.45">.. MSG_RETRY  attempt=2</text>
+  <g class="ahl3"><text class="logline" x="70" y="278" fill="#a1a1aa">.. MSG_RESULT_SUMMARY  {"id":521,"status":"REGISTER_ERROR"<tspan class="afield" fill="#38bdf8" opacity="0">,"type":"user"</tspan>}</text></g>
+  <text class="logline" x="70" y="308" opacity="0.45">.. MSG_CLEANUP  purged=…</text>
+
+  <!-- query pane -->
+  <rect class="pane" x="660" y="60" width="310" height="290" rx="12"/>
+  <text class="lbl" x="680" y="92">Logs Insights</text>
+  <text class="logline" x="680" y="126" fill="#818cf8">filter message like</text>
+  <text class="logline" x="680" y="144" fill="#818cf8">/MSG_RESULT_SUMMARY/</text>
+  <text class="logline" x="680" y="170" fill="#818cf8">| count errors by bin(1d)</text>
+  <line x1="680" y1="190" x2="950" y2="190" stroke="#23252f" stroke-width="1.2"/>
+  <text class="sub" x="680" y="222">errors yesterday:</text>
+  <text class="ac0" x="680" y="262" fill="#e5e7eb" font-size="30" font-weight="700">0</text>
+  <text class="ac1" x="680" y="262" fill="#e5e7eb" font-size="30" font-weight="700" opacity="0">1</text>
+  <text class="ac2" x="680" y="262" fill="#e5e7eb" font-size="30" font-weight="700" opacity="0">1</text>
+  <text class="ac3" x="680" y="262" fill="#e5e7eb" font-size="30" font-weight="700" opacity="0">2</text>
+  <text class="sub afield" x="680" y="300" fill="#38bdf8" opacity="0">split by "type" — one widened field,</text>
+  <text class="sub afield" x="680" y="318" fill="#38bdf8" opacity="0">every old query still works</text>
+
+  <circle class="am1" cx="580" cy="153" r="4.5" fill="#38bdf8" opacity="0"/>
+  <circle class="am2" cx="580" cy="213" r="4.5" fill="#34d399" opacity="0"/>
+  <circle class="am3" cx="580" cy="273" r="4.5" fill="#38bdf8" opacity="0"/>
+
+  <text class="sub" x="50" y="398">contract: stable code · payload inline · logged at a boundary · widened, never forked</text>
+  <text class="cap" x="50" y="492">a log line with consumers is an API — the query only counts what the line remembered to say</text>
+</svg>

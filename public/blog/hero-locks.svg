@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 510" font-family="ui-monospace,Menlo,monospace">
+  <style>
+    .box{fill:#12131b;stroke:#23252f;stroke-width:1.5}
+    .lbl{fill:#e5e7eb;font-size:15px;font-weight:600}
+    .sub{fill:#71717a;font-size:12.5px}
+    .cap{fill:#71717a;font-size:13px}
+    .idx{fill:#181a24;stroke:#30333f;stroke-width:1.2}
+    @keyframes wa{0%,4%{transform:translate(285px,150px);opacity:0}6%{opacity:1}16%{transform:translate(285px,208px);opacity:1}44%{transform:translate(285px,208px);opacity:1}46%,100%{opacity:0}}
+    @keyframes range{0%,14%{opacity:0}18%,44%{opacity:0.28}48%,100%{opacity:0}}
+    @keyframes wb{0%,20%{transform:translate(560px,150px);opacity:0}22%{opacity:1}30%{transform:translate(560px,196px);opacity:1}31%{transform:translate(556px,196px)}33%{transform:translate(564px,196px)}35%{transform:translate(556px,196px)}37%{transform:translate(560px,196px);opacity:1}44%{transform:translate(560px,196px);opacity:1}46%,100%{opacity:0}}
+    @keyframes blocked{0%,28%{opacity:0}32%,42%{opacity:1}47%,100%{opacity:0}}
+    @keyframes mfix1{0%,52%{transform:translate(320px,388px);opacity:0}54%{opacity:1}62%{transform:translate(470px,388px);opacity:1}66%{transform:translate(620px,388px);opacity:1}68%,100%{opacity:0}}
+    @keyframes mfix2{0%,68%{transform:translate(320px,428px);opacity:0}70%{opacity:1}78%{transform:translate(470px,428px);opacity:1}82%{transform:translate(620px,428px);opacity:1}84%,100%{opacity:0}}
+    @keyframes mutexg{0%,52%{stroke:#30333f}56%,82%{stroke:#34d399}88%,100%{stroke:#30333f}}
+    .awa{animation:wa 13s linear infinite}
+    .arange{animation:range 13s linear infinite}
+    .awb{animation:wb 13s linear infinite}
+    .ablk{animation:blocked 13s linear infinite}
+    .am1{animation:mfix1 13s linear infinite}
+    .am2{animation:mfix2 13s linear infinite}
+    .amx{animation:mutexg 13s linear infinite}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}circle{opacity:0}.arange,.ablk{opacity:0}}
+  </style>
+  <rect width="1020" height="510" fill="#0f1017"/>
+
+  <text class="lbl" x="60" y="60">the surprise — distinct rows, shared index range</text>
+
+  <text class="sub" x="120" y="130" text-anchor="middle">worker A → row 519</text>
+  <text class="sub" x="590" y="130" text-anchor="middle">worker B → row 524 (blocked)</text>
+
+  <!-- index strip -->
+  <g>
+    <rect class="idx" x="80" y="190" width="130" height="36" rx="6"/>
+    <rect class="idx" x="220" y="190" width="130" height="36" rx="6"/>
+    <rect class="idx" x="360" y="190" width="130" height="36" rx="6"/>
+    <rect class="idx" x="500" y="190" width="130" height="36" rx="6"/>
+    <rect class="idx" x="640" y="190" width="130" height="36" rx="6"/>
+    <rect class="idx" x="780" y="190" width="130" height="36" rx="6"/>
+  </g>
+  <text class="sub" x="145" y="213" text-anchor="middle" fill="#a1a1aa">…517</text>
+  <text class="sub" x="285" y="213" text-anchor="middle" fill="#a1a1aa">519 ●A</text>
+  <text class="sub" x="425" y="213" text-anchor="middle" fill="#a1a1aa">gap</text>
+  <text class="sub" x="565" y="213" text-anchor="middle" fill="#a1a1aa">524 ●B</text>
+  <text class="sub" x="705" y="213" text-anchor="middle" fill="#a1a1aa">gap</text>
+  <text class="sub" x="845" y="213" text-anchor="middle" fill="#a1a1aa">530…</text>
+
+  <!-- next-key range held by A -->
+  <rect class="arange" x="80" y="182" width="560" height="52" rx="8" fill="#f87171" opacity="0"/>
+  <text class="sub" x="60" y="262">scan + next-key locks: A's range covers B's row and the gaps between</text>
+  <text class="ablk" x="620" y="168" fill="#f87171" font-size="14" font-weight="600" opacity="0">⏳ lock wait</text>
+
+  <line x1="60" y1="300" x2="960" y2="300" stroke="#23252f" stroke-width="1.5" stroke-dasharray="6 8"/>
+
+  <text class="lbl" x="60" y="340">the boring fix — one writer at a time</text>
+  <rect class="box amx" x="430" y="360" width="80" height="96" rx="10"/>
+  <text class="sub" x="470" y="400" text-anchor="middle" fill="#a1a1aa">mutex</text>
+  <text class="sub" x="470" y="420" text-anchor="middle">serialize</text>
+  <rect class="box" x="620" y="360" width="200" height="96" rx="10"/>
+  <text class="sub" x="720" y="400" text-anchor="middle" fill="#a1a1aa">InnoDB — no contention</text>
+  <text class="sub" x="720" y="422" text-anchor="middle" fill="#34d399">✓ 519   ✓ 524</text>
+  <text class="sub" x="240" y="392" text-anchor="middle">A</text>
+  <text class="sub" x="240" y="432" text-anchor="middle">B</text>
+  <line x1="260" y1="388" x2="430" y2="388" stroke="#30333f" stroke-width="1.5" stroke-dasharray="4 5"/>
+  <line x1="260" y1="428" x2="430" y2="428" stroke="#30333f" stroke-width="1.5" stroke-dasharray="4 5"/>
+
+  <circle class="awa" r="5.5" fill="#38bdf8" opacity="0"/>
+  <circle class="awb" r="5.5" fill="#f87171" opacity="0"/>
+  <circle class="am1" r="5.5" fill="#34d399" opacity="0"/>
+  <circle class="am2" r="5.5" fill="#34d399" opacity="0"/>
+
+  <text class="cap" x="60" y="492">"row-level locking" is index-level locking — EXPLAIN your writes, then match the fix to the envelope</text>
+</svg>
