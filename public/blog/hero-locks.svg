@@ -25,8 +25,8 @@
 
   <text class="lbl" x="60" y="60">the surprise — distinct rows, shared index range</text>
 
-  <text class="sub" x="120" y="130" text-anchor="middle">worker A → row 519</text>
-  <text class="sub" x="590" y="130" text-anchor="middle">worker B → row 524 (blocked)</text>
+  <text class="sub" x="130" y="130" text-anchor="middle">worker A → upsert user 519</text>
+  <text class="sub" x="600" y="130" text-anchor="middle">worker B → upsert user 524</text>
 
   <!-- index strip -->
   <g>
@@ -46,12 +46,12 @@
 
   <!-- next-key range held by A -->
   <rect class="arange" x="80" y="182" width="560" height="52" rx="8" fill="#f87171" opacity="0"/>
-  <text class="sub" x="60" y="262">scan + next-key locks: A's range covers B's row and the gaps between</text>
-  <text class="ablk" x="620" y="168" fill="#f87171" font-size="14" font-weight="600" opacity="0">⏳ lock wait</text>
+  <text class="sub" x="60" y="262">upserts take gap + insert-intention locks — A and B hold overlapping ranges of the same unique index</text>
+  <text class="ablk" x="600" y="168" fill="#f87171" font-size="14" font-weight="600" opacity="0">⚡ deadlock — B rolled back</text>
 
   <line x1="60" y1="300" x2="960" y2="300" stroke="#23252f" stroke-width="1.5" stroke-dasharray="6 8"/>
 
-  <text class="lbl" x="60" y="340">the boring fix — one writer at a time</text>
+  <text class="lbl" x="60" y="340">the boring fix — cap the fan-out, one writer at a time</text>
   <rect class="box amx" x="430" y="360" width="80" height="96" rx="10"/>
   <text class="sub" x="470" y="400" text-anchor="middle" fill="#a1a1aa">mutex</text>
   <text class="sub" x="470" y="420" text-anchor="middle">serialize</text>
@@ -68,5 +68,5 @@
   <circle class="am1" r="5.5" fill="#34d399" opacity="0"/>
   <circle class="am2" r="5.5" fill="#34d399" opacity="0"/>
 
-  <text class="cap" x="60" y="492">"row-level locking" is index-level locking — EXPLAIN your writes, then match the fix to the envelope</text>
+  <text class="cap" x="60" y="492">"row-level locking" is index-level locking — upserts lock ranges, and the engine will show you exactly which</text>
 </svg>
