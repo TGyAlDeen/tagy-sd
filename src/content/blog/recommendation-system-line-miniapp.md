@@ -5,7 +5,7 @@ pubDate: "Aug 22 2026"
 heroImage: "/blog/hero-reco.svg"
 ---
 
-In a production recommendation system, the model is the smallest moving part. Most of the engineering lives in the path that turns a score from a Python process into a chat message a user actually taps — reliably, cheaply, and within a chat platform's constraints.
+Ask me what powers a recommendation system, and the honest answer is: mostly not the model. The part of this one I'm proudest of isn't the scoring — it's that a number computed by a Python process at 3 a.m. reliably became a card someone tapped in a chat thread at lunch. That path — score to message, cheap, dependable, inside a chat platform's constraints — is where most of the engineering lives.
 
 I built and ran the backend of a real-estate discovery platform delivered entirely through **LINE** — no native app, no standalone website for end users. Search, favorites, tour booking, and personalized property recommendations all lived inside chat and LIFF mini-apps. Here's how the recommendation path actually worked, end to end.
 
