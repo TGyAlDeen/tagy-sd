@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 510" font-family="ui-monospace,Menlo,monospace">
+  <style>
+    .box{fill:#12131b;stroke:#23252f;stroke-width:1.5}
+    .lbl{fill:#e5e7eb;font-size:16px;font-weight:600}
+    .sub{fill:#71717a;font-size:12.5px}
+    .cap{fill:#71717a;font-size:13px}
+    .line{stroke:#30333f;stroke-width:1.5;fill:none}
+    .dot{fill:#38bdf8;opacity:0}
+    .red{fill:#f87171;opacity:0}
+    @keyframes main{
+      0%{transform:translate(140px,95px);opacity:0}2%{opacity:1}
+      8%{transform:translate(382px,95px)}14%{transform:translate(618px,95px)}
+      18%{transform:translate(625px,180px)}26%{transform:translate(125px,180px)}
+      29%{transform:translate(125px,232px);opacity:1}31%{opacity:0}100%{opacity:0}}
+    @keyframes s1{0%,33%{transform:translate(202px,270px);opacity:0}35%{opacity:1}41%{transform:translate(288px,270px);opacity:1}43%,100%{opacity:0}}
+    @keyframes s2{0%,48%{transform:translate(442px,270px);opacity:0}50%{opacity:1}56%{transform:translate(528px,270px);opacity:1}58%,100%{opacity:0}}
+    @keyframes s3{0%,60%{transform:translate(682px,270px);opacity:0}62%{opacity:1}68%{transform:translate(768px,270px);opacity:1}70%,100%{opacity:0}}
+    @keyframes ws{0%,72%{transform:translate(845px,228px);opacity:0}74%{opacity:1}77%{transform:translate(845px,168px)}88%{transform:translate(140px,168px)}91%{transform:translate(140px,134px);opacity:1}93%,100%{opacity:0}}
+    @keyframes rdot{0%,44%{transform:translate(365px,312px);opacity:0}45%{opacity:1}49%{transform:translate(365px,358px);opacity:1}51%,100%{opacity:0}}
+    @keyframes dlqp{0%,48%{stroke:#23252f}51%,58%{stroke:#f87171}64%,100%{stroke:#23252f}}
+    @keyframes repl{to{stroke-dashoffset:-36}}
+    .amain{animation:main 11s linear infinite}
+    .as1{animation:s1 11s linear infinite}
+    .as2{animation:s2 11s linear infinite}
+    .as3{animation:s3 11s linear infinite}
+    .aws{animation:ws 11s linear infinite}
+    .ard{animation:rdot 11s linear infinite}
+    .adlq{animation:dlqp 11s linear infinite}
+    .arepl{animation:repl 2.5s linear infinite}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.dot,.red{opacity:0}}
+  </style>
+  <rect width="1020" height="510" fill="#0f1017"/>
+
+  <!-- top row -->
+  <rect class="box" x="50" y="60" width="180" height="70" rx="10"/>
+  <text class="lbl" x="140" y="90" text-anchor="middle">React SPA</text>
+  <text class="sub" x="140" y="112" text-anchor="middle">live status · WS</text>
+  <line class="line" x1="230" y1="95" x2="296" y2="95"/><path d="M290 90 L300 95 L290 100" class="line"/>
+  <rect class="box" x="300" y="60" width="170" height="70" rx="10"/>
+  <text class="lbl" x="385" y="90" text-anchor="middle">API Gateway</text>
+  <text class="sub" x="385" y="112" text-anchor="middle">REST + WebSocket</text>
+  <line class="line" x1="470" y1="95" x2="546" y2="95"/><path d="M540 90 L550 95 L540 100" class="line"/>
+  <rect class="box" x="550" y="60" width="150" height="70" rx="10"/>
+  <text class="lbl" x="625" y="90" text-anchor="middle">λ API tier</text>
+  <text class="sub" x="625" y="112" text-anchor="middle">hexagonal</text>
+  <line class="line" x1="700" y1="95" x2="786" y2="95"/><path d="M780 90 L790 95 L780 100" class="line"/>
+  <rect class="box" x="790" y="60" width="180" height="70" rx="10"/>
+  <text class="lbl" x="880" y="90" text-anchor="middle" font-size="15">Aurora PostgreSQL</text>
+  <text class="sub" x="880" y="112" text-anchor="middle">via RDS Proxy</text>
+
+  <!-- drop into pipeline -->
+  <path class="line" d="M625 130 V180 H125 V228" stroke-dasharray="4 5"/>
+  <path d="M120 222 L125 232 L130 222" class="line"/>
+
+  <!-- pipeline row -->
+  <g>
+    <rect class="box" x="50" y="232" width="150" height="76" rx="10"/>
+    <text class="lbl" x="125" y="262" text-anchor="middle" font-size="15">SQS ▸ λ parse</text>
+    <text class="sub" x="125" y="284" text-anchor="middle">normalize</text>
+    <line class="line" x1="200" y1="270" x2="286" y2="270"/><path d="M280 265 L290 270 L280 275" class="line"/>
+    <rect class="box adlq" x="290" y="232" width="150" height="76" rx="10"/>
+    <text class="lbl" x="365" y="262" text-anchor="middle" font-size="15">SQS ▸ λ validate</text>
+    <text class="sub" x="365" y="284" text-anchor="middle">master-data cache</text>
+    <line class="line" x1="440" y1="270" x2="526" y2="270"/><path d="M520 265 L530 270 L520 275" class="line"/>
+    <rect class="box" x="530" y="232" width="150" height="76" rx="10"/>
+    <text class="lbl" x="605" y="262" text-anchor="middle" font-size="15">SQS ▸ λ register</text>
+    <text class="sub" x="605" y="284" text-anchor="middle">SFTP</text>
+    <line class="line" x1="680" y1="270" x2="766" y2="270"/><path d="M760 265 L770 270 L760 275" class="line"/>
+    <rect class="box" x="770" y="232" width="150" height="76" rx="10"/>
+    <text class="lbl" x="845" y="262" text-anchor="middle" font-size="15">SQS ▸ λ notify</text>
+    <text class="sub" x="845" y="284" text-anchor="middle">WS push</text>
+  </g>
+
+  <!-- DLQ -->
+  <line class="line" x1="365" y1="308" x2="365" y2="356" stroke-dasharray="3 4"/>
+  <rect class="box adlq" x="305" y="360" width="120" height="46" rx="9"/>
+  <text class="sub" x="365" y="388" text-anchor="middle" fill="#f87171">DLQ · alarm</text>
+
+  <!-- ws return -->
+  <path class="line" d="M845 228 V168 H140 V138" stroke-dasharray="2 6" opacity="0.7"/>
+
+  <!-- regions -->
+  <rect class="box" x="50" y="432" width="300" height="52" rx="9"/>
+  <text class="sub" x="200" y="463" text-anchor="middle" fill="#a1a1aa">Tokyo — primary</text>
+  <line x1="350" y1="458" x2="670" y2="458" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="8 10" opacity="0.6" class="arepl"/>
+  <text class="sub" x="510" y="448" text-anchor="middle">Aurora global · S3 CRR</text>
+  <rect class="box" x="670" y="432" width="300" height="52" rx="9"/>
+  <text class="sub" x="820" y="463" text-anchor="middle" fill="#a1a1aa">Osaka — DR</text>
+
+  <!-- dots -->
+  <circle class="dot amain" r="5.5"/>
+  <circle class="dot as1" r="5.5"/>
+  <circle class="dot as2" r="5.5"/>
+  <circle class="dot as3" r="5.5"/>
+  <circle class="dot aws" r="4.5" fill="#818cf8"/>
+  <circle class="red ard" r="5"/>
+
+  <text class="cap" x="50" y="508">upload ▸ staged queues ▸ register ▸ notify · a DLQ per stage · one Terraform, two regions</text>
+</svg>

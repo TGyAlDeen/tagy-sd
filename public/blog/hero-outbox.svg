@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 510" font-family="ui-monospace,Menlo,monospace">
+  <style>
+    .box{fill:#12131b;stroke:#23252f;stroke-width:1.5;rx:10}
+    .row{fill:#181a24;stroke:#23252f;stroke-width:1.2}
+    .lbl{fill:#e5e7eb;font-size:17px;font-weight:600}
+    .sub{fill:#71717a;font-size:13px}
+    .cap{fill:#71717a;font-size:13px}
+    .line{stroke:#30333f;stroke-width:1.5;fill:none}
+    .dot{fill:#38bdf8;opacity:0}
+    .ok{fill:#34d399;font-size:14px;font-weight:600;opacity:0}
+    @keyframes d1{0%{transform:translate(150px,158px);opacity:0}2%{opacity:1}14%{transform:translate(150px,262px);opacity:1}16%{opacity:0}100%{transform:translate(150px,262px);opacity:0}}
+    @keyframes rows{0%,15%{stroke:#23252f}18%,26%{stroke:#38bdf8}32%,100%{stroke:#23252f}}
+    @keyframes d2{0%,24%{transform:translate(296px,387px);opacity:0}26%{opacity:1}38%{transform:translate(414px,387px);opacity:1}40%,100%{transform:translate(414px,387px);opacity:0}}
+    @keyframes d3{0%,42%{transform:translate(596px,387px);opacity:0}44%{opacity:1}52%{transform:translate(644px,387px);opacity:1}54%,100%{transform:translate(644px,387px);opacity:0}}
+    @keyframes d4{0%,56%{transform:translate(816px,387px);opacity:0}58%{opacity:1}64%{transform:translate(885px,387px);opacity:1}74%{transform:translate(885px,186px);opacity:1}76%,100%{transform:translate(885px,186px);opacity:0}}
+    @keyframes cons{0%,74%{stroke:#23252f}78%,88%{stroke:#34d399}94%,100%{stroke:#23252f}}
+    @keyframes okt{0%,76%{opacity:0}80%,90%{opacity:1}96%,100%{opacity:0}}
+    .a1{animation:d1 9s linear infinite}
+    .a2{animation:d2 9s linear infinite}
+    .a3{animation:d3 9s linear infinite}
+    .a4{animation:d4 9s linear infinite}
+    .arows{animation:rows 9s linear infinite}
+    .acons{animation:cons 9s linear infinite}
+    .aok{animation:okt 9s linear infinite}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}.dot{opacity:0}}
+  </style>
+  <rect width="1020" height="510" fill="#0f1017"/>
+  <!-- service -->
+  <rect class="box" x="50" y="70" width="200" height="88" rx="10"/>
+  <text class="lbl" x="150" y="108" text-anchor="middle">Order Service</text>
+  <text class="sub" x="150" y="132" text-anchor="middle">Go · Cloud Run</text>
+
+  <!-- tx arrow -->
+  <line class="line" x1="150" y1="158" x2="150" y2="264"/>
+  <path d="M145 258 L150 268 L155 258" fill="none" stroke="#30333f" stroke-width="1.5"/>
+  <text class="sub" x="165" y="216">one transaction</text>
+
+  <!-- spanner -->
+  <rect class="box" x="50" y="270" width="260" height="170" rx="10"/>
+  <text class="lbl" x="180" y="302" text-anchor="middle">Cloud Spanner</text>
+  <rect class="row arows" x="70" y="320" width="220" height="36" rx="7"/>
+  <text class="sub" x="180" y="343" text-anchor="middle" fill="#a1a1aa">Orders → CONFIRMED</text>
+  <rect class="row arows" x="70" y="370" width="220" height="36" rx="7"/>
+  <text class="sub" x="180" y="393" text-anchor="middle" fill="#a1a1aa">OutboxEvents · pending</text>
+
+  <!-- relay -->
+  <line class="line" x1="292" y1="387" x2="416" y2="387" stroke-dasharray="4 5"/>
+  <path d="M410 382 L420 387 L410 392" fill="none" stroke="#30333f" stroke-width="1.5"/>
+  <rect class="box" x="420" y="352" width="170" height="70" rx="10"/>
+  <text class="lbl" x="505" y="382" text-anchor="middle" font-size="16">Relay worker</text>
+  <text class="sub" x="505" y="404" text-anchor="middle">poll → enqueue</text>
+
+  <!-- tasks -->
+  <line class="line" x1="590" y1="387" x2="646" y2="387"/>
+  <path d="M640 382 L650 387 L640 392" fill="none" stroke="#30333f" stroke-width="1.5"/>
+  <rect class="box" x="650" y="352" width="160" height="70" rx="10"/>
+  <text class="lbl" x="730" y="382" text-anchor="middle" font-size="16">Cloud Tasks</text>
+  <text class="sub" x="730" y="404" text-anchor="middle">retry · backoff</text>
+
+  <!-- consumer -->
+  <path class="line" d="M810 387 H885 V184"/>
+  <path d="M880 190 L885 180 L890 190" fill="none" stroke="#30333f" stroke-width="1.5"/>
+  <rect class="box acons" x="790" y="90" width="190" height="90" rx="10"/>
+  <text class="lbl" x="885" y="126" text-anchor="middle">Consumer</text>
+  <text class="sub" x="885" y="150" text-anchor="middle">idempotent apply</text>
+  <text class="ok aok" x="885" y="70" text-anchor="middle">✓ applied once</text>
+
+  <!-- dots -->
+  <circle class="dot a1" r="5.5"/>
+  <circle class="dot a2" r="5.5"/>
+  <circle class="dot a3" r="5.5"/>
+  <circle class="dot a4" r="5.5"/>
+
+  <text class="cap" x="50" y="486">event flow — commit ▸ relay ▸ deliver ▸ apply · at-least-once, deduped at the edge</text>
+</svg>
