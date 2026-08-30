@@ -8,8 +8,6 @@ const today = new Date();
 	<div class="container inner">
 		<div class="left">
 			<span>&copy; {today.getFullYear()} {SITE_AUTHOR}</span>
-			<span class="sep">·</span>
-			<span class="mono muted">Built with Astro, deployed on Cloudflare</span>
 		</div>
 		<div class="social">
 			{SOCIALS.map((s) => (
@@ -43,7 +41,6 @@ const today = new Date();
 		flex-wrap: wrap;
 	}
 	.left { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
-	.sep { color: var(--muted); }
 	.social { display: flex; gap: 0.25rem; }
 	.social a {
 		display: inline-grid;
