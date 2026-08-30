@@ -1,0 +1,40 @@
+---
+import Icon from './Icon.astro';
+---
+
+<button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle color theme" title="Toggle theme">
+	<span class="icon sun"><Icon name="sun" size={18} /></span>
+	<span class="icon moon"><Icon name="moon" size={18} /></span>
+</button>
+
+<script>
+	const btn = document.getElementById('theme-toggle');
+	btn?.addEventListener('click', () => {
+		const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+		document.documentElement.dataset.theme = next;
+		try {
+			localStorage.setItem('theme', next);
+		} catch {}
+	});
+</script>
+
+<style>
+	.theme-toggle {
+		display: inline-grid;
+		place-items: center;
+		width: 2.25rem;
+		height: 2.25rem;
+		border-radius: 999px;
+		border: 1px solid var(--border);
+		background: var(--surface);
+		color: var(--text-2);
+		cursor: pointer;
+		transition: border-color 0.15s ease, color 0.15s ease;
+	}
+	.theme-toggle:hover { border-color: var(--accent); color: var(--text); }
+	.icon { grid-area: 1 / 1; display: flex; transition: opacity 0.2s ease, transform 0.3s ease; }
+	.sun { opacity: 0; transform: rotate(-90deg) scale(0.6); }
+	.moon { opacity: 1; transform: none; }
+	:global([data-theme='dark']) .sun { opacity: 1; transform: none; }
+	:global([data-theme='dark']) .moon { opacity: 0; transform: rotate(90deg) scale(0.6); }
+</style>
