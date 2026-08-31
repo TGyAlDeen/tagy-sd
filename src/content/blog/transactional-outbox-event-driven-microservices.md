@@ -81,7 +81,7 @@ A few things that mattered more in production than in the design doc:
 - **Outbox table growth.** Published rows were deleted by a scheduled job after a retention window. Spanner handles large tables fine, but an unbounded outbox slows the relay's `FetchUnpublished` scan. Index on `(PublishedAt, CreatedAt)` and keep the working set small.
 - **Ordering.** Task queues don't guarantee order. Where sequence mattered (state machine transitions), consumers validated the transition rather than trusting arrival order — an out-of-order `order.shipped` before `order.confirmed` gets parked and retried, not applied.
 - **Observability.** The relay exports `oldest_unpublished_age` as a metric. That single gauge catches almost every failure mode: relay stuck, task queue backed up, consumer erroring. Alert on age, not on queue depth.
-- **Context cancellation.** One subtle production bug: an outbound HTTP call wrapped in a goroutine kept running after the request context was cancelled, producing half-applied side effects. The fix was to stop being clever — propagate the caller's context and let cancellation actually cancel.
+- **Context cancellation.** One subtle production bug: a cache write fired in a goroutine inherited the request's context and was cancelled mid-flight the moment the handler returned. The fix was to stop being clever — run the work synchronously on the request path ([the full postmortem](/blog/context-cancellation-postmortem/)).
 
 ## What I'd do differently
 
