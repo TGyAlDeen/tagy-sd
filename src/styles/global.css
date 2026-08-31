@@ -1,5 +1,13 @@
 @import "@fontsource-variable/inter";
 @import "@fontsource-variable/jetbrains-mono";
+/* Locale faces: IBM Plex siblings — subset by unicode-range, so they only
+   download on pages that actually use their glyphs. */
+@import "@fontsource/ibm-plex-sans-jp/400.css";
+@import "@fontsource/ibm-plex-sans-jp/500.css";
+@import "@fontsource/ibm-plex-sans-jp/700.css";
+@import "@fontsource/ibm-plex-sans-arabic/400.css";
+@import "@fontsource/ibm-plex-sans-arabic/500.css";
+@import "@fontsource/ibm-plex-sans-arabic/700.css";
 
 /* ---------- Design tokens ---------- */
 :root {
@@ -29,6 +37,13 @@
 	--prose: 720px;
 
 	color-scheme: light;
+}
+
+html[lang="ja"] {
+	--font-sans: "IBM Plex Sans JP", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+}
+html[lang="ar"] {
+	--font-sans: "IBM Plex Sans Arabic", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
 }
 
 [data-theme="dark"] {
@@ -133,8 +148,9 @@ pre > code {
 }
 blockquote {
 	margin: 1.25rem 0;
-	padding: 0.25rem 0 0.25rem 1.1rem;
-	border-left: 3px solid var(--accent);
+	padding-block: 0.25rem;
+	padding-inline: 1.1rem 0;
+	border-inline-start: 3px solid var(--accent);
 	color: var(--text-2);
 	font-size: 1.05rem;
 }
@@ -151,7 +167,7 @@ table {
 	overflow-x: auto;
 }
 th, td {
-	text-align: left;
+	text-align: start;
 	padding: 0.6rem 0.75rem;
 	border-bottom: 1px solid var(--border);
 }
@@ -265,6 +281,19 @@ th { color: var(--text-2); font-weight: 600; }
 }
 
 ::selection { background: var(--accent-soft); }
+
+/* ---------- RTL (Arabic) ---------- */
+/* Tracking breaks Arabic letter joining — flatten it. */
+[dir="rtl"] h1, [dir="rtl"] h2, [dir="rtl"] h3, [dir="rtl"] h4,
+[dir="rtl"] .eyebrow, [dir="rtl"] .tag {
+	letter-spacing: 0;
+}
+/* Code is always LTR, even inside RTL prose. */
+[dir="rtl"] pre, [dir="rtl"] code, [dir="rtl"] .term {
+	direction: ltr;
+	text-align: left;
+	unicode-bidi: isolate;
+}
 
 @media (prefers-reduced-motion: reduce) {
 	*, *::before, *::after { transition: none !important; animation: none !important; }

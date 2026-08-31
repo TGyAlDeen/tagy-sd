@@ -2,18 +2,20 @@
 import type { CollectionEntry } from 'astro:content';
 import FormattedDate from './FormattedDate.astro';
 import Icon from './Icon.astro';
+import { postLang, postUrl, DATE_LOCALE, UI } from '../i18n';
 
 type Props = { post: CollectionEntry<'blog'>; showImage?: boolean };
 const { post, showImage = false } = Astro.props;
 const { title, description, pubDate, heroImage } = post.data;
+const lang = postLang(post.id);
 ---
 
-<a class="card post" href={`/blog/${post.id}/`}>
+<a class="card post" href={postUrl(post.id)}>
 	{showImage && heroImage && <img class="cover" src={heroImage} alt="" width={720} height={360} loading="lazy" />}
-	<div class="date mono muted"><FormattedDate date={pubDate} /></div>
+	<div class="date mono muted"><FormattedDate date={pubDate} locale={DATE_LOCALE[lang]} /></div>
 	<h3>{title}</h3>
 	<p>{description}</p>
-	<span class="read">Read <Icon name="arrow" size={14} /></span>
+	<span class="read">{UI[lang].read} <Icon name="arrow" size={14} /></span>
 </a>
 
 <style>
@@ -29,4 +31,5 @@ const { title, description, pubDate, heroImage } = post.data;
 		color: var(--accent-text);
 	}
 	.card:hover h3 { color: var(--accent-text); }
+	:global([dir='rtl']) .read svg { transform: scaleX(-1); }
 </style>

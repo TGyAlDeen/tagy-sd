@@ -3,6 +3,20 @@ import HeaderLink from './HeaderLink.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import Icon from './Icon.astro';
 import { SITE_HANDLE, SOCIALS } from '../consts';
+import { LOCALES, LANG_LABEL, UI, blogIndexUrl, type Lang } from '../i18n';
+
+interface Props {
+	lang?: Lang;
+	alternates?: Partial<Record<Lang, string>>;
+}
+const { lang = 'en', alternates } = Astro.props;
+// Default targets: each locale's blog index (used on pages without a direct translation).
+const langTargets: Partial<Record<Lang, string>> = alternates ?? {
+	en: '/',
+	ja: blogIndexUrl('ja'),
+	ar: blogIndexUrl('ar'),
+};
+const t = UI[lang];
 ---
 
 <header class="site-header">
@@ -15,12 +29,24 @@ import { SITE_HANDLE, SOCIALS } from '../consts';
 		</label>
 
 		<div class="links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/blog">Blog</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
+			<HeaderLink href="/">{t.home}</HeaderLink>
+			<HeaderLink href={blogIndexUrl(lang)}>{t.blog}</HeaderLink>
+			<HeaderLink href="/about">{t.about}</HeaderLink>
 		</div>
 
 		<div class="right">
+			<div class="lang mono" aria-label="Language">
+				{
+					LOCALES.map(
+						(l) =>
+							langTargets[l] && (
+								<a href={langTargets[l]} class:list={[{ active: l === lang }]} data-setlang={l} lang={l}>
+									{LANG_LABEL[l]}
+								</a>
+							),
+					)
+				}
+			</div>
 			<div class="social">
 				{SOCIALS.map((s) => (
 					<a href={s.href} target="_blank" rel="noopener noreferrer" title={s.name}>
@@ -33,6 +59,16 @@ import { SITE_HANDLE, SOCIALS } from '../consts';
 		</div>
 	</nav>
 </header>
+
+<script>
+	document.querySelectorAll('[data-setlang]').forEach((a) => {
+		a.addEventListener('click', () => {
+			try {
+				localStorage.setItem('langPref', (a as HTMLElement).dataset.setlang ?? 'en');
+			} catch {}
+		});
+	});
+</script>
 
 <style>
 	.site-header {
@@ -60,14 +96,32 @@ import { SITE_HANDLE, SOCIALS } from '../consts';
 	.links {
 		display: flex;
 		gap: 0.25rem;
-		margin-left: 0.5rem;
+		margin-inline-start: 0.5rem;
 	}
 	.right {
-		margin-left: auto;
+		margin-inline-start: auto;
 		display: flex;
 		align-items: center;
 		gap: 0.75rem;
 	}
+	.lang {
+		display: flex;
+		align-items: center;
+		gap: 0.15rem;
+		border: 1px solid var(--border);
+		border-radius: 999px;
+		padding: 0.2rem 0.35rem;
+		background: var(--surface);
+	}
+	.lang a {
+		padding: 0.15rem 0.5rem;
+		border-radius: 999px;
+		font-size: 0.72rem;
+		color: var(--muted);
+		white-space: nowrap;
+	}
+	.lang a:hover { color: var(--text); text-decoration: none; }
+	.lang a.active { background: var(--surface-2); color: var(--text); }
 	.social {
 		display: flex;
 		gap: 0.25rem;
@@ -83,6 +137,9 @@ import { SITE_HANDLE, SOCIALS } from '../consts';
 	.social a:hover { color: var(--text); background: var(--surface-2); text-decoration: none; }
 	.nav-toggle, .nav-burger { display: none; }
 
+	@media (max-width: 800px) {
+		.social { display: none; }
+	}
 	@media (max-width: 720px) {
 		nav { flex-wrap: wrap; height: auto; min-height: 3.75rem; padding-top: 0.6rem; padding-bottom: 0.6rem; }
 		.nav-burger {
@@ -96,8 +153,7 @@ import { SITE_HANDLE, SOCIALS } from '../consts';
 			cursor: pointer;
 			order: 3;
 		}
-		.right { order: 2; margin-left: auto; }
-		.social { display: none; }
+		.right { order: 2; margin-inline-start: auto; }
 		.links {
 			order: 4;
 			flex-basis: 100%;

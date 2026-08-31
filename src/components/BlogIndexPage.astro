@@ -1,0 +1,154 @@
+---
+// Full blog-index document, shared by /blog and /{ja,ar}/blog.
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from './BaseHead.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import PostCard from './PostCard.astro';
+import Icon from './Icon.astro';
+import LangBanner from './LangBanner.astro';
+import { SITE_DESCRIPTION } from '../consts';
+import { DIR, UI, LOCALES, blogIndexUrl, type Lang } from '../i18n';
+
+interface Props {
+	posts: CollectionEntry<'blog'>[];
+	lang: Lang;
+}
+const { posts, lang } = Astro.props;
+const t = UI[lang];
+// Every locale always has a blog index.
+const alternates = Object.fromEntries(LOCALES.map((l) => [l, blogIndexUrl(l)]));
+---
+
+<!doctype html>
+<html lang={lang} dir={DIR[lang]}>
+	<head>
+		<BaseHead title={t.blog} description={SITE_DESCRIPTION} lang={lang} alternates={alternates} />
+	</head>
+	<body>
+		<Header lang={lang} alternates={alternates} />
+		<main>
+			<header class="page-head">
+				<div>
+					<p class="eyebrow">{t.blog}</p>
+					<h1>{t.notes}</h1>
+					<p class="muted">{t.postsLine(posts.length)}</p>
+				</div>
+				<div class="view-toggle" role="group" aria-label="View mode">
+					<button id="view-grid" type="button" aria-label={t.gridView} title={t.gridView}>
+						<Icon name="grid" size={16} />
+					</button>
+					<button id="view-list" type="button" aria-label={t.listView} title={t.listView}>
+						<Icon name="list" size={16} />
+					</button>
+				</div>
+			</header>
+			<div class="posts" id="posts" data-view="grid">
+				{posts.map((post) => <PostCard post={post} showImage />)}
+			</div>
+		</main>
+		<Footer />
+		<LangBanner lang={lang} alternates={alternates} />
+
+		<script is:inline>
+			(() => {
+				const posts = document.getElementById('posts');
+				const btns = { grid: document.getElementById('view-grid'), list: document.getElementById('view-list') };
+				const apply = (v) => {
+					posts.dataset.view = v;
+					btns.grid.classList.toggle('active', v === 'grid');
+					btns.list.classList.toggle('active', v === 'list');
+				};
+				let v = 'grid';
+				try {
+					const stored = localStorage.getItem('blogView');
+					if (stored === 'list' || stored === 'grid') v = stored;
+				} catch {}
+				apply(v);
+				for (const key of ['grid', 'list']) {
+					btns[key].addEventListener('click', () => {
+						apply(key);
+						try { localStorage.setItem('blogView', key); } catch {}
+					});
+				}
+			})();
+		</script>
+	</body>
+</html>
+
+<style>
+	.page-head {
+		margin-bottom: 2.5rem;
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-between;
+		gap: 1rem;
+	}
+	.page-head h1 { font-size: clamp(2rem, 4vw, 2.75rem); }
+	.page-head .muted { margin: 0; }
+
+	.view-toggle {
+		display: inline-flex;
+		border: 1px solid var(--border);
+		border-radius: 999px;
+		overflow: hidden;
+		background: var(--surface);
+		flex-shrink: 0;
+	}
+	.view-toggle button {
+		display: inline-grid;
+		place-items: center;
+		width: 2.4rem;
+		height: 2.25rem;
+		border: 0;
+		background: transparent;
+		color: var(--muted);
+		cursor: pointer;
+		transition: background 0.15s ease, color 0.15s ease;
+	}
+	.view-toggle button:hover { color: var(--text); }
+	.view-toggle button.active { background: var(--surface-2); color: var(--text); }
+
+	/* grid view (default) */
+	.posts[data-view='grid'] {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+		gap: 1.25rem;
+	}
+
+	/* list view */
+	.posts[data-view='list'] {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+	.posts[data-view='list'] :global(.card.post) {
+		display: grid;
+		grid-template-columns: 7.5rem minmax(0, 1fr) auto;
+		grid-template-areas: 'date title read' 'date desc read';
+		align-items: center;
+		column-gap: 1.25rem;
+		row-gap: 0.2rem;
+		padding: 0.9rem 1.25rem;
+	}
+	.posts[data-view='list'] :global(.card.post .cover) { display: none; }
+	.posts[data-view='list'] :global(.card.post .date) { grid-area: date; }
+	.posts[data-view='list'] :global(.card.post h3) { grid-area: title; font-size: 1rem; }
+	.posts[data-view='list'] :global(.card.post p) {
+		grid-area: desc;
+		display: -webkit-box;
+		-webkit-line-clamp: 1;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+	.posts[data-view='list'] :global(.card.post .read) { grid-area: read; }
+	.posts[data-view='list'] :global(.card.post:hover) { transform: none; }
+
+	@media (max-width: 640px) {
+		.page-head { flex-direction: column; align-items: flex-start; }
+		.posts[data-view='list'] :global(.card.post) {
+			grid-template-columns: minmax(0, 1fr) auto;
+			grid-template-areas: 'date read' 'title read' 'desc read';
+		}
+	}
+</style>
