@@ -1,0 +1,92 @@
+---
+// First-visit language suggestion + sticky preference routing.
+// No server-side redirects (crawler-safe): everything happens client-side.
+import { UI, type Lang } from '../i18n';
+
+interface Props {
+	lang: Lang;
+	alternates: Partial<Record<Lang, string>>;
+}
+const { lang, alternates } = Astro.props;
+const texts = Object.fromEntries(
+	Object.keys(alternates).map((l) => [
+		l,
+		{ msg: UI[l as Lang].alsoAvailable, go: UI[l as Lang].switchTo, close: UI[l as Lang].dismiss },
+	]),
+);
+---
+
+<div id="lang-banner" class="lang-banner" hidden>
+	<span id="lang-banner-msg"></span>
+	<a id="lang-banner-go" href="#"></a>
+	<button id="lang-banner-x" type="button" aria-label="Dismiss">✕</button>
+</div>
+
+<script is:inline define:vars={{ lang, alternates, texts }}>
+	(() => {
+		try {
+			const pref = localStorage.getItem('langPref');
+			// Sticky choice: user already picked a language — route them there.
+			if (pref && pref !== lang && alternates[pref]) {
+				location.replace(alternates[pref]);
+				return;
+			}
+			if (pref || localStorage.getItem('langSuggestDone')) return;
+			const nav = (navigator.language || '').slice(0, 2);
+			if (nav === lang || !alternates[nav] || !texts[nav]) return;
+			const el = document.getElementById('lang-banner');
+			const go = document.getElementById('lang-banner-go');
+			document.getElementById('lang-banner-msg').textContent = texts[nav].msg;
+			go.textContent = texts[nav].go;
+			go.href = alternates[nav];
+			go.addEventListener('click', () => {
+				try {
+					localStorage.setItem('langPref', nav);
+				} catch {}
+			});
+			document.getElementById('lang-banner-x').addEventListener('click', () => {
+				el.hidden = true;
+				try {
+					localStorage.setItem('langSuggestDone', '1');
+				} catch {}
+			});
+			el.hidden = false;
+		} catch {}
+	})();
+</script>
+
+<style>
+	.lang-banner {
+		position: fixed;
+		inset-inline: 0;
+		bottom: 1.25rem;
+		margin: 0 auto;
+		width: fit-content;
+		max-width: calc(100% - 2rem);
+		display: flex;
+		align-items: center;
+		gap: 0.9rem;
+		padding: 0.65rem 1rem;
+		border-radius: 999px;
+		border: 1px solid var(--border-strong);
+		background: var(--surface);
+		box-shadow: var(--shadow);
+		font-size: 0.875rem;
+		z-index: 60;
+	}
+	.lang-banner a {
+		font-weight: 600;
+		white-space: nowrap;
+	}
+	.lang-banner button {
+		border: 0;
+		background: transparent;
+		color: var(--muted);
+		cursor: pointer;
+		font-size: 0.85rem;
+		padding: 0.15rem;
+	}
+	.lang-banner button:hover {
+		color: var(--text);
+	}
+</style>

@@ -3,6 +3,7 @@
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
 import { SITE_TITLE, SITE_AUTHOR, SITE_ROLE, SOCIALS } from '../consts';
+import { OG_LOCALE, type Lang } from '../i18n';
 
 interface Props {
 	title: string;
@@ -11,11 +12,22 @@ interface Props {
 	type?: 'website' | 'article';
 	publishedTime?: Date;
 	modifiedTime?: Date;
+	lang?: Lang;
+	alternates?: Partial<Record<Lang, string>>;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image, type = 'website', publishedTime, modifiedTime } = Astro.props;
+const {
+	title,
+	description,
+	image,
+	type = 'website',
+	publishedTime,
+	modifiedTime,
+	lang = 'en',
+	alternates,
+} = Astro.props;
 const fullTitle = title === SITE_TITLE ? title : `${title} — ${SITE_TITLE}`;
 // Social/search scrapers don't render SVG — only use raster images for og:image.
 const ogImage = image && !image.endsWith('.svg') ? image : '/og-default.png';
@@ -36,6 +48,7 @@ const jsonLd =
 				headline: title,
 				description,
 				url: canonicalURL.toString(),
+				inLanguage: lang,
 				datePublished: publishedTime?.toISOString(),
 				...(modifiedTime && { dateModified: modifiedTime.toISOString() }),
 				image: new URL(ogImage, Astro.site).toString(),
@@ -48,6 +61,7 @@ const jsonLd =
 				'@type': 'WebSite',
 				name: SITE_TITLE,
 				description,
+				inLanguage: lang,
 				url: Astro.site?.toString(),
 				author: personLd,
 			};
@@ -79,6 +93,17 @@ const jsonLd =
 <link rel="canonical" href={canonicalURL} />
 <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={new URL('rss.xml', Astro.site)} />
 <link rel="sitemap" href="/sitemap-index.xml" />
+{
+	alternates &&
+		Object.entries(alternates).map(([l, href]) => (
+			<link rel="alternate" hreflang={l} href={new URL(href, Astro.site).toString()} />
+		))
+}
+{
+	alternates?.en && (
+		<link rel="alternate" hreflang="x-default" href={new URL(alternates.en, Astro.site).toString()} />
+	)
+}
 
 <!-- Primary Meta Tags -->
 <title>{fullTitle}</title>
@@ -88,6 +113,7 @@ const jsonLd =
 <!-- Open Graph -->
 <meta property="og:type" content={type} />
 <meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:locale" content={OG_LOCALE[lang]} />
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
