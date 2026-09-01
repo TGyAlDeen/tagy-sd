@@ -26,8 +26,13 @@ const texts = Object.fromEntries(
 	(() => {
 		try {
 			const pref = localStorage.getItem('langPref');
-			// Sticky choice: user already picked a language — route them there.
-			if (pref && pref !== lang && alternates[pref]) {
+			// Sticky choice: route to the preferred language — but ONLY on the
+			// session's entry page. After that, every navigation (back button,
+			// direct links, cross-language browsing) is deliberate and respected;
+			// redirecting on every load traps the back button in a bounce loop.
+			const routed = sessionStorage.getItem('langRouted');
+			sessionStorage.setItem('langRouted', '1');
+			if (!routed && pref && pref !== lang && alternates[pref]) {
 				location.replace(alternates[pref]);
 				return;
 			}
