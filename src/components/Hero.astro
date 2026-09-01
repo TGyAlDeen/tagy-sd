@@ -1,16 +1,23 @@
 ---
 import Icon from './Icon.astro';
-import { SITE_AUTHOR, SITE_ROLE, SITE_LOCATION, SITE_TAGLINE, SOCIALS } from '../consts';
+import { SITE_AUTHOR, SOCIALS } from '../consts';
+import { HOME, blogIndexUrl, type Lang } from '../i18n';
+
+interface Props {
+	lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const h = HOME[lang];
 const github = SOCIALS.find((s) => s.icon === 'github');
 ---
 
 <section class="hero">
 	<div class="glow" aria-hidden="true"></div>
-	<p class="eyebrow">{SITE_ROLE} · {SITE_LOCATION}</p>
-	<h1>Hi, I'm <span class="name">{SITE_AUTHOR}</span>.</h1>
-	<p class="lede">{SITE_TAGLINE}</p>
+	<p class="eyebrow">{h.role} · {h.location}</p>
+	<h1>{h.greetPre}<span class="name">{SITE_AUTHOR}</span>{h.greetPost}</h1>
+	<p class="lede">{h.tagline}</p>
 	<div class="cta">
-		<a class="btn primary" href="/blog">Read the blog <Icon name="arrow" size={16} /></a>
+		<a class="btn primary" href={blogIndexUrl(lang)}>{h.ctaBlog} <Icon name="arrow" size={16} /></a>
 		{github && (
 			<a class="btn" href={github.href} target="_blank" rel="noopener noreferrer">
 				<Icon name="github" size={16} /> GitHub

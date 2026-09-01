@@ -1,0 +1,74 @@
+---
+// Full home-page document, shared by / and /{ja,ar}/.
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from './BaseHead.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import Hero from './Hero.astro';
+import TechStack from './TechStack.astro';
+import ProjectCard from './ProjectCard.astro';
+import PostCard from './PostCard.astro';
+import LangBanner from './LangBanner.astro';
+import { SITE_TITLE } from '../consts';
+import { PROJECTS } from '../data/projects';
+import { DIR, HOME, blogIndexUrl, type Lang } from '../i18n';
+
+interface Props {
+	posts: CollectionEntry<'blog'>[];
+	lang: Lang;
+}
+const { posts, lang } = Astro.props;
+const h = HOME[lang];
+const alternates = { en: '/', ja: '/ja/', ar: '/ar/' };
+---
+
+<!doctype html>
+<html lang={lang} dir={DIR[lang]}>
+	<head>
+		<BaseHead title={SITE_TITLE} description={h.metaDesc} lang={lang} alternates={alternates} />
+	</head>
+	<body>
+		<Header lang={lang} alternates={alternates} />
+		<main>
+			<Hero lang={lang} />
+			<TechStack lang={lang} />
+
+			<section class="section">
+				<div class="section-head">
+					<div>
+						<p class="eyebrow">{h.projectsEyebrow}</p>
+						<h2>{h.projectsTitle}</h2>
+					</div>
+					<a class="more" href="https://github.com/TGyAlDeen" target="_blank" rel="noopener noreferrer">{h.allRepos}</a>
+				</div>
+				<div class="grid">
+					{PROJECTS.map((p) => <ProjectCard project={p} />)}
+				</div>
+			</section>
+
+			<section class="section">
+				<div class="section-head">
+					<div>
+						<p class="eyebrow">{h.writingEyebrow}</p>
+						<h2>{h.writingTitle}</h2>
+					</div>
+					<a class="more" href={blogIndexUrl(lang)}>{h.allPosts}</a>
+				</div>
+				<div class="grid">
+					{posts.map((post) => <PostCard post={post} />)}
+				</div>
+			</section>
+		</main>
+		<Footer />
+		<LangBanner lang={lang} alternates={alternates} />
+	</body>
+</html>
+
+<style>
+	main { padding-top: 0; }
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		gap: 1rem;
+	}
+</style>
