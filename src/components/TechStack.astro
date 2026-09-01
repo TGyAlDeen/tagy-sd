@@ -19,7 +19,7 @@ const h = HOME[lang];
 	<div class="groups">
 		{STACK.map((g) => (
 			<div class="group">
-				<div class="label mono muted">{g.label}</div>
+				<div class="label mono muted">{g.label[lang]}</div>
 				<div class="items">{g.items.map((i) => <span class="tag">{i}</span>)}</div>
 			</div>
 		))}

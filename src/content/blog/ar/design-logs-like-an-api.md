@@ -1,7 +1,7 @@
 ---
 title: "صمّم سجلّاتك كأنها API"
 description: "أسئلة العمل يجيب عنها CloudWatch Logs Insights: عقود سطور السجل، لماذا توسيع سطر موجود يتفوق على إضافة سطر جديد، مطبّات JSON escaping، وفخ مدة الاحتفاظ."
-pubDate: "Aug 26 2026"
+pubDate: "2026-08-26"
 heroImage: "/blog/hero-logs.svg"
 ---
 

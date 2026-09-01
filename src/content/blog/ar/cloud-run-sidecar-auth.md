@@ -1,7 +1,7 @@
 ---
 title: "مصادقة بين الخدمات دون service mesh"
 description: "نمط الـ sidecar proxy على Cloud Run: مصادقة الوارد، الصادر عبر بوابة API داخلية مركزية، وموزّع حمل داخلي يوجّه بالمسار — فوائد الـ mesh دون ثقله."
-pubDate: "Jul 12 2026"
+pubDate: "2026-07-12"
 heroImage: "/blog/hero-sidecar.svg"
 ---
 

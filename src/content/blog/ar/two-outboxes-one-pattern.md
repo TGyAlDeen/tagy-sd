@@ -1,7 +1,7 @@
 ---
 title: "صندوقا صادر، نمط واحد"
 description: "Cloud Tasks للأوامر وPub/Sub للأحداث — نفس الـ outbox المعاملاتي، نفس شكل الترحيل، نفس التسليم عبر HTTP. التفرع الحقيقي الوحيد في الطبقة الوسطى، وفي من يملك التوجيه."
-pubDate: "Sep 1 2026"
+pubDate: "2026-09-01"
 heroImage: "/blog/hero-two-outboxes.svg"
 ---
 

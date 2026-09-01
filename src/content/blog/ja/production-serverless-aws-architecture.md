@@ -1,7 +1,7 @@
 ---
 title: "本番のサーバーレス:エンタープライズAWSプラットフォームからの教訓"
 description: "50個超のLambda関数、ヘキサゴナルアーキテクチャ、SQS駆動のバッチパイプライン、マルチリージョンDR——エンタープライズ級サーバーレスを支える構造・キュー設計・運用判断。"
-pubDate: "Jul 26 2026"
+pubDate: "2026-07-26"
 heroImage: "/blog/hero-serverless.svg"
 ---
 

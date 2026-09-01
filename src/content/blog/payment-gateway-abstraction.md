@@ -1,7 +1,7 @@
 ---
 title: "One interface, four ways to pay"
 description: "Card with 3DS, wallet, convenience store, and direct debit behind a single internal service — how a payment gateway abstraction keeps a provider's quirks out of your order flow."
-pubDate: "Jun 28 2026"
+pubDate: "2026-06-28"
 heroImage: "/blog/hero-payments.svg"
 ---
 

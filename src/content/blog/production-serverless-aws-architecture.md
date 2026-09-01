@@ -1,7 +1,7 @@
 ---
 title: "Serverless in production: lessons from an enterprise AWS platform"
 description: "Fifty-plus Lambda functions, hexagonal architecture, SQS-driven batch pipelines, and multi-region DR on AWS — the structure, queue design, and operational decisions behind an enterprise serverless platform."
-pubDate: "Jul 26 2026"
+pubDate: "2026-07-26"
 heroImage: "/blog/hero-serverless.svg"
 ---
 

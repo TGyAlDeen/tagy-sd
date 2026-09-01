@@ -1,7 +1,7 @@
 ---
 title: "UIがチャットスレッドであるプロダクトを作る"
 description: "LIFFトークン検証、Flex Messageカルーセル、リッチメニュー、ルーティングとしてのチャットボットフロー——バックエンドの規律としてのチャットプラットフォームエンジニアリング。"
-pubDate: "Aug 24 2026"
+pubDate: "2026-08-24"
 heroImage: "/blog/hero-chat.svg"
 ---
 

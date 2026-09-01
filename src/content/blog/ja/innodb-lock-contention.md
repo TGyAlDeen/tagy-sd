@@ -1,7 +1,7 @@
 ---
 title: "実行計画には現れないロック競合"
 description: "最大1000並列のGoワーカーが、それぞれ自分のユーザーの行だけをMySQLにupsertしているのに、InnoDBはデッドロックを検出し続けた。ギャップロックの仕組み、修正案の比較、そしてあえて選んだ地味な解決策。"
-pubDate: "Aug 30 2026"
+pubDate: "2026-08-30"
 heroImage: "/blog/hero-locks.svg"
 ---
 

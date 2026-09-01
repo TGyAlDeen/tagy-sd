@@ -1,7 +1,7 @@
 ---
 title: "Hexagonal architecture inside Lambda, with code"
 description: "How fifty-plus TypeScript Lambda functions stayed testable and consistent: ten-line handlers, ports and adapters, and one use case serving API, queue, and batch entrypoints."
-pubDate: "Aug 5 2026"
+pubDate: "2026-08-05"
 heroImage: "/blog/hero-hexagonal.svg"
 ---
 

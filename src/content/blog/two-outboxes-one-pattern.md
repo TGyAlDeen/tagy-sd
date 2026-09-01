@@ -1,7 +1,7 @@
 ---
 title: "Two outboxes, one pattern"
 description: "Cloud Tasks for commands, Pub/Sub for events — same transactional outbox, same relay shape, same HTTP delivery. The only real fork is the middle layer, and who owns the routing."
-pubDate: "Sep 1 2026"
+pubDate: "2026-09-01"
 heroImage: "/blog/hero-two-outboxes.svg"
 ---
 

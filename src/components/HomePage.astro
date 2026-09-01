@@ -8,7 +8,7 @@ import Hero from './Hero.astro';
 import TechStack from './TechStack.astro';
 import ProjectCard from './ProjectCard.astro';
 import PostCard from './PostCard.astro';
-import LangBanner from './LangBanner.astro';
+import LangRouter from './LangRouter.astro';
 import { SITE_TITLE } from '../consts';
 import { PROJECTS } from '../data/projects';
 import { DIR, HOME, blogIndexUrl, type Lang } from '../i18n';
@@ -60,7 +60,7 @@ const alternates = { en: '/', ja: '/ja/', ar: '/ar/' };
 			</section>
 		</main>
 		<Footer />
-		<LangBanner lang={lang} alternates={alternates} />
+		<LangRouter lang={lang} alternates={alternates} />
 	</body>
 </html>
 

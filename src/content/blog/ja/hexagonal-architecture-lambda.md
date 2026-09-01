@@ -1,7 +1,7 @@
 ---
 title: "Lambdaの中のヘキサゴナルアーキテクチャ(コード付き)"
 description: "50個超のTypeScript Lambda関数がテスト可能で一貫性を保てた理由:10行のハンドラー、ポートとアダプター、そしてAPI・キュー・バッチの3つの入口に仕える1つのユースケース。"
-pubDate: "Aug 5 2026"
+pubDate: "2026-08-05"
 heroImage: "/blog/hero-hexagonal.svg"
 ---
 

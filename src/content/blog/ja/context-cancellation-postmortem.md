@@ -1,7 +1,7 @@
 ---
 title: "goroutineが間違った道具になるとき"
 description: "Goのコンテキストキャンセルに関する本番ポストモーテム:fire-and-forgetのキャッシュ書き込みがリクエストのcontextを継承し、リクエストと一緒に死んだ——診断、差し戻された最初の修正、そして退屈な最終修正。"
-pubDate: "Jul 19 2026"
+pubDate: "2026-07-19"
 heroImage: "/blog/hero-context.svg"
 ---
 

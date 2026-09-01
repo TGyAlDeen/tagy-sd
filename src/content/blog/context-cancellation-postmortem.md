@@ -1,7 +1,7 @@
 ---
 title: "When a goroutine is the wrong tool"
 description: "A production postmortem on Go context cancellation: a fire-and-forget cache write inherited the request's context and died with it — the diagnosis, the reverted first fix, and the boring final one."
-pubDate: "Jul 19 2026"
+pubDate: "2026-07-19"
 heroImage: "/blog/hero-context.svg"
 ---
 

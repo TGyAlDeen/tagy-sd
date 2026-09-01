@@ -1,7 +1,7 @@
 ---
 title: "Serverless في الإنتاج: دروس من منصة AWS مؤسسية"
 description: "أكثر من خمسين دالة Lambda، معمارية سداسية، خطوط معالجة دفعات مدفوعة بـ SQS، واستعادة كوارث متعددة المناطق — البنية وتصميم الطوابير والقرارات التشغيلية خلف منصة serverless مؤسسية."
-pubDate: "Jul 26 2026"
+pubDate: "2026-07-26"
 heroImage: "/blog/hero-serverless.svg"
 ---
 

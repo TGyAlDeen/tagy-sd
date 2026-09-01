@@ -29,8 +29,14 @@ const {
 	alternates,
 } = Astro.props;
 const fullTitle = title === SITE_TITLE ? title : `${title} — ${SITE_TITLE}`;
-// Social/search scrapers don't render SVG — only use raster images for og:image.
-const ogImage = image && !image.endsWith('.svg') ? image : '/og-default.png';
+// Social/search scrapers don't render SVG. Every animated hero has a
+// pre-rendered PNG twin under /blog/og/ (generated at authoring time).
+const heroRaster =
+	image && image.startsWith('/blog/hero-') && image.endsWith('.svg')
+		? image.replace('/blog/hero-', '/blog/og/hero-').replace(/\.svg$/, '.png')
+		: null;
+const ogImage = heroRaster ?? (image && !image.endsWith('.svg') ? image : '/og-default.png');
+const ogSize = heroRaster ? { w: 1200, h: 600 } : { w: 1200, h: 630 };
 
 const personLd = {
 	'@type': 'Person',
@@ -118,8 +124,8 @@ const jsonLd =
 <meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(ogImage, Astro.site ?? Astro.url)} />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
+<meta property="og:image:width" content={String(ogSize.w)} />
+<meta property="og:image:height" content={String(ogSize.h)} />
 {publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
 {modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
 {type === 'article' && <meta property="article:author" content={SITE_AUTHOR} />}
