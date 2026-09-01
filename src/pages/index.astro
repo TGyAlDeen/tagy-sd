@@ -1,13 +1,5 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
-import Hero from '../components/Hero.astro';
-import TechStack from '../components/TechStack.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import PostCard from '../components/PostCard.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import { PROJECTS } from '../data/projects';
+import HomePage from '../components/HomePage.astro';
 import { getCollection } from 'astro:content';
 import { postLang } from '../i18n';
 
@@ -17,52 +9,4 @@ const posts = (await getCollection('blog'))
 	.slice(0, 3);
 ---
 
-<!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<Hero />
-			<TechStack />
-
-			<section class="section">
-				<div class="section-head">
-					<div>
-						<p class="eyebrow">Projects</p>
-						<h2>Selected work</h2>
-					</div>
-					<a class="more" href="https://github.com/TGyAlDeen" target="_blank" rel="noopener noreferrer">all repos →</a>
-				</div>
-				<div class="grid">
-					{PROJECTS.map((p) => <ProjectCard project={p} />)}
-				</div>
-			</section>
-
-			<section class="section">
-				<div class="section-head">
-					<div>
-						<p class="eyebrow">Writing</p>
-						<h2>Latest posts</h2>
-					</div>
-					<a class="more" href="/blog">all posts →</a>
-				</div>
-				<div class="grid">
-					{posts.map((post) => <PostCard post={post} />)}
-				</div>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
-
-<style>
-	main { padding-top: 0; }
-	.grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-		gap: 1rem;
-	}
-</style>
+<HomePage posts={posts} lang="en" />

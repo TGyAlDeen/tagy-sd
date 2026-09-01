@@ -1,4 +1,6 @@
 // Locale utilities and UI strings. English is the default (unprefixed) locale.
+import { SITE_ROLE, SITE_LOCATION, SITE_TAGLINE, SITE_DESCRIPTION } from './consts';
+
 export type Lang = 'en' | 'ja' | 'ar';
 
 export const LOCALES: Lang[] = ['en', 'ja', 'ar'];
@@ -90,3 +92,80 @@ export function postUrl(id: string): string {
 export function blogIndexUrl(lang: Lang): string {
 	return lang === 'en' ? '/blog/' : `/${lang}/blog/`;
 }
+
+export const HOME: Record<
+	Lang,
+	{
+		role: string;
+		location: string;
+		greetPre: string;
+		greetPost: string;
+		tagline: string;
+		metaDesc: string;
+		ctaBlog: string;
+		stackEyebrow: string;
+		stackTitle: string;
+		projectsEyebrow: string;
+		projectsTitle: string;
+		allRepos: string;
+		writingEyebrow: string;
+		writingTitle: string;
+		allPosts: string;
+	}
+> = {
+	en: {
+		role: SITE_ROLE,
+		location: 'Tokyo, Japan',
+		greetPre: "Hi, I'm ",
+		greetPost: '.',
+		tagline: SITE_TAGLINE,
+		metaDesc: SITE_DESCRIPTION,
+		ctaBlog: 'Read the blog',
+		stackEyebrow: 'Stack',
+		stackTitle: 'What I work with',
+		projectsEyebrow: 'Projects',
+		projectsTitle: 'Selected work',
+		allRepos: 'all repos →',
+		writingEyebrow: 'Writing',
+		writingTitle: 'Latest posts',
+		allPosts: 'all posts →',
+	},
+	ja: {
+		role: 'シニアリードソフトウェアエンジニア',
+		location: '東京',
+		greetPre: 'こんにちは、',
+		greetPost: 'です。',
+		tagline:
+			'分散バックエンドシステムを8年以上、構築・運用しています——FinTech・物流・保険のプラットフォームで数百万のユーザーを支えてきました。Monstarlabのテックリード/エンジニアリングマネージャー。最近はRAGとマルチエージェントシステムを本番投入しています。深層学習の修士(MEXT奨学生)、日英アラビア語のトライリンガル。',
+		metaDesc:
+			'東京のシニアリードソフトウェアエンジニア——AWS/GCP上の分散システム、GoとJava、本番のLLM/RAGサービス。',
+		ctaBlog: 'ブログを読む',
+		stackEyebrow: 'スタック',
+		stackTitle: '使っている技術',
+		projectsEyebrow: 'プロジェクト',
+		projectsTitle: '主な開発',
+		allRepos: 'すべてのリポジトリ →',
+		writingEyebrow: '執筆',
+		writingTitle: '最新の記事',
+		allPosts: 'すべての記事 →',
+	},
+	ar: {
+		role: 'مهندس برمجيات رئيسي أول',
+		location: 'طوكيو، اليابان',
+		greetPre: 'مرحبًا، أنا ',
+		greetPost: '.',
+		tagline:
+			'أبني وأشغّل أنظمة خلفية موزعة منذ أكثر من 8 سنوات — عبر منصات FinTech واللوجستيات والتأمين التي تخدم ملايين المستخدمين. قائد تقني ومدير هندسة في Monstarlab؛ ومؤخرًا أطلق أنظمة RAG ومتعددة الوكلاء إلى الإنتاج. ماجستير في التعلم العميق (منحة MEXT)، ثلاثي اللغات: اليابانية والإنجليزية والعربية.',
+		metaDesc:
+			'مهندس برمجيات رئيسي أول في طوكيو — أنظمة موزعة على AWS وGCP، بلغتي Go وJava، وخدمات LLM/RAG في الإنتاج.',
+		ctaBlog: 'اقرأ المدوّنة',
+		stackEyebrow: 'التقنيات',
+		stackTitle: 'ما أعمل به',
+		projectsEyebrow: 'المشاريع',
+		projectsTitle: 'أعمال مختارة',
+		allRepos: 'كل المستودعات ←',
+		writingEyebrow: 'الكتابة',
+		writingTitle: 'أحدث المقالات',
+		allPosts: 'كل المقالات ←',
+	},
+};

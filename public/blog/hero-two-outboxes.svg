@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1020 510" font-family="ui-monospace,Menlo,monospace">
+  <style>
+    .box{fill:#12131b;stroke:#23252f;stroke-width:1.5}
+    .lbl{fill:#e5e7eb;font-size:14.5px;font-weight:600}
+    .sub{fill:#71717a;font-size:12px}
+    .cap{fill:#71717a;font-size:13px}
+    .line{stroke:#30333f;stroke-width:1.5;fill:none}
+    @keyframes ca{0%,2%{transform:translate(190px,150px);opacity:0}4%{opacity:1}12%{transform:translate(300px,150px)}22%{transform:translate(470px,150px)}32%{transform:translate(640px,150px)}42%{transform:translate(810px,150px);opacity:1}44%,100%{opacity:0}}
+    @keyframes cok{0%,42%{stroke:#23252f}46%,56%{stroke:#f59e0b}62%,100%{stroke:#23252f}}
+    @keyframes pa{0%,30%{transform:translate(190px,355px);opacity:0}32%{opacity:1}40%{transform:translate(300px,355px)}50%{transform:translate(470px,355px)}60%{transform:translate(640px,355px);opacity:1}62%,100%{opacity:0}}
+    @keyframes f1{0%,62%{transform:translate(770px,355px);opacity:0}64%{opacity:1}74%{transform:translate(845px,300px);opacity:1}76%,100%{opacity:0}}
+    @keyframes f2{0%,62%{transform:translate(770px,355px);opacity:0}64%{opacity:1}74%{transform:translate(845px,368px);opacity:1}76%,100%{opacity:0}}
+    @keyframes f3{0%,62%{transform:translate(770px,355px);opacity:0}64%{opacity:1}74%{transform:translate(845px,436px);opacity:1}76%,100%{opacity:0}}
+    @keyframes subglow{0%,74%{stroke:#23252f}78%,90%{stroke:#38bdf8}96%,100%{stroke:#23252f}}
+    .aca{animation:ca 12s linear infinite}
+    .acok{animation:cok 12s linear infinite}
+    .apa{animation:pa 12s linear infinite}
+    .af1{animation:f1 12s linear infinite}
+    .af2{animation:f2 12s linear infinite}
+    .af3{animation:f3 12s linear infinite}
+    .asub{animation:subglow 12s linear infinite}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important}circle{opacity:0}}
+  </style>
+  <rect width="1020" height="510" fill="#0f1017"/>
+
+  <!-- producer -->
+  <rect class="box" x="40" y="180" width="150" height="150" rx="12"/>
+  <text class="lbl" x="115" y="234" text-anchor="middle">producer</text>
+  <text class="sub" x="115" y="256" text-anchor="middle">one Spanner tx:</text>
+  <text class="sub" x="115" y="274" text-anchor="middle">data + message</text>
+  <line class="line" x1="150" y1="180" x2="250" y2="152" stroke-dasharray="4 5"/>
+  <line class="line" x1="150" y1="330" x2="250" y2="357" stroke-dasharray="4 5"/>
+
+  <!-- PATH A -->
+  <text class="sub" x="255" y="92" fill="#f59e0b">PATH A · commands — Cloud Tasks · producer owns the routing</text>
+  <rect class="box" x="255" y="110" width="150" height="70" rx="10"/>
+  <text class="lbl" x="330" y="140" text-anchor="middle">tasksMessages</text>
+  <text class="sub" x="330" y="160" text-anchor="middle">queueId</text>
+  <line class="line" x1="405" y1="150" x2="425" y2="150"/>
+  <rect class="box" x="425" y="110" width="150" height="70" rx="10"/>
+  <text class="lbl" x="500" y="140" text-anchor="middle">relay ×1</text>
+  <text class="sub" x="500" y="160" text-anchor="middle">polls · buffers</text>
+  <line class="line" x1="575" y1="150" x2="595" y2="150"/>
+  <rect class="box" x="595" y="110" width="150" height="70" rx="10"/>
+  <text class="lbl" x="670" y="140" text-anchor="middle">Tasks queue</text>
+  <text class="sub" x="670" y="160" text-anchor="middle">id = messageId</text>
+  <line class="line" x1="745" y1="150" x2="765" y2="150" stroke-dasharray="4 5"/>
+  <rect class="box acok" x="765" y="110" width="200" height="70" rx="10"/>
+  <text class="lbl" x="865" y="140" text-anchor="middle">one endpoint</text>
+  <text class="sub" x="865" y="160" text-anchor="middle">POST + OIDC · retries</text>
+  <text class="sub" x="865" y="200" text-anchor="middle" fill="#f59e0b">exactly 1 handler</text>
+
+  <!-- PATH B -->
+  <text class="sub" x="255" y="298" fill="#38bdf8">PATH B · events — Pub/Sub · consumers own the routing</text>
+  <rect class="box" x="255" y="316" width="150" height="70" rx="10"/>
+  <text class="lbl" x="330" y="346" text-anchor="middle">pubsubMessages</text>
+  <text class="sub" x="330" y="366" text-anchor="middle">topicId only</text>
+  <line class="line" x1="405" y1="355" x2="425" y2="355"/>
+  <rect class="box" x="425" y="316" width="150" height="70" rx="10"/>
+  <text class="lbl" x="500" y="346" text-anchor="middle">relay ×1</text>
+  <text class="sub" x="500" y="366" text-anchor="middle">polls · publishes</text>
+  <line class="line" x1="575" y1="355" x2="595" y2="355"/>
+  <rect class="box" x="595" y="316" width="150" height="70" rx="10"/>
+  <text class="lbl" x="670" y="346" text-anchor="middle">topic</text>
+  <text class="sub" x="670" y="366" text-anchor="middle">user-account-created</text>
+  <line class="line" x1="745" y1="355" x2="800" y2="300" stroke-dasharray="3 4"/>
+  <line class="line" x1="745" y1="355" x2="800" y2="368" stroke-dasharray="3 4"/>
+  <line class="line" x1="745" y1="355" x2="800" y2="436" stroke-dasharray="3 4"/>
+  <rect class="box asub" x="800" y="276" width="180" height="46" rx="9"/>
+  <text class="sub" x="890" y="304" text-anchor="middle" fill="#a1a1aa">points service</text>
+  <rect class="box asub" x="800" y="344" width="180" height="46" rx="9"/>
+  <text class="sub" x="890" y="372" text-anchor="middle" fill="#a1a1aa">notification service</text>
+  <rect class="box asub" x="800" y="412" width="180" height="46" rx="9"/>
+  <text class="sub" x="890" y="432" text-anchor="middle" fill="#a1a1aa">producer — itself</text>
+  <text class="sub" x="890" y="448" text-anchor="middle">referral code</text>
+
+  <circle class="aca" r="5.5" fill="#f59e0b" opacity="0"/>
+  <circle class="apa" r="5.5" fill="#38bdf8" opacity="0"/>
+  <circle class="af1" r="4.5" fill="#38bdf8" opacity="0"/>
+  <circle class="af2" r="4.5" fill="#38bdf8" opacity="0"/>
+  <circle class="af3" r="4.5" fill="#38bdf8" opacity="0"/>
+
+  <text class="cap" x="40" y="490">same outbox, same relay, same HTTP delivery — the fork is who owns the routing</text>
+</svg>
