@@ -1,7 +1,7 @@
 ---
 title: "Service-to-service auth without a service mesh"
 description: "A sidecar proxy pattern on Cloud Run: ingress authentication, egress through a central internal API hub, and an internal load balancer doing the routing — mesh benefits without mesh weight."
-pubDate: "Jul 12 2026"
+pubDate: "2026-07-12"
 heroImage: "/blog/hero-sidecar.svg"
 ---
 

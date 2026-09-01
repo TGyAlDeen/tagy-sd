@@ -1,7 +1,7 @@
 ---
 title: "イベントを失わないイベント駆動マイクロサービス:Transactional Outbox の実践"
 description: "Cloud Run と Spanner の上で、注文・決済・下流サービスの整合性をどう守ったか——Transactional Outbox パターンとタスクキューのリレーワーカー、そして今ならこう作るという反省。"
-pubDate: "Jun 14 2026"
+pubDate: "2026-06-14"
 heroImage: "/blog/hero-outbox.svg"
 ---
 

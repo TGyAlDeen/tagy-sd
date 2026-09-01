@@ -6,7 +6,7 @@ import Header from './Header.astro';
 import Footer from './Footer.astro';
 import PostCard from './PostCard.astro';
 import Icon from './Icon.astro';
-import LangBanner from './LangBanner.astro';
+import LangRouter from './LangRouter.astro';
 import { SITE_DESCRIPTION } from '../consts';
 import { DIR, UI, LOCALES, blogIndexUrl, type Lang } from '../i18n';
 
@@ -24,6 +24,12 @@ const alternates = Object.fromEntries(LOCALES.map((l) => [l, blogIndexUrl(l)]));
 <html lang={lang} dir={DIR[lang]}>
 	<head>
 		<BaseHead title={t.blog} description={SITE_DESCRIPTION} lang={lang} alternates={alternates} />
+		<script is:inline>
+			// Restore the saved view before first paint to avoid a grid->list flash.
+			try {
+				if (localStorage.getItem('blogView') === 'list') document.documentElement.dataset.blogView = 'list';
+			} catch {}
+		</script>
 	</head>
 	<body>
 		<Header lang={lang} alternates={alternates} />
@@ -43,28 +49,25 @@ const alternates = Object.fromEntries(LOCALES.map((l) => [l, blogIndexUrl(l)]));
 					</button>
 				</div>
 			</header>
-			<div class="posts" id="posts" data-view="grid">
+			<div class="posts" id="posts">
 				{posts.map((post) => <PostCard post={post} showImage />)}
 			</div>
 		</main>
 		<Footer />
-		<LangBanner lang={lang} alternates={alternates} />
+		<LangRouter lang={lang} alternates={alternates} />
 
 		<script is:inline>
 			(() => {
-				const posts = document.getElementById('posts');
 				const btns = { grid: document.getElementById('view-grid'), list: document.getElementById('view-list') };
 				const apply = (v) => {
-					posts.dataset.view = v;
-					btns.grid.classList.toggle('active', v === 'grid');
-					btns.list.classList.toggle('active', v === 'list');
+					if (v === 'list') document.documentElement.dataset.blogView = 'list';
+					else delete document.documentElement.dataset.blogView;
+					for (const key of ['grid', 'list']) {
+						btns[key].classList.toggle('active', v === key);
+						btns[key].setAttribute('aria-pressed', String(v === key));
+					}
 				};
-				let v = 'grid';
-				try {
-					const stored = localStorage.getItem('blogView');
-					if (stored === 'list' || stored === 'grid') v = stored;
-				} catch {}
-				apply(v);
+				apply(document.documentElement.dataset.blogView === 'list' ? 'list' : 'grid');
 				for (const key of ['grid', 'list']) {
 					btns[key].addEventListener('click', () => {
 						apply(key);
@@ -110,19 +113,19 @@ const alternates = Object.fromEntries(LOCALES.map((l) => [l, blogIndexUrl(l)]));
 	.view-toggle button.active { background: var(--surface-2); color: var(--text); }
 
 	/* grid view (default) */
-	.posts[data-view='grid'] {
+	.posts {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 		gap: 1.25rem;
 	}
 
 	/* list view */
-	.posts[data-view='list'] {
+	:global(html[data-blog-view='list']) .posts {
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
 	}
-	.posts[data-view='list'] :global(.card.post) {
+	:global(html[data-blog-view='list']) .posts :global(.card.post) {
 		display: grid;
 		grid-template-columns: 7.5rem minmax(0, 1fr) auto;
 		grid-template-areas: 'date title read' 'date desc read';
@@ -131,22 +134,22 @@ const alternates = Object.fromEntries(LOCALES.map((l) => [l, blogIndexUrl(l)]));
 		row-gap: 0.2rem;
 		padding: 0.9rem 1.25rem;
 	}
-	.posts[data-view='list'] :global(.card.post .cover) { display: none; }
-	.posts[data-view='list'] :global(.card.post .date) { grid-area: date; }
-	.posts[data-view='list'] :global(.card.post h3) { grid-area: title; font-size: 1rem; }
-	.posts[data-view='list'] :global(.card.post p) {
+	:global(html[data-blog-view='list']) .posts :global(.card.post .cover) { display: none; }
+	:global(html[data-blog-view='list']) .posts :global(.card.post .date) { grid-area: date; }
+	:global(html[data-blog-view='list']) .posts :global(.card.post h3) { grid-area: title; font-size: 1rem; }
+	:global(html[data-blog-view='list']) .posts :global(.card.post p) {
 		grid-area: desc;
 		display: -webkit-box;
 		-webkit-line-clamp: 1;
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 	}
-	.posts[data-view='list'] :global(.card.post .read) { grid-area: read; }
-	.posts[data-view='list'] :global(.card.post:hover) { transform: none; }
+	:global(html[data-blog-view='list']) .posts :global(.card.post .read) { grid-area: read; }
+	:global(html[data-blog-view='list']) .posts :global(.card.post:hover) { transform: none; }
 
 	@media (max-width: 640px) {
 		.page-head { flex-direction: column; align-items: flex-start; }
-		.posts[data-view='list'] :global(.card.post) {
+		:global(html[data-blog-view='list']) .posts :global(.card.post) {
 			grid-template-columns: minmax(0, 1fr) auto;
 			grid-template-areas: 'date read' 'title read' 'desc read';
 		}

@@ -1,7 +1,7 @@
 ---
 title: "Design your logs like an API"
 description: "Business questions answered from CloudWatch Logs Insights: log-line contracts, why enriching an existing line beats adding a new one, JSON-escaping gotchas, and the retention trap."
-pubDate: "Aug 26 2026"
+pubDate: "2026-08-26"
 heroImage: "/blog/hero-logs.svg"
 ---
 

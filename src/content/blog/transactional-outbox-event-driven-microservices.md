@@ -1,7 +1,7 @@
 ---
 title: "Event-driven microservices without losing events: the transactional outbox in practice"
 description: "How we kept orders, payments, and downstream services consistent on Cloud Run and Spanner using the transactional outbox pattern and task-queue relay workers — and what we'd do differently."
-pubDate: "Jun 14 2026"
+pubDate: "2026-06-14"
 heroImage: "/blog/hero-outbox.svg"
 ---
 

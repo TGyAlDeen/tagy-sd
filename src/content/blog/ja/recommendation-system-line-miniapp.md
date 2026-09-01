@@ -1,7 +1,7 @@
 ---
 title: "LINEミニアプリの中でMLレコメンドを届ける"
 description: "LINEだけで完結する物件探しプラットフォームの裏側——Goバックエンド、LIFFミニアプリ、XGBoost推論サービス、そしてレコメンドを新鮮に保つバッチパイプライン。"
-pubDate: "Aug 22 2026"
+pubDate: "2026-08-22"
 heroImage: "/blog/hero-reco.svg"
 ---
 

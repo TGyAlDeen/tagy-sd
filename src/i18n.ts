@@ -24,9 +24,6 @@ export const UI: Record<
 		read: string;
 		gridView: string;
 		listView: string;
-		alsoAvailable: string;
-		switchTo: string;
-		dismiss: string;
 	}
 > = {
 	en: {
@@ -38,9 +35,6 @@ export const UI: Record<
 		read: 'Read',
 		gridView: 'Grid view',
 		listView: 'List view',
-		alsoAvailable: 'This page is also available in English',
-		switchTo: 'Switch',
-		dismiss: 'Dismiss',
 	},
 	ja: {
 		home: 'ホーム',
@@ -51,9 +45,6 @@ export const UI: Record<
 		read: '読む',
 		gridView: 'グリッド表示',
 		listView: 'リスト表示',
-		alsoAvailable: 'このページは日本語でも読めます',
-		switchTo: '日本語で読む',
-		dismiss: '閉じる',
 	},
 	ar: {
 		home: 'الرئيسية',
@@ -64,9 +55,6 @@ export const UI: Record<
 		read: 'اقرأ',
 		gridView: 'عرض شبكي',
 		listView: 'عرض قائمة',
-		alsoAvailable: 'هذه الصفحة متوفرة بالعربية',
-		switchTo: 'اقرأ بالعربية',
-		dismiss: 'إغلاق',
 	},
 };
 

@@ -1,7 +1,7 @@
 ---
 title: "Building a product where the UI is a chat thread"
 description: "LIFF token verification, Flex Message carousels, rich menus, and chatbot flows as routing — chat-platform engineering as a backend discipline."
-pubDate: "Aug 24 2026"
+pubDate: "2026-08-24"
 heroImage: "/blog/hero-chat.svg"
 ---
 

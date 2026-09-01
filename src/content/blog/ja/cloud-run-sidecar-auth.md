@@ -1,7 +1,7 @@
 ---
 title: "サービスメッシュなしのサービス間認証"
 description: "Cloud Run上のサイドカープロキシパターン:イングレス認証、中央の内部APIハブ経由のエグレス、パスベースルーティングの内部ロードバランサー——メッシュの重さなしにメッシュの利益を。"
-pubDate: "Jul 12 2026"
+pubDate: "2026-07-12"
 heroImage: "/blog/hero-sidecar.svg"
 ---
 

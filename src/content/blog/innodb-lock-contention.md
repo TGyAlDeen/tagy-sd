@@ -1,7 +1,7 @@
 ---
 title: "The lock contention that wasn't in the query plan"
 description: "Up to a thousand concurrent Go workers, each upserting its own user's rows in MySQL — and InnoDB kept detecting deadlocks between them. The gap-lock mechanics, the fix menu ranked, and the deliberately boring choice."
-pubDate: "Aug 30 2026"
+pubDate: "2026-08-30"
 heroImage: "/blog/hero-locks.svg"
 ---
 

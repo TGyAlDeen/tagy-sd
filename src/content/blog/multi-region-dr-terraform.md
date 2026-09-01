@@ -1,7 +1,7 @@
 ---
 title: "Multi-region DR you actually rehearse"
 description: "Tokyo primary, Osaka standby, one Terraform module set: what to replicate, what to rehearse, and why an untested failover plan is a diagram, not a capability."
-pubDate: "Aug 12 2026"
+pubDate: "2026-08-12"
 heroImage: "/blog/hero-dr.svg"
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "Serving ML recommendations inside a LINE mini-app"
 description: "The architecture behind a property-search platform delivered entirely through LINE — Go backend, LIFF mini-apps, an XGBoost inference service, and the batch pipelines that keep recommendations fresh."
-pubDate: "Aug 22 2026"
+pubDate: "2026-08-22"
 heroImage: "/blog/hero-reco.svg"
 ---
 

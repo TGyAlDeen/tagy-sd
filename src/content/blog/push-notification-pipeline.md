@@ -1,7 +1,7 @@
 ---
 title: "The push pipeline that didn't get blocked"
 description: "Notification campaigns as scheduled batch jobs: eligibility and dedup pushed into the audience query, a send log that doubles as the resume checkpoint, throttling against platform quotas — and the two gates I'd add today."
-pubDate: "Aug 28 2026"
+pubDate: "2026-08-28"
 heroImage: "/blog/hero-push.svg"
 ---
 

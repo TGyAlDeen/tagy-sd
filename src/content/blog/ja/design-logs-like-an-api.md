@@ -1,7 +1,7 @@
 ---
 title: "ログをAPIのように設計する"
 description: "CloudWatch Logs Insightsでビジネスの問いに答える:ログ行の契約、新しい行を足すより既存の行を広げるべき理由、JSONエスケープの罠、そしてリテンションという一方通行のドア。"
-pubDate: "Aug 26 2026"
+pubDate: "2026-08-26"
 heroImage: "/blog/hero-logs.svg"
 ---
 

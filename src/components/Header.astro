@@ -13,23 +13,24 @@ const { lang = 'en', alternates } = Astro.props;
 // Default targets: each locale's blog index (used on pages without a direct translation).
 const langTargets: Partial<Record<Lang, string>> = alternates ?? {
 	en: '/',
-	ja: blogIndexUrl('ja'),
-	ar: blogIndexUrl('ar'),
+	ja: '/ja/',
+	ar: '/ar/',
 };
 const t = UI[lang];
+const homeUrl = lang === 'en' ? '/' : `/${lang}/`;
 ---
 
 <header class="site-header">
 	<nav class="container">
-		<a href="/" class="brand mono" aria-label="Home"><span class="prompt">~/</span>{SITE_HANDLE}</a>
+		<a href={homeUrl} class="brand mono" aria-label={t.home}><span class="prompt">~/</span>{SITE_HANDLE}</a>
 
-		<input id="nav-toggle" class="nav-toggle" type="checkbox" aria-hidden="true" />
+		<input id="nav-toggle" class="nav-toggle" type="checkbox" aria-label="Toggle navigation" />
 		<label for="nav-toggle" class="nav-burger" aria-label="Toggle navigation">
 			<Icon name="menu" size={20} />
 		</label>
 
 		<div class="links">
-			<HeaderLink href="/">{t.home}</HeaderLink>
+			<HeaderLink href={homeUrl}>{t.home}</HeaderLink>
 			<HeaderLink href={blogIndexUrl(lang)}>{t.blog}</HeaderLink>
 			<HeaderLink href="/about">{t.about}</HeaderLink>
 		</div>
@@ -146,6 +147,20 @@ const t = UI[lang];
 	}
 	@media (max-width: 720px) {
 		nav { flex-wrap: wrap; height: auto; min-height: 3.75rem; padding-top: 0.6rem; padding-bottom: 0.6rem; }
+		/* Keyboard-accessible: focusable but visually hidden; Space toggles it. */
+		.nav-toggle {
+			display: block;
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			opacity: 0;
+			margin: 0;
+			pointer-events: none;
+		}
+		.nav-toggle:focus-visible ~ .nav-burger {
+			outline: 2px solid var(--accent);
+			outline-offset: 2px;
+		}
 		.nav-burger {
 			display: inline-grid;
 			place-items: center;

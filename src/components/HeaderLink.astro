@@ -5,7 +5,9 @@ type Props = HTMLAttributes<'a'>;
 
 const { href, class: className, ...props } = Astro.props;
 const pathname = Astro.url.pathname;
-const isActive = href === '/' ? pathname === '/' : pathname.startsWith(String(href));
+const h = String(href);
+// Home-style hrefs ('/', '/ja/', '/ar/') must match exactly, otherwise prefix-match.
+const isActive = /^\/(ja\/|ar\/)?$/.test(h) ? pathname === h : pathname.startsWith(h);
 ---
 
 <a href={href} class:list={[className, { active: isActive }]} {...props}>

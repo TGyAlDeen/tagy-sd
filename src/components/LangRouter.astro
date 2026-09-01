@@ -1,0 +1,32 @@
+---
+// Invisible sticky-language routing: on the FIRST page of a browser session,
+// route visitors with a saved language preference (set via the header pill)
+// to this page's alternate in that language. All later navigation in the
+// session is deliberate and respected. No UI.
+import type { Lang } from '../i18n';
+
+interface Props {
+	lang: Lang;
+	alternates: Partial<Record<Lang, string>>;
+}
+const { lang, alternates } = Astro.props;
+---
+
+<script is:inline define:vars={{ lang, alternates }}>
+	(() => {
+		const get = (k) => {
+			let v = null;
+			try { v = localStorage.getItem(k); } catch {}
+			if (v === null) { try { v = sessionStorage.getItem(k); } catch {} }
+			return v;
+		};
+		try {
+			const pref = get('langPref');
+			const routed = get('langRouted');
+			try { sessionStorage.setItem('langRouted', '1'); } catch {}
+			if (!routed && pref && pref !== lang && alternates[pref]) {
+				location.replace(alternates[pref]);
+			}
+		} catch {}
+	})();
+</script>

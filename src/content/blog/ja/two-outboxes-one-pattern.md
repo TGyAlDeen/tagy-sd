@@ -1,7 +1,7 @@
 ---
 title: "2つのOutbox、1つのパターン"
 description: "コマンドにはCloud Tasks、イベントにはPub/Sub——同じTransactional Outbox、同じリレー、同じHTTP配送。本当の分岐点は中間層と、ルーティングを誰が所有するか。"
-pubDate: "Sep 1 2026"
+pubDate: "2026-09-01"
 heroImage: "/blog/hero-two-outboxes.svg"
 ---
 
