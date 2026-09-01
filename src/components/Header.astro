@@ -63,8 +63,12 @@ const t = UI[lang];
 <script>
 	document.querySelectorAll('[data-setlang]').forEach((a) => {
 		a.addEventListener('click', () => {
+			const v = (a as HTMLElement).dataset.setlang ?? 'en';
 			try {
-				localStorage.setItem('langPref', (a as HTMLElement).dataset.setlang ?? 'en');
+				localStorage.setItem('langPref', v);
+			} catch {}
+			try {
+				sessionStorage.setItem('langPref', v);
 			} catch {}
 		});
 	});
