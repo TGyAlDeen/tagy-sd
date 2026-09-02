@@ -1,0 +1,91 @@
+---
+// Full About document, shared by /about and /{ja,ar}/about.
+import BaseHead from './BaseHead.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import Icon from './Icon.astro';
+import LangRouter from './LangRouter.astro';
+import { SITE_AUTHOR, SOCIALS } from '../consts';
+import { ABOUT, HOME, UI, DIR, type Lang } from '../i18n';
+
+interface Props {
+	lang: Lang;
+}
+const { lang } = Astro.props;
+const a = ABOUT[lang];
+const h = HOME[lang];
+const alternates = { en: '/about/', ja: '/ja/about/', ar: '/ar/about/' };
+---
+
+<!doctype html>
+<html lang={lang} dir={DIR[lang]}>
+	<head>
+		<BaseHead title={UI[lang].about} description={a.metaDesc} lang={lang} alternates={alternates} />
+	</head>
+	<body>
+		<Header lang={lang} alternates={alternates} />
+		<main>
+			<header class="page-head">
+				<p class="eyebrow">{UI[lang].about}</p>
+				<h1>{SITE_AUTHOR}</h1>
+				<p class="muted">{h.role} · {h.location}</p>
+			</header>
+
+			<div class="layout">
+				<div class="prose">
+					{a.paragraphs.map((p) => <p set:html={p} />)}
+				</div>
+
+				<aside>
+					<div class="panel">
+						<div class="label mono muted">{a.currentlyTitle}</div>
+						<ul>
+							{a.currently.map((item) => <li>{item}</li>)}
+						</ul>
+					</div>
+					<div class="panel">
+						<div class="label mono muted">{a.elsewhereTitle}</div>
+						<ul class="links">
+							{SOCIALS.map((s) => (
+								<li>
+									<a href={s.href} target="_blank" rel="noopener noreferrer"><Icon name={s.icon} size={16} /> {s.name}</a>
+								</li>
+							))}
+						</ul>
+					</div>
+				</aside>
+			</div>
+		</main>
+		<Footer />
+		<LangRouter lang={lang} alternates={alternates} />
+	</body>
+</html>
+
+<style>
+	.page-head { margin-bottom: 2.5rem; }
+	.page-head h1 { font-size: clamp(2rem, 4vw, 2.75rem); margin-bottom: 0.25rem; }
+	.layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 300px;
+		gap: 3rem;
+		align-items: start;
+	}
+	.prose { font-size: 1.05rem; max-width: var(--prose); }
+	aside { display: flex; flex-direction: column; gap: 1rem; position: sticky; top: 5rem; }
+	.panel {
+		padding: 1.1rem 1.25rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--surface);
+	}
+	.label { margin-bottom: 0.6rem; }
+	ul { margin: 0; padding-inline-start: 1.1rem; font-size: 0.925rem; color: var(--text-2); }
+	li { margin-bottom: 0.35rem; }
+	.links { list-style: none; padding: 0; }
+	.links a { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--text-2); }
+	.links a:hover { color: var(--accent-text); }
+	@media (max-width: 800px) {
+		.layout { grid-template-columns: 1fr; gap: 2rem; }
+		aside { position: static; }
+	}
+</style>

@@ -18,6 +18,7 @@ const langTargets: Partial<Record<Lang, string>> = alternates ?? {
 };
 const t = UI[lang];
 const homeUrl = lang === 'en' ? '/' : `/${lang}/`;
+const aboutUrl = lang === 'en' ? '/about/' : `/${lang}/about/`;
 ---
 
 <header class="site-header">
@@ -32,7 +33,7 @@ const homeUrl = lang === 'en' ? '/' : `/${lang}/`;
 		<div class="links">
 			<HeaderLink href={homeUrl}>{t.home}</HeaderLink>
 			<HeaderLink href={blogIndexUrl(lang)}>{t.blog}</HeaderLink>
-			<HeaderLink href="/about">{t.about}</HeaderLink>
+			<HeaderLink href={aboutUrl}>{t.about}</HeaderLink>
 		</div>
 
 		<div class="right">
