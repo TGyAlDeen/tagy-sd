@@ -42,7 +42,7 @@ const alternates = { en: '/', ja: '/ja/', ar: '/ar/' };
 					<a class="more" href="https://github.com/TGyAlDeen" target="_blank" rel="noopener noreferrer">{h.allRepos}</a>
 				</div>
 				<div class="grid">
-					{PROJECTS.map((p) => <ProjectCard project={p} />)}
+					{PROJECTS.map((p) => <ProjectCard project={p} lang={lang} />)}
 				</div>
 			</section>
 
