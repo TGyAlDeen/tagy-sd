@@ -44,9 +44,9 @@ const checks = [
 	// --- impact ---
 	(lang, home) => {
 		check(`[${lang}] impact section`, home.includes('id="impact"'));
-		check(`[${lang}] 7 impact outcome cards`, count(home, 'data-impact') === 7);
-		check(`[${lang}] 10 industry tags`, count(home, 'data-sector') === 10);
-		check(`[${lang}] one featured "now building" card`, count(home, 'data-featured') === 1);
+		check(`[${lang}] 9 impact outcome cards (3×3)`, count(home, 'data-impact') === 9);
+		check(`[${lang}] 15 industry tags`, count(home, 'data-sector') === 15);
+		check(`[${lang}] no featured card`, !home.includes('data-featured') && !home.includes('class="now"'));
 		check(`[${lang}] GovTech KYC on home`, text(home).includes('KYC'));
 		check(`[${lang}] no Khartoum on home`, !/Khartoum|ハルツーム|الخرطوم/.test(text(home)));
 		check(`[${lang}] no 40M on home`, !/(?<!\d)40\s?M\b|4,000万|40 مليون/.test(text(home)));
