@@ -44,7 +44,9 @@ const checks = [
 	// --- impact ---
 	(lang, home) => {
 		check(`[${lang}] impact section`, home.includes('id="impact"'));
-		check(`[${lang}] 4 impact stats`, count(home, 'data-impact') === 4);
+		check(`[${lang}] 6 impact outcome cards`, count(home, 'data-impact') === 6);
+		check(`[${lang}] 9 industry tags`, count(home, 'data-sector') === 9);
+		check(`[${lang}] no Khartoum on home`, !/Khartoum|ハルツーム|الخرطوم/.test(text(home)));
 		check(`[${lang}] no 40M on home`, !/(?<!\d)40\s?M\b|4,000万|40 مليون/.test(text(home)));
 	},
 	// --- journey ---

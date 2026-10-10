@@ -7,7 +7,7 @@ export type MilestoneIcon = 'rocket' | 'layers' | 'server' | 'code' | 'cap' | 's
 export interface Milestone {
 	period: Record<Lang, string> | null;
 	role: Record<Lang, string>;
-	org: Record<Lang, string>;
+	org: Record<Lang, string> | null;
 	story: Record<Lang, string>;
 	theme: Record<Lang, string>;
 	icon: MilestoneIcon;
@@ -99,11 +99,11 @@ export const JOURNEY: Milestone[] = [
 	{
 		period: span('2011 — 2017'),
 		role: { en: 'Co-founder & Software Engineer', ja: '共同創業者 & ソフトウェアエンジニア', ar: 'شريك مؤسس ومهندس برمجيات' },
-		org: { en: 'Khartoum · Sudan', ja: 'ハルツーム · スーダン', ar: 'الخرطوم · السودان' },
+		org: null,
 		story: {
-			en: 'Co-founded a software consultancy delivering web, mobile and POS-integrated payment systems. Outside work: information-security strategy for the Internet Society Sudan Chapter, and organizing the SdNOG conference.',
-			ja: 'Web・モバイル・POS連携決済システムを手がけるソフトウェア会社を共同創業。仕事の外では、Internet Society Sudan Chapterの情報セキュリティ戦略とSdNOGカンファレンスの運営に携わりました。',
-			ar: 'شاركتُ في تأسيس شركة برمجيات تبني أنظمة ويب وجوّال ودفع متكاملة مع نقاط البيع. وخارج العمل: استراتيجية أمن المعلومات في فرع Internet Society بالسودان، وتنظيم مؤتمر SdNOG.',
+			en: 'Co-founded a software consultancy delivering web, mobile and POS-integrated payment systems. Outside work: information-security strategy for an Internet Society chapter, and organizing the SdNOG conference.',
+			ja: 'Web・モバイル・POS連携決済システムを手がけるソフトウェア会社を共同創業。仕事の外では、Internet Societyの支部で情報セキュリティ戦略を担い、SdNOGカンファレンスの運営にも携わりました。',
+			ar: 'شاركتُ في تأسيس شركة برمجيات تبني أنظمة ويب وجوّال ودفع متكاملة مع نقاط البيع. وخارج العمل: استراتيجية أمن المعلومات في أحد فروع Internet Society، وتنظيم مؤتمر SdNOG.',
 		},
 		theme: { en: 'Where it started', ja: 'すべての始まり', ar: 'حيث بدأ كل شيء' },
 		icon: 'seedling',
