@@ -200,3 +200,8 @@ dist
 
 ### Astro ###
 .astro/
+
+# Local-only: client-name regex for scripts/check-home.mjs (never commit)
+.anonymize-terms
+# superpowers plan workspaces
+.superpowers/

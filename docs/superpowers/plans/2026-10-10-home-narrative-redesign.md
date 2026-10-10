@@ -17,7 +17,7 @@
 - Colors, radii, fonts: existing CSS tokens only (`--accent`, `--accent-2`, `--accent-text`, `--surface`, `--border`, `--radius`, `--text-2`, `--muted`, `--bg`). No new colors.
 - Layout CSS uses logical properties (`inset-inline-start`, `margin-inline-*`, `padding-inline-*`, `text-align: start|end`) so Arabic mirrors without extra rules.
 - Numbers only from the resume: "Tens of millions" FinTech users, `6 / 9` bids, `6` direct reports, `10+` years. Never "40M" on the home page.
-- Employers may be named (Monstarlab, Techfirm). Clients/projects/products: no names and no identifying hints. Anonymization grep must be clean on home/About output: `REDACTED` (and no "postal").
+- Employers may be named (Monstarlab, Techfirm). Clients/projects/products: no names and no identifying hints. Anonymization grep must be clean on home/About output, using the client-name regex from the gitignored `.anonymize-terms` file (never committed).
 - "8+ years" / "eight years" / "8年" / "8 سنوات" / "الثماني" must not appear anywhere on home or About in any language.
 - Journey reveal is progressive enhancement: static HTML never contains the hidden state; no animation under `prefers-reduced-motion`.
 - Commits end with `Co-Authored-By: Claude Opus 5.5 (1M context) <noreply@anthropic.com>`.
@@ -1025,9 +1025,11 @@ Insert above `// --- end checks ---`:
 		check(`[${lang}] stack section removed`, !home.includes(stackTitle));
 		check(`[${lang}] projects off home`, !home.includes('IDS-UNSW-NB15'));
 		check(`[${lang}] projects on about`, about.includes('IDS-UNSW-NB15'));
-		const leaks = /REDACTED|postal/i;
-		check(`[${lang}] anonymization clean (home)`, !leaks.test(text(home)));
-		check(`[${lang}] anonymization clean (about)`, !leaks.test(text(about)));
+		// `leaks` is loaded from the gitignored .anonymize-terms file (see top of script).
+		if (leaks) {
+			check(`[${lang}] anonymization clean (home)`, !leaks.test(text(home)));
+			check(`[${lang}] anonymization clean (about)`, !leaks.test(text(about)));
+		}
 	},
 ```
 

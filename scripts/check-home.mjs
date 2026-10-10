@@ -1,6 +1,6 @@
 // Post-build assertions for the home and About pages, all locales.
 // Run after `astro build`: `npm run check:home`.
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 
 const LANGS = ['en', 'ja', 'ar'];
 const page = (lang, sub = '') =>
@@ -9,6 +9,12 @@ const count = (html, needle) => html.split(needle).length - 1;
 // Visible text only — asset hashes and inline scripts must not trip text checks.
 const text = (html) =>
 	html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' ');
+
+// Client names must never be committed: the regex lives in the gitignored
+// `.anonymize-terms` file (one line, e.g. `name1|name2`).
+const TERMS_FILE = '.anonymize-terms';
+const leaks = existsSync(TERMS_FILE) ? new RegExp(readFileSync(TERMS_FILE, 'utf8').trim(), 'i') : null;
+if (!leaks) console.warn(`warn ${TERMS_FILE} missing — anonymization checks skipped`);
 
 let failures = 0;
 function check(name, ok) {
@@ -66,9 +72,10 @@ const checks = [
 		check(`[${lang}] stack section removed`, !home.includes(stackTitle));
 		check(`[${lang}] projects off home`, !home.includes('IDS-UNSW-NB15'));
 		check(`[${lang}] projects on about`, about.includes('IDS-UNSW-NB15'));
-		const leaks = /REDACTED|postal/i;
-		check(`[${lang}] anonymization clean (home)`, !leaks.test(text(home)));
-		check(`[${lang}] anonymization clean (about)`, !leaks.test(text(about)));
+		if (leaks) {
+			check(`[${lang}] anonymization clean (home)`, !leaks.test(text(home)));
+			check(`[${lang}] anonymization clean (about)`, !leaks.test(text(about)));
+		}
 	},
 	// --- end checks ---
 ];

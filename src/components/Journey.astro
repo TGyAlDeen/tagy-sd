@@ -109,6 +109,8 @@ const h = HOME[lang];
 	.milestone:nth-child(even) .entry { grid-column: 3; text-align: start; }
 	.entry.pending { opacity: 0; transform: translateY(12px); }
 	.entry.pending.in { opacity: 1; transform: none; }
+	/* Printing/PDF never scrolls, so unrevealed cards must still show. */
+	@media print { .entry.pending { opacity: 1; transform: none; transition: none; } }
 	.period { margin: 0 0 0.35rem; color: var(--accent-text); font-weight: 600; }
 	h3 { margin: 0 0 0.15rem; font-size: 1.05rem; }
 	.org { margin: 0 0 0.6rem; font-size: 0.875rem; color: var(--muted); }
