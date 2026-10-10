@@ -11,8 +11,13 @@ export const SECTORS: Record<Lang, string>[] = [
 	{ en: 'Insurance', ja: '保険', ar: 'التأمين' },
 	{ en: 'IoT', ja: 'IoT', ar: 'IoT' },
 	{ en: 'E-commerce', ja: 'EC', ar: 'التجارة الإلكترونية' },
+	{ en: 'Entertainment', ja: 'エンタメ', ar: 'الترفيه' },
 	{ en: 'Payments', ja: '決済', ar: 'المدفوعات' },
+	{ en: 'Enterprise integration', ja: '業務システム連携', ar: 'تكامل الأنظمة المؤسسية' },
+	{ en: 'HR tech', ja: 'HRテック', ar: 'تقنيات الموارد البشرية' },
+	{ en: 'Security', ja: 'セキュリティ', ar: 'الأمن السيبراني' },
 	{ en: 'AI', ja: 'AI', ar: 'الذكاء الاصطناعي' },
+	{ en: 'Agentic AI', ja: 'エージェントAI', ar: 'الذكاء الاصطناعي الوكيلي' },
 ];
 
 export interface Outcome {
@@ -20,8 +25,6 @@ export interface Outcome {
 	title: Record<Lang, string>;
 	body: Record<Lang, string>;
 	tech: string;
-	/** The work in progress now — shown as a full-width "now building" card. */
-	featured?: boolean;
 }
 
 export const IMPACT: Outcome[] = [
@@ -38,7 +41,6 @@ export const IMPACT: Outcome[] = [
 			ar: 'تطلب الشركات تحققًا لمرة واحدة من الهوية، ويُثبت الناس هويتهم بتمرير بطاقة الهوية الحكومية (بطاقة My Number) على هواتفهم — دون إنشاء حساب، مع التحقق من كل عملية عبر البنية التحتية الحكومية للمفاتيح العامة.',
 		},
 		tech: 'Go · NFC · gRPC + REST · ECS Fargate · DynamoDB',
-		featured: true,
 	},
 	{
 		sector: { en: 'FinTech', ja: 'FinTech', ar: 'FinTech' },
@@ -81,14 +83,34 @@ export const IMPACT: Outcome[] = [
 		tech: 'Go · ML recommendations · LINE',
 	},
 	{
-		sector: { en: 'AI at work', ja: '仕事のAI', ar: 'الذكاء الاصطناعي في العمل' },
-		title: { en: 'Less searching, better matches', ja: '探す時間を減らし、よい出会いを', ar: 'بحث أقل، ومطابقة أفضل' },
+		sector: { en: 'Insurance', ja: '保険', ar: 'التأمين' },
+		title: { en: 'Policyholders served on every screen', ja: '契約者をどの画面でも支える', ar: 'خدمة حاملي الوثائق على كل شاشة' },
 		body: {
-			en: 'Support teams find answers in their own documents, sales workflows run on agents, and hiring teams see relevant past candidates.',
-			ja: 'サポートチームは自社のドキュメントから答えを見つけ、営業フローはエージェントが回し、採用チームは過去の応募者から合う人を見つけられます。',
-			ar: 'تجد فرق الدعم الإجابات في مستنداتها الخاصة، وتعمل مسارات المبيعات بالوكلاء، وترى فرق التوظيف المرشحين السابقين المناسبين.',
+			en: 'One Spring Boot platform behind the customer web, native mobile and internal admin apps — given its first CI/CD pipeline and monitoring, so fixes reach customers safely.',
+			ja: '顧客向けWeb・ネイティブアプリ・社内管理画面を支える1つのSpring Bootプラットフォーム。初のCI/CDと監視を導入し、修正が安全に顧客へ届くようにしました。',
+			ar: 'منصة Spring Boot واحدة خلف تطبيقات الويب والجوّال للعملاء ولوحة الإدارة الداخلية — أدخلتُ إليها أول خط CI/CD ومراقبة، لتصل الإصلاحات إلى العملاء بأمان.',
 		},
-		tech: 'RAG · multi-agent · ML matching',
+		tech: 'Java · Spring Boot · CI/CD · Datadog',
+	},
+	{
+		sector: { en: 'AI', ja: 'AI', ar: 'الذكاء الاصطناعي' },
+		title: { en: 'Answers people can find', ja: '必要な答えにたどり着ける', ar: 'إجابات يمكن العثور عليها' },
+		body: {
+			en: 'Support teams find answers in their own documents — including scanned Japanese ones — and hiring teams see relevant past candidates for each open role.',
+			ja: 'サポートチームはスキャンされた日本語資料も含めて自社ドキュメントから答えを見つけ、採用チームは募集ごとに合う過去の応募者を見つけられます。',
+			ar: 'تجد فرق الدعم الإجابات في مستنداتها الخاصة — بما فيها الوثائق اليابانية الممسوحة ضوئيًا — وترى فرق التوظيف المرشحين السابقين المناسبين لكل وظيفة شاغرة.',
+		},
+		tech: 'RAG · Bedrock + OpenSearch · OCR · ML matching',
+	},
+	{
+		sector: { en: 'Agentic AI', ja: 'エージェントAI', ar: 'الذكاء الاصطناعي الوكيلي' },
+		title: { en: 'Agents that do the busywork', ja: '定型業務はエージェントに', ar: 'وكلاء يتولّون الأعمال الروتينية' },
+		body: {
+			en: 'A multi-agent system automates business sales workflows, and tool-calling agents work directly against enterprise systems through MCP.',
+			ja: '営業ワークフローをマルチエージェントシステムが自動化し、ツール呼び出しエージェントがMCP経由で業務システムを直接操作します。',
+			ar: 'يُؤتمت نظام متعدد الوكلاء مسارات المبيعات، ويعمل وكلاء يستدعون الأدوات مباشرةً على الأنظمة المؤسسية عبر MCP.',
+		},
+		tech: 'Multi-agent · tool-calling · MCP · Azure',
 	},
 	{
 		sector: { en: 'People', ja: '人', ar: 'الناس' },

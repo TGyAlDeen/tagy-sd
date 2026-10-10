@@ -21,11 +21,8 @@ const h = HOME[lang];
 	</ul>
 	<div class="grid">
 		{IMPACT.map((o) => (
-			<article class={o.featured ? 'outcome featured' : 'outcome'} data-impact data-featured={o.featured || undefined}>
-				<p class="sector mono">
-					{o.featured && <span class="now">{h.impactNow}</span>}
-					{o.sector[lang]}
-				</p>
+			<article class="outcome" data-impact>
+				<p class="sector mono">{o.sector[lang]}</p>
 				<h3>{o.title[lang]}</h3>
 				<p class="body">{o.body[lang]}</p>
 				<p class="tech mono">{o.tech}</p>
@@ -63,24 +60,6 @@ const h = HOME[lang];
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.08em;
-	}
-	.featured {
-		grid-column: 1 / -1;
-		border-color: var(--accent);
-		background:
-			radial-gradient(closest-side at 0% 0%, var(--accent-soft), transparent),
-			var(--surface);
-	}
-	.featured h3 { font-size: 1.35rem; }
-	.featured .body { max-width: 72ch; }
-	.now {
-		display: inline-block;
-		margin-inline-end: 0.6rem;
-		padding: 0.1rem 0.5rem;
-		border-radius: 999px;
-		background: var(--accent-text);
-		color: var(--bg);
-		letter-spacing: 0.04em;
 	}
 	h3 { margin: 0; font-size: 1.1rem; }
 	.body { margin: 0; flex: 1; font-size: 0.925rem; color: var(--text-2); }

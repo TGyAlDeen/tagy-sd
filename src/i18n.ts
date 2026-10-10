@@ -93,7 +93,6 @@ export const HOME: Record<
 		ctaWriting: string;
 		impactEyebrow: string;
 		impactTitle: string;
-		impactNow: string;
 		journeyEyebrow: string;
 		journeyTitle: string;
 		servicesEyebrow: string;
@@ -117,7 +116,6 @@ export const HOME: Record<
 		ctaWriting: 'Read the writing',
 		impactEyebrow: 'Impact',
 		impactTitle: "Technology in people's everyday lives",
-		impactNow: 'Now building',
 		journeyEyebrow: 'Journey',
 		journeyTitle: 'How I got here',
 		servicesEyebrow: 'What I do',
@@ -142,7 +140,6 @@ export const HOME: Record<
 		ctaWriting: '記事を読む',
 		impactEyebrow: 'インパクト',
 		impactTitle: '人々の日常を支える技術',
-		impactNow: '開発中',
 		journeyEyebrow: 'キャリア',
 		journeyTitle: 'これまでの歩み',
 		servicesEyebrow: '提供できること',
@@ -167,7 +164,6 @@ export const HOME: Record<
 		ctaWriting: 'اقرأ المقالات',
 		impactEyebrow: 'الأثر',
 		impactTitle: 'تقنية في حياة الناس اليومية',
-		impactNow: 'أعمل عليه الآن',
 		journeyEyebrow: 'المسيرة',
 		journeyTitle: 'كيف وصلت إلى هنا',
 		servicesEyebrow: 'ما أقدّمه',
