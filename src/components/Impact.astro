@@ -21,7 +21,7 @@ const h = HOME[lang];
 	</ul>
 	<div class="grid">
 		{IMPACT.map((o) => (
-			<article class="outcome" data-impact>
+			<article class="outcome spec" data-impact>
 				<p class="sector mono">{o.sector[lang]}</p>
 				<h3>{o.title[lang]}</h3>
 				<p class="body">{o.body[lang]}</p>
@@ -55,6 +55,12 @@ const h = HOME[lang];
 		background: var(--surface);
 		box-shadow: var(--card-shadow);
 	}
+	.grid { counter-reset: fig; }
+	.outcome { counter-increment: fig; }
+	.sector::before {
+		content: 'FIG.' counter(fig, decimal-leading-zero) ' · ';
+		color: var(--muted);
+	}
 	.sector {
 		margin: 0;
 		color: var(--accent-text);
@@ -67,7 +73,7 @@ const h = HOME[lang];
 	.tech {
 		margin: 0;
 		padding-top: 0.6rem;
-		border-top: 1px solid var(--border);
+		border-top: 1px dashed var(--border-strong);
 		color: var(--muted);
 	}
 	/* The mono face has no Arabic glyphs and tracking breaks letter joining. */

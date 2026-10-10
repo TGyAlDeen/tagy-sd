@@ -32,17 +32,6 @@ const github = SOCIALS.find((s) => s.icon === 'github');
 		position: relative;
 		padding: 4.5rem 0 4rem;
 	}
-	/* Grid lives on its own layer so the fade-out mask never dims the CTAs. */
-	.hero::before {
-		content: '';
-		position: absolute;
-		inset: 0;
-		background-image: radial-gradient(var(--grid) 1px, transparent 1px);
-		background-size: 22px 22px;
-		mask-image: linear-gradient(to bottom, black 60%, transparent);
-		-webkit-mask-image: linear-gradient(to bottom, black 60%, transparent);
-		pointer-events: none;
-	}
 	.glow {
 		position: absolute;
 		inset: -20% 0 auto 10%;
