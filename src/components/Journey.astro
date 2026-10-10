@@ -21,7 +21,7 @@ const h = HOME[lang];
 		{JOURNEY.map((m) => (
 			<li class="milestone" data-milestone>
 				<span class="badge" aria-hidden="true"><Icon name={m.icon} size={20} /></span>
-				<article class="entry" data-reveal>
+				<article class="entry spec" data-reveal>
 					{m.period && <p class="period mono">{m.period[lang]}</p>}
 					<h3>{m.role[lang]}</h3>
 					{m.org && <p class="org">{m.org[lang]}</p>}
@@ -73,6 +73,25 @@ const h = HOME[lang];
 		margin-inline-start: -1px;
 		background: linear-gradient(var(--accent), var(--accent-2));
 	}
+	/* A signal pulse travels down the trace. */
+	.timeline::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		inset-inline-start: 50%;
+		width: 2px;
+		height: 96px;
+		margin-inline-start: -1px;
+		background: linear-gradient(transparent, var(--accent-text), transparent);
+		animation: trace 7s linear infinite;
+		pointer-events: none;
+	}
+	@keyframes trace {
+		0% { top: 0; opacity: 0; }
+		8% { opacity: 1; }
+		92% { opacity: 1; }
+		100% { top: calc(100% - 96px); opacity: 0; }
+	}
 	.milestone {
 		position: relative;
 		display: grid;
@@ -93,8 +112,22 @@ const h = HOME[lang];
 		background: var(--bg);
 		border: 2px solid var(--accent);
 		color: var(--accent-text);
+		box-shadow: 0 0 0 4px var(--accent-soft), 0 0 18px var(--accent-soft);
+		position: relative;
 		z-index: 1;
 	}
+	/* Connector stub from the node to its card, like a PCB trace. */
+	.badge::after {
+		content: '';
+		position: absolute;
+		top: 50%;
+		width: 22px;
+		height: 2px;
+		margin-top: -1px;
+		background: var(--accent);
+		inset-inline-end: 100%;
+	}
+	.milestone:nth-child(even) .badge::after { inset-inline-end: auto; inset-inline-start: 100%; }
 	.entry {
 		grid-row: 1;
 		grid-column: 1;
@@ -119,7 +152,10 @@ const h = HOME[lang];
 	.theme { margin: 0; font-size: 0.85rem; font-weight: 600; color: var(--accent-text); }
 
 	@media (max-width: 860px) {
-		.timeline::before { inset-inline-start: 16px; }
+		.timeline::before,
+		.timeline::after { inset-inline-start: 16px; }
+		.badge::after,
+		.milestone:nth-child(even) .badge::after { inset-inline-end: auto; inset-inline-start: 100%; width: 16px; }
 		.milestone { grid-template-columns: 32px minmax(0, 1fr); gap: 1rem; align-items: start; }
 		.badge { grid-column: 1; width: 32px; height: 32px; }
 		.badge :global(svg) { width: 16px; height: 16px; }

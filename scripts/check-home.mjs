@@ -118,6 +118,14 @@ const checks = [
 		check(`[${lang}] services: agentic AI card title`, svc.includes(t));
 		check(`[${lang}] services: multi-agent tag`, svc.includes('>Multi-agent<'));
 	},
+	// --- blueprint: spec-sheet cards ---
+	(lang, home, about) => {
+		const specs = (html) => (html.match(/class="[^"]*\bspec\b/g) || []).length;
+		// 9 impact + 7 journey + 3 services + 3 posts + contact band
+		check(`[${lang}] blueprint: home cards are spec sheets`, specs(home) >= 23);
+		// 2 panels + 2 products
+		check(`[${lang}] blueprint: about cards are spec sheets`, specs(about) >= 4);
+	},
 	// --- end checks ---
 ];
 

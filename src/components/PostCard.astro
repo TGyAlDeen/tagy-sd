@@ -10,7 +10,7 @@ const { title, description, pubDate, heroImage } = post.data;
 const lang = postLang(post.id);
 ---
 
-<a class="card post" href={postUrl(post.id)}>
+<a class="card post spec" href={postUrl(post.id)}>
 	{showImage && heroImage && <img class="cover" src={heroImage} alt="" width={720} height={360} loading="lazy" />}
 	<div class="date mono muted"><FormattedDate date={pubDate} locale={DATE_LOCALE[lang]} /></div>
 	<h3>{title}</h3>
