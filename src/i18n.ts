@@ -86,34 +86,44 @@ export const HOME: Record<
 	{
 		role: string;
 		location: string;
-		greetPre: string;
-		greetPost: string;
+		headline: string;
 		tagline: string;
 		metaDesc: string;
-		ctaBlog: string;
-		stackEyebrow: string;
-		stackTitle: string;
-		projectsEyebrow: string;
-		projectsTitle: string;
-		allRepos: string;
+		ctaWork: string;
+		ctaWriting: string;
+		impactEyebrow: string;
+		impactTitle: string;
+		journeyEyebrow: string;
+		journeyTitle: string;
+		servicesEyebrow: string;
+		servicesTitle: string;
 		writingEyebrow: string;
 		writingTitle: string;
 		allPosts: string;
+		contactEyebrow: string;
+		contactTitle: string;
+		contactBody: string;
+		contactEmail: string;
 	}
 > = {
 	en: {
 		role: SITE_ROLE,
 		location: 'Tokyo, Japan',
-		greetPre: "Hi, I'm ",
-		greetPost: '.',
+		headline: 'I build distributed backend & agentic systems at scale.',
 		tagline: SITE_TAGLINE,
 		metaDesc: SITE_DESCRIPTION,
-		ctaBlog: 'Read the blog',
-		stackEyebrow: 'Stack',
-		stackTitle: 'What I work with',
-		projectsEyebrow: 'Projects',
-		projectsTitle: 'Selected work',
-		allRepos: 'all repos →',
+		ctaWork: 'Work with me',
+		ctaWriting: 'Read the writing',
+		impactEyebrow: 'Impact',
+		impactTitle: 'In numbers',
+		journeyEyebrow: 'Journey',
+		journeyTitle: 'From Khartoum to Tokyo',
+		servicesEyebrow: 'What I do',
+		servicesTitle: 'Where I can help',
+		contactEyebrow: 'Contact',
+		contactTitle: "Let's talk",
+		contactBody: 'Hiring, a project, or a question about a post — I read everything.',
+		contactEmail: 'Email me',
 		writingEyebrow: 'Writing',
 		writingTitle: 'Latest posts',
 		allPosts: 'all posts →',
@@ -121,18 +131,23 @@ export const HOME: Record<
 	ja: {
 		role: 'シニアリードソフトウェアエンジニア',
 		location: '東京',
-		greetPre: 'こんにちは、',
-		greetPost: 'です。',
+		headline: '大規模な分散バックエンドとエージェントシステムを作っています。',
 		tagline:
-			'分散バックエンドシステムを8年以上、構築・運用しています——FinTech・物流・保険のプラットフォームで数百万のユーザーを支えてきました。Monstarlabのテックリード/エンジニアリングマネージャー。最近はRAGとマルチエージェントシステムを本番投入しています。深層学習の修士(MEXT奨学生)、日英アラビア語のトライリンガル。',
+			'10年以上 · FinTech・物流・保険 · ハルツームから東京へ。いまはAIを本番に届けるチームを率いています。',
 		metaDesc:
 			'東京のシニアリードソフトウェアエンジニア——AWS/GCP上の分散システム、GoとJava、本番のLLM/RAGサービス。',
-		ctaBlog: 'ブログを読む',
-		stackEyebrow: 'スタック',
-		stackTitle: '使っている技術',
-		projectsEyebrow: 'プロジェクト',
-		projectsTitle: '主な開発',
-		allRepos: 'すべてのリポジトリ →',
+		ctaWork: '相談する',
+		ctaWriting: '記事を読む',
+		impactEyebrow: 'インパクト',
+		impactTitle: '数字で見る',
+		journeyEyebrow: 'キャリア',
+		journeyTitle: 'ハルツームから東京へ',
+		servicesEyebrow: '提供できること',
+		servicesTitle: 'お手伝いできること',
+		contactEyebrow: 'コンタクト',
+		contactTitle: 'お気軽にどうぞ',
+		contactBody: '採用のご相談、プロジェクト、記事への質問——どれもすべて目を通します。',
+		contactEmail: 'メールを送る',
 		writingEyebrow: '執筆',
 		writingTitle: '最新の記事',
 		allPosts: 'すべての記事 →',
@@ -140,18 +155,23 @@ export const HOME: Record<
 	ar: {
 		role: 'مهندس برمجيات رئيسي أول',
 		location: 'طوكيو، اليابان',
-		greetPre: 'مرحبًا، أنا ',
-		greetPost: '.',
+		headline: 'أبني أنظمة خلفية موزعة وأنظمة وكلاء ذكية على نطاق واسع.',
 		tagline:
-			'أبني وأشغّل أنظمة خلفية موزعة منذ أكثر من 8 سنوات — عبر منصات FinTech واللوجستيات والتأمين التي تخدم ملايين المستخدمين. قائد تقني ومدير هندسة في Monstarlab؛ ومؤخرًا أطلق أنظمة RAG ومتعددة الوكلاء إلى الإنتاج. ماجستير في التعلم العميق (منحة MEXT)، ثلاثي اللغات: اليابانية والإنجليزية والعربية.',
+			'أكثر من 10 سنوات · FinTech واللوجستيات والتأمين · من الخرطوم إلى طوكيو، وأقود اليوم فرقًا تُطلق الذكاء الاصطناعي إلى الإنتاج.',
 		metaDesc:
 			'مهندس برمجيات رئيسي أول في طوكيو — أنظمة موزعة على AWS وGCP، بلغتي Go وJava، وخدمات LLM/RAG في الإنتاج.',
-		ctaBlog: 'اقرأ المدوّنة',
-		stackEyebrow: 'التقنيات',
-		stackTitle: 'ما أعمل به',
-		projectsEyebrow: 'المشاريع',
-		projectsTitle: 'أعمال مختارة',
-		allRepos: 'كل المستودعات ←',
+		ctaWork: 'لنعمل معًا',
+		ctaWriting: 'اقرأ المقالات',
+		impactEyebrow: 'الأثر',
+		impactTitle: 'بالأرقام',
+		journeyEyebrow: 'المسيرة',
+		journeyTitle: 'من الخرطوم إلى طوكيو',
+		servicesEyebrow: 'ما أقدّمه',
+		servicesTitle: 'أين يمكنني المساعدة',
+		contactEyebrow: 'تواصل',
+		contactTitle: 'لنتحدث',
+		contactBody: 'توظيف، أو مشروع، أو سؤال عن مقالة — أقرأ كل رسالة.',
+		contactEmail: 'راسلني',
 		writingEyebrow: 'الكتابة',
 		writingTitle: 'أحدث المقالات',
 		allPosts: 'كل المقالات ←',
@@ -166,12 +186,13 @@ export const ABOUT: Record<
 		currentlyTitle: string;
 		currently: string[];
 		elsewhereTitle: string;
+		sideProjectsTitle: string;
 	}
 > = {
 	en: {
 		metaDesc: 'About Tagy Aldeen — Senior Lead Software Engineer based in Tokyo, Japan.',
 		paragraphs: [
-			"I'm a backend engineer who has spent the last eight years designing and running distributed systems in production — and the last few also leading the teams that build them. At <strong>Monstarlab</strong> in Tokyo I'm a Senior Lead Software Engineer: technical authority on enterprise delivery, from architecture and authentication design to estimates for client bids, and mentor to engineers across several project teams.",
+			"I'm a backend engineer with more than ten years of building software — designing and running distributed systems in production, and lately leading the teams that build them. At <strong>Monstarlab</strong> in Tokyo I'm a Senior Lead Software Engineer: technical authority on enterprise delivery, from architecture and authentication design to estimates for client bids, and mentor to engineers across several project teams.",
 			"The systems I've owned include a Japanese FinTech platform serving 40 million users (leading its Java-to-Kotlin migration while holding p95 latency around 160&nbsp;ms), a multi-tenant B2B logistics platform on AWS with multi-region DR, and GCP microservices for a marketplace serving millions. I care about the unglamorous parts: data consistency across services, observability, incident response, and turning person-dependent knowledge into designs and runbooks.",
 			"More recently I've been building LLM systems for real workloads — RAG pipelines on AWS Bedrock and OpenSearch, and multi-agent orchestration for sales automation. Before industry I did a Master's in deep learning at Nagoya Institute of Technology on a MEXT scholarship, publishing on ML-based intrusion detection for IoT.",
 			'I write here about backend architecture, running systems in production, and what actually works when you put LLMs behind an API.',
@@ -184,11 +205,12 @@ export const ABOUT: Record<
 			'Writing more, side projects in Go',
 		],
 		elsewhereTitle: 'Elsewhere',
+		sideProjectsTitle: 'Side projects',
 	},
 	ja: {
 		metaDesc: 'Tagy Aldeenについて——東京のシニアリードソフトウェアエンジニア。',
 		paragraphs: [
-			'私は8年にわたり、本番環境の分散システムを設計・運用してきたバックエンドエンジニアです——そしてここ数年は、それを作るチームを率いる側でもあります。東京の<strong>Monstarlab</strong>でシニアリードソフトウェアエンジニアとして、アーキテクチャや認証設計からクライアント案件の見積もりまで、エンタープライズ開発の技術面を担い、複数のプロジェクトチームのエンジニアをメンタリングしています。',
+			'10年以上ソフトウェアを作ってきたバックエンドエンジニアです——本番環境の分散システムを設計・運用し、ここ数年はそれを作るチームを率いる側でもあります。東京の<strong>Monstarlab</strong>でシニアリードソフトウェアエンジニアとして、アーキテクチャや認証設計からクライアント案件の見積もりまで、エンタープライズ開発の技術面を担い、複数のプロジェクトチームのエンジニアをメンタリングしています。',
 			'これまで担ってきたシステムには、4,000万ユーザーを抱える日本のFinTechプラットフォーム(JavaからKotlinへの移行を主導しつつp95レイテンシを約160msに維持)、マルチリージョンDRを備えたAWS上のマルチテナントB2B物流プラットフォーム、数百万人が使うマーケットプレイスのGCPマイクロサービスがあります。大切にしているのは地味な部分です:サービス間のデータ整合性、可観測性、インシデント対応、そして属人的な知識を設計書とランブックに変えること。',
 			'最近は実ワークロードのためのLLMシステムを構築しています——AWS BedrockとOpenSearchによるRAGパイプライン、営業自動化のためのマルチエージェントオーケストレーション。業界に入る前は、MEXT奨学生として名古屋工業大学で深層学習の修士課程を修め、IoT向けの機械学習ベース侵入検知について論文を発表しました。',
 			'このブログでは、バックエンドアーキテクチャ、本番システムの運用、そしてLLMをAPIの裏に置くときに実際に効くことについて書いています。',
@@ -201,11 +223,12 @@ export const ABOUT: Record<
 			'執筆を増やしつつ、Goでサイドプロジェクト',
 		],
 		elsewhereTitle: 'ほかの場所',
+		sideProjectsTitle: 'サイドプロジェクト',
 	},
 	ar: {
 		metaDesc: 'نبذة عن Tagy Aldeen — مهندس برمجيات رئيسي أول في طوكيو، اليابان.',
 		paragraphs: [
-			'أنا مهندس أنظمة خلفية أمضيت السنوات الثماني الأخيرة في تصميم وتشغيل أنظمة موزعة في الإنتاج — وفي السنوات الأخيرة أقود أيضًا الفرق التي تبنيها. في <strong>Monstarlab</strong> بطوكيو أعمل مهندسَ برمجيات رئيسيًا أول: مرجعية تقنية للتسليم المؤسسي، من المعمارية وتصميم المصادقة إلى تقديرات عروض العملاء، وموجّهًا للمهندسين عبر عدة فرق مشاريع.',
+			'أنا مهندس أنظمة خلفية أبني البرمجيات منذ أكثر من عشر سنوات — أصمّم وأشغّل أنظمة موزعة في الإنتاج، وفي السنوات الأخيرة أقود أيضًا الفرق التي تبنيها. في <strong>Monstarlab</strong> بطوكيو أعمل مهندسَ برمجيات رئيسيًا أول: مرجعية تقنية للتسليم المؤسسي، من المعمارية وتصميم المصادقة إلى تقديرات عروض العملاء، وموجّهًا للمهندسين عبر عدة فرق مشاريع.',
 			'من الأنظمة التي تولّيتها: منصة FinTech يابانية تخدم 40 مليون مستخدم (قدتُ هجرتها من Java إلى Kotlin مع إبقاء p95 عند نحو 160 مللي ثانية)، ومنصة لوجستيات B2B متعددة المستأجرين على AWS مع تعافٍ متعدد المناطق، وخدمات مصغّرة على GCP لسوق يخدم الملايين. أهتم بالأجزاء غير اللامعة: اتساق البيانات بين الخدمات، وقابلية الرصد، والاستجابة للحوادث، وتحويل المعرفة المرتبطة بالأشخاص إلى تصاميم وأدلة تشغيل.',
 			'مؤخرًا أبني أنظمة LLM لأحمال حقيقية — خطوط RAG على AWS Bedrock وOpenSearch، وتنسيقًا متعدد الوكلاء لأتمتة المبيعات. قبل الانتقال إلى الصناعة أنجزت ماجستير التعلم العميق في معهد ناغويا للتقنية بمنحة MEXT، ونشرت بحثًا في كشف التسلل المبني على تعلم الآلة لأجهزة IoT.',
 			'أكتب هنا عن معمارية الأنظمة الخلفية، وتشغيل الأنظمة في الإنتاج، وما ينجح فعلًا حين تضع LLM خلف API.',
@@ -218,5 +241,6 @@ export const ABOUT: Record<
 			'أكتب أكثر، ومشاريع جانبية بلغة Go',
 		],
 		elsewhereTitle: 'في أماكن أخرى',
+		sideProjectsTitle: 'مشاريع جانبية',
 	},
 };

@@ -35,6 +35,7 @@
 		"build": "astro build",
 		"cf-typegen": "wrangler types",
 		"check": "astro build && tsc && wrangler deploy --dry-run",
+		"check:home": "astro build && node scripts/check-home.mjs",
 		"deploy": "wrangler deploy",
 		"dev": "astro dev",
 		"preview": "astro build && wrangler dev"

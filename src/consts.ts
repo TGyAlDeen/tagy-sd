@@ -9,7 +9,7 @@ export const SITE_HANDLE = "tagy.sd";
 export const SITE_ROLE = "Senior Lead Software Engineer";
 export const SITE_LOCATION = "Tokyo, Japan";
 export const SITE_TAGLINE =
-	"I build and run distributed backend systems — 8+ years across FinTech, logistics, and insurance platforms serving millions of users. Tech lead and engineering manager at Monstarlab; lately shipping RAG and multi-agent systems to production. Master's in deep learning (MEXT scholar), trilingual JP · EN · AR.";
+	"10+ years · FinTech, logistics, insurance · from Khartoum to Tokyo, now leading teams that ship AI to production.";
 
 export const SOCIALS = [
 	{ name: "GitHub", href: "https://github.com/TGyAlDeen", icon: "github" },
