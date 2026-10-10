@@ -288,6 +288,8 @@ th { color: var(--text-2); font-weight: 600; }
 [dir="rtl"] .eyebrow, [dir="rtl"] .tag {
 	letter-spacing: 0;
 }
+/* The mono face has no Arabic glyphs; fall back to the Arabic sans. */
+[dir="rtl"] .eyebrow { font-family: var(--font-sans); }
 /* Code is always LTR, even inside RTL prose. */
 [dir="rtl"] pre, [dir="rtl"] code, [dir="rtl"] .term {
 	direction: ltr;

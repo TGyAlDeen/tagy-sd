@@ -24,7 +24,7 @@ const h = HOME[lang];
 				<article class="entry" data-reveal>
 					{m.period && <p class="period mono">{m.period[lang]}</p>}
 					<h3>{m.role[lang]}</h3>
-					<p class="org">{m.org[lang]}</p>
+					{m.org && <p class="org">{m.org[lang]}</p>}
 					<p class="story">{m.story[lang]}</p>
 					<p class="theme">◆ {m.theme[lang]}</p>
 				</article>
@@ -112,6 +112,7 @@ const h = HOME[lang];
 	/* Printing/PDF never scrolls, so unrevealed cards must still show. */
 	@media print { .entry.pending { opacity: 1; transform: none; transition: none; } }
 	.period { margin: 0 0 0.35rem; color: var(--accent-text); font-weight: 600; }
+	:global([dir='rtl']) .period { font-family: var(--font-sans); }
 	h3 { margin: 0 0 0.15rem; font-size: 1.05rem; }
 	.org { margin: 0 0 0.6rem; font-size: 0.875rem; color: var(--muted); }
 	.story { margin: 0 0 0.6rem; font-size: 0.925rem; color: var(--text-2); }
