@@ -22,13 +22,17 @@ export const SERVICES: Service[] = [
 		tags: ['Go', 'Java / Kotlin', 'AWS', 'GCP'],
 	},
 	{
-		title: { en: 'Production AI', ja: '本番のAI', ar: 'الذكاء الاصطناعي في الإنتاج' },
-		body: {
-			en: 'RAG and multi-agent systems behind real APIs — ingestion, retrieval, tool-calling and MCP, with evals and guardrails so they hold up after the demo.',
-			ja: '実際のAPIの裏で動くRAGとマルチエージェントシステム——取り込み、検索、ツール呼び出しとMCP。デモの後も持ちこたえるよう、評価とガードレール付きで。',
-			ar: 'أنظمة RAG ومتعددة الوكلاء خلف واجهات API حقيقية — الاستيعاب والاسترجاع واستدعاء الأدوات وMCP، مع تقييمات وضوابط تجعلها تصمد بعد العرض التجريبي.',
+		title: {
+			en: 'Agentic AI & RAG in production',
+			ja: '本番のエージェントAIとRAG',
+			ar: 'الذكاء الاصطناعي الوكيلي وRAG في الإنتاج',
 		},
-		tags: ['Python', 'AWS Bedrock', 'OpenSearch', 'MCP'],
+		body: {
+			en: "Multi-agent systems and tool-calling agents that work against real enterprise systems through MCP, plus RAG that answers from a company's own documents — with evals and guardrails so they hold up after the demo.",
+			ja: '実際の業務システムをMCP経由で操作するマルチエージェントシステムとツール呼び出しエージェント、そして自社ドキュメントから答えるRAG——デモの後も持ちこたえるよう、評価とガードレール付きで。',
+			ar: 'أنظمة متعددة الوكلاء ووكلاء يستدعون الأدوات ويعملون على أنظمة مؤسسية حقيقية عبر MCP، إلى جانب RAG يجيب من مستندات الشركة نفسها — مع تقييمات وضوابط تجعلها تصمد بعد العرض التجريبي.',
+		},
+		tags: ['Python', 'Multi-agent', 'MCP', 'AWS Bedrock'],
 	},
 	{
 		title: { en: 'Technical leadership', ja: '技術リーダーシップ', ar: 'القيادة التقنية' },

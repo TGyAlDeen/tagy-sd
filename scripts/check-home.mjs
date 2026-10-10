@@ -111,6 +111,13 @@ const checks = [
 		check(`[${lang}] journey: co-founder is its own card`, home.includes(cofounder) && !home.includes('→ Co‑founder') && !home.includes('← شريك مؤسس') && !home.includes('→ 共同創業者'));
 		check(`[${lang}] journey: freelance is the earliest card`, home.lastIndexOf(t) > home.indexOf(cofounder));
 	},
+	// --- services: production AI leads with agents ---
+	(lang, home) => {
+		const t = { en: 'Agentic AI &amp; RAG in production', ja: '本番のエージェントAIとRAG', ar: 'الذكاء الاصطناعي الوكيلي وRAG في الإنتاج' }[lang];
+		const svc = home.slice(home.indexOf('id="services"'), home.indexOf('id="writing"'));
+		check(`[${lang}] services: agentic AI card title`, svc.includes(t));
+		check(`[${lang}] services: multi-agent tag`, svc.includes('>Multi-agent<'));
+	},
 	// --- end checks ---
 ];
 
