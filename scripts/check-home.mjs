@@ -59,7 +59,7 @@ const checks = [
 	// --- journey ---
 	(lang, home) => {
 		check(`[${lang}] journey section`, home.includes('id="journey"'));
-		check(`[${lang}] 6 milestones`, count(home, 'data-milestone') === 6);
+		check(`[${lang}] 7 milestones`, count(home, 'data-milestone') === 7);
 		check(`[${lang}] no hidden reveal state in static HTML`, !/class="[^"]*\bpending\b/.test(home));
 		check(`[${lang}] journey names employers`, home.includes('Monstarlab') && home.includes('Techfirm'));
 	},
@@ -107,6 +107,9 @@ const checks = [
 	(lang, home) => {
 		const t = { en: 'Freelance Developer, System Analyst &amp; Designer', ja: 'フリーランス開発者・システムアナリスト・デザイナー', ar: 'مطوّر مستقل ومحلل أنظمة ومصمم' }[lang];
 		check(`[${lang}] journey: freelance role`, home.includes(t));
+		const cofounder = { en: 'Co‑founder &amp; Software Engineer</h3>', ja: '共同創業者 &amp; ソフトウェアエンジニア</h3>', ar: 'شريك مؤسس ومهندس برمجيات</h3>' }[lang];
+		check(`[${lang}] journey: co-founder is its own card`, home.includes(cofounder) && !home.includes('→ Co‑founder') && !home.includes('← شريك مؤسس') && !home.includes('→ 共同創業者'));
+		check(`[${lang}] journey: freelance is the earliest card`, home.lastIndexOf(t) > home.indexOf(cofounder));
 	},
 	// --- end checks ---
 ];
