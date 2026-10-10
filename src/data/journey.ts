@@ -21,9 +21,9 @@ export const JOURNEY: Milestone[] = [
 		role: { en: 'Senior Lead Software Engineer', ja: 'シニアリードソフトウェアエンジニア', ar: 'مهندس برمجيات رئيسي أول' },
 		org: { en: 'Monstarlab · Tokyo', ja: 'Monstarlab · 東京', ar: 'Monstarlab · طوكيو' },
 		story: {
-			en: 'End-to-end delivery of a serverless shipment-data platform on AWS. Production LLM services: a RAG system on Bedrock and OpenSearch, and a multi-agent sales system on Azure built from scratch. Technical owner of client bids.',
-			ja: 'AWSサーバーレスの配送データ基盤をエンドツーエンドで担当。本番のLLMサービスとして、BedrockとOpenSearchによるRAGシステムと、Azure上でゼロから組んだ営業向けマルチエージェントシステムを構築。クライアント提案の技術責任者も務めています。',
-			ar: 'أتولّى من البداية إلى النهاية منصة بيانات شحنات مبنية على AWS بلا خوادم. وأبني خدمات LLM في الإنتاج: نظام RAG على Bedrock وOpenSearch، ونظامًا متعدد الوكلاء لأتمتة المبيعات على Azure بنيتُه من الصفر. وأنا المسؤول التقني عن عروض العملاء.',
+			en: 'End-to-end delivery of a serverless shipment-data platform on AWS, and now a GovTech identity-verification (KYC) platform in Go. Production LLM services: a RAG system on Bedrock and OpenSearch, and a multi-agent sales system on Azure built from scratch. Technical owner of client bids.',
+			ja: 'AWSサーバーレスの配送データ基盤をエンドツーエンドで担当し、現在はGoによるGovTechの本人確認(KYC)基盤を開発中。本番のLLMサービスとして、BedrockとOpenSearchによるRAGシステムと、Azure上でゼロから組んだ営業向けマルチエージェントシステムを構築。クライアント提案の技術責任者も務めています。',
+			ar: 'أتولّى من البداية إلى النهاية منصة بيانات شحنات مبنية على AWS بلا خوادم، وأبني الآن منصة GovTech للتحقق من الهوية (KYC) بلغة Go. وأبني خدمات LLM في الإنتاج: نظام RAG على Bedrock وOpenSearch، ونظامًا متعدد الوكلاء لأتمتة المبيعات على Azure بنيتُه من الصفر. وأنا المسؤول التقني عن عروض العملاء.',
 		},
 		theme: { en: 'AI into production', ja: 'AIを本番へ', ar: 'الذكاء الاصطناعي في الإنتاج' },
 		icon: 'rocket',

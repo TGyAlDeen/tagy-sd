@@ -93,6 +93,7 @@ export const HOME: Record<
 		ctaWriting: string;
 		impactEyebrow: string;
 		impactTitle: string;
+		impactNow: string;
 		journeyEyebrow: string;
 		journeyTitle: string;
 		servicesEyebrow: string;
@@ -116,6 +117,7 @@ export const HOME: Record<
 		ctaWriting: 'Read the writing',
 		impactEyebrow: 'Impact',
 		impactTitle: "Technology in people's everyday lives",
+		impactNow: 'Now building',
 		journeyEyebrow: 'Journey',
 		journeyTitle: 'How I got here',
 		servicesEyebrow: 'What I do',
@@ -133,13 +135,14 @@ export const HOME: Record<
 		location: '東京',
 		headline: '大規模な分散バックエンドとエージェントシステムを作っています。',
 		tagline:
-			'10年以上 · FinTech・物流・公共・不動産・保険 · いまはAIを本番に届けるチームを率いています。',
+			'10年以上 · FinTech・GovTech・物流・公共・不動産・保険 · いまはAIを本番に届けるチームを率いています。',
 		metaDesc:
 			'東京のシニアリードソフトウェアエンジニア——AWS/GCP上の分散システム、GoとJava、本番のLLM/RAGサービス。',
 		ctaWork: '相談する',
 		ctaWriting: '記事を読む',
 		impactEyebrow: 'インパクト',
 		impactTitle: '人々の日常を支える技術',
+		impactNow: '開発中',
 		journeyEyebrow: 'キャリア',
 		journeyTitle: 'これまでの歩み',
 		servicesEyebrow: '提供できること',
@@ -157,13 +160,14 @@ export const HOME: Record<
 		location: 'طوكيو، اليابان',
 		headline: 'أبني أنظمة خلفية موزعة وأنظمة وكلاء ذكية على نطاق واسع.',
 		tagline:
-			'أكثر من 10 سنوات · FinTech واللوجستيات والقطاع العام والعقارات والتأمين · وأقود اليوم فرقًا تُطلق الذكاء الاصطناعي إلى الإنتاج.',
+			'أكثر من 10 سنوات · FinTech وGovTech واللوجستيات والقطاع العام والعقارات والتأمين · وأقود اليوم فرقًا تُطلق الذكاء الاصطناعي إلى الإنتاج.',
 		metaDesc:
 			'مهندس برمجيات رئيسي أول في طوكيو — أنظمة موزعة على AWS وGCP، بلغتي Go وJava، وخدمات LLM/RAG في الإنتاج.',
 		ctaWork: 'لنعمل معًا',
 		ctaWriting: 'اقرأ المقالات',
 		impactEyebrow: 'الأثر',
 		impactTitle: 'تقنية في حياة الناس اليومية',
+		impactNow: 'أعمل عليه الآن',
 		journeyEyebrow: 'المسيرة',
 		journeyTitle: 'كيف وصلت إلى هنا',
 		servicesEyebrow: 'ما أقدّمه',

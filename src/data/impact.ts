@@ -4,6 +4,7 @@ import type { Lang } from '../i18n';
 
 export const SECTORS: Record<Lang, string>[] = [
 	{ en: 'FinTech', ja: 'FinTech', ar: 'FinTech' },
+	{ en: 'GovTech', ja: 'GovTech', ar: 'GovTech' },
 	{ en: 'Logistics', ja: '物流', ar: 'اللوجستيات' },
 	{ en: 'Public sector', ja: '公共', ar: 'القطاع العام' },
 	{ en: 'Real estate', ja: '不動産', ar: 'العقارات' },
@@ -19,9 +20,26 @@ export interface Outcome {
 	title: Record<Lang, string>;
 	body: Record<Lang, string>;
 	tech: string;
+	/** The work in progress now — shown as a full-width "now building" card. */
+	featured?: boolean;
 }
 
 export const IMPACT: Outcome[] = [
+	{
+		sector: { en: 'GovTech · KYC', ja: 'GovTech · KYC', ar: 'GovTech · KYC' },
+		title: {
+			en: 'Proving who you are with the card in your wallet',
+			ja: '財布の中のカードで本人確認',
+			ar: 'إثبات هويتك بالبطاقة التي في محفظتك',
+		},
+		body: {
+			en: 'Businesses request a one-time identity check; people verify by tapping their government ID card (My Number Card) on their phone — no account to create, and every check is verified against the government\'s public-key infrastructure.',
+			ja: '事業者がワンタイムの本人確認を依頼し、利用者はスマホに公的身分証(マイナンバーカード)をかざすだけ。アカウント登録は不要で、すべての確認は政府の公開鍵基盤に対して検証されます。',
+			ar: 'تطلب الشركات تحققًا لمرة واحدة من الهوية، ويُثبت الناس هويتهم بتمرير بطاقة الهوية الحكومية (بطاقة My Number) على هواتفهم — دون إنشاء حساب، مع التحقق من كل عملية عبر البنية التحتية الحكومية للمفاتيح العامة.',
+		},
+		tech: 'Go · NFC · gRPC + REST · ECS Fargate · DynamoDB',
+		featured: true,
+	},
 	{
 		sector: { en: 'FinTech', ja: 'FinTech', ar: 'FinTech' },
 		title: { en: "Money that's always there", ja: 'いつでも使えるお金の基盤', ar: 'أموال متاحة دائمًا' },
