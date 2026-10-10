@@ -91,11 +91,6 @@ export const HOME: Record<
 		metaDesc: string;
 		ctaWork: string;
 		ctaWriting: string;
-		stackEyebrow: string;
-		stackTitle: string;
-		projectsEyebrow: string;
-		projectsTitle: string;
-		allRepos: string;
 		impactEyebrow: string;
 		impactTitle: string;
 		journeyEyebrow: string;
@@ -129,11 +124,6 @@ export const HOME: Record<
 		contactTitle: "Let's talk",
 		contactBody: 'Hiring, a project, or a question about a post — I read everything.',
 		contactEmail: 'Email me',
-		stackEyebrow: 'Stack',
-		stackTitle: 'What I work with',
-		projectsEyebrow: 'Projects',
-		projectsTitle: 'Selected work',
-		allRepos: 'all repos →',
 		writingEyebrow: 'Writing',
 		writingTitle: 'Latest posts',
 		allPosts: 'all posts →',
@@ -158,11 +148,6 @@ export const HOME: Record<
 		contactTitle: 'お気軽にどうぞ',
 		contactBody: '採用のご相談、プロジェクト、記事への質問——どれもすべて目を通します。',
 		contactEmail: 'メールを送る',
-		stackEyebrow: 'スタック',
-		stackTitle: '使っている技術',
-		projectsEyebrow: 'プロジェクト',
-		projectsTitle: '主な開発',
-		allRepos: 'すべてのリポジトリ →',
 		writingEyebrow: '執筆',
 		writingTitle: '最新の記事',
 		allPosts: 'すべての記事 →',
@@ -187,11 +172,6 @@ export const HOME: Record<
 		contactTitle: 'لنتحدث',
 		contactBody: 'توظيف، أو مشروع، أو سؤال عن مقالة — أقرأ كل رسالة.',
 		contactEmail: 'راسلني',
-		stackEyebrow: 'التقنيات',
-		stackTitle: 'ما أعمل به',
-		projectsEyebrow: 'المشاريع',
-		projectsTitle: 'أعمال مختارة',
-		allRepos: 'كل المستودعات ←',
 		writingEyebrow: 'الكتابة',
 		writingTitle: 'أحدث المقالات',
 		allPosts: 'كل المقالات ←',
@@ -206,6 +186,7 @@ export const ABOUT: Record<
 		currentlyTitle: string;
 		currently: string[];
 		elsewhereTitle: string;
+		sideProjectsTitle: string;
 	}
 > = {
 	en: {
@@ -224,6 +205,7 @@ export const ABOUT: Record<
 			'Writing more, side projects in Go',
 		],
 		elsewhereTitle: 'Elsewhere',
+		sideProjectsTitle: 'Side projects',
 	},
 	ja: {
 		metaDesc: 'Tagy Aldeenについて——東京のシニアリードソフトウェアエンジニア。',
@@ -241,6 +223,7 @@ export const ABOUT: Record<
 			'執筆を増やしつつ、Goでサイドプロジェクト',
 		],
 		elsewhereTitle: 'ほかの場所',
+		sideProjectsTitle: 'サイドプロジェクト',
 	},
 	ar: {
 		metaDesc: 'نبذة عن Tagy Aldeen — مهندس برمجيات رئيسي أول في طوكيو، اليابان.',
@@ -258,5 +241,6 @@ export const ABOUT: Record<
 			'أكتب أكثر، ومشاريع جانبية بلغة Go',
 		],
 		elsewhereTitle: 'في أماكن أخرى',
+		sideProjectsTitle: 'مشاريع جانبية',
 	},
 };

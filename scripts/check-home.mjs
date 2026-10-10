@@ -53,6 +53,23 @@ const checks = [
 		check(`[${lang}] services section`, home.includes('id="services"'));
 		check(`[${lang}] 3 services`, count(home, 'data-service') === 3);
 	},
+	// --- contact, order, removals ---
+	(lang, home, about) => {
+		check(`[${lang}] contact section`, home.includes('id="contact"'));
+		const contact = home.slice(Math.max(0, home.indexOf('id="contact"')), home.indexOf('</main>'));
+		check(`[${lang}] contact has mailto`, home.includes('id="contact"') && contact.includes('href="mailto:'));
+		const order = ['id="impact"', 'id="journey"', 'id="services"', 'id="writing"', 'id="contact"'].map((id) =>
+			home.indexOf(id),
+		);
+		check(`[${lang}] section order`, order.every((i, n) => i > 0 && (n === 0 || i > order[n - 1])));
+		const stackTitle = { en: 'What I work with', ja: '使っている技術', ar: 'ما أعمل به' }[lang];
+		check(`[${lang}] stack section removed`, !home.includes(stackTitle));
+		check(`[${lang}] projects off home`, !home.includes('IDS-UNSW-NB15'));
+		check(`[${lang}] projects on about`, about.includes('IDS-UNSW-NB15'));
+		const leaks = /REDACTED|postal/i;
+		check(`[${lang}] anonymization clean (home)`, !leaks.test(text(home)));
+		check(`[${lang}] anonymization clean (about)`, !leaks.test(text(about)));
+	},
 	// --- end checks ---
 ];
 

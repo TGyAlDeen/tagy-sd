@@ -8,12 +8,10 @@ import Hero from './Hero.astro';
 import Impact from './Impact.astro';
 import Journey from './Journey.astro';
 import Services from './Services.astro';
-import TechStack from './TechStack.astro';
-import ProjectCard from './ProjectCard.astro';
+import ContactCta from './ContactCta.astro';
 import PostCard from './PostCard.astro';
 import LangRouter from './LangRouter.astro';
 import { SITE_TITLE } from '../consts';
-import { PROJECTS } from '../data/projects';
 import { DIR, HOME, blogIndexUrl, type Lang } from '../i18n';
 
 interface Props {
@@ -37,22 +35,8 @@ const alternates = { en: '/', ja: '/ja/', ar: '/ar/' };
 			<Impact lang={lang} />
 			<Journey lang={lang} />
 			<Services lang={lang} />
-			<TechStack lang={lang} />
 
-			<section class="section">
-				<div class="section-head">
-					<div>
-						<p class="eyebrow">{h.projectsEyebrow}</p>
-						<h2>{h.projectsTitle}</h2>
-					</div>
-					<a class="more" href="https://github.com/TGyAlDeen" target="_blank" rel="noopener noreferrer">{h.allRepos}</a>
-				</div>
-				<div class="grid">
-					{PROJECTS.map((p) => <ProjectCard project={p} lang={lang} />)}
-				</div>
-			</section>
-
-			<section class="section">
+			<section class="section" id="writing">
 				<div class="section-head">
 					<div>
 						<p class="eyebrow">{h.writingEyebrow}</p>
@@ -64,6 +48,8 @@ const alternates = { en: '/', ja: '/ja/', ar: '/ar/' };
 					{posts.map((post) => <PostCard post={post} />)}
 				</div>
 			</section>
+
+			<ContactCta lang={lang} />
 		</main>
 		<Footer />
 		<LangRouter lang={lang} alternates={alternates} />
