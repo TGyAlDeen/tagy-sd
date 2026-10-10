@@ -41,6 +41,13 @@ const checks = [
 		check(`[${lang}] 4 impact stats`, count(home, 'data-impact') === 4);
 		check(`[${lang}] no 40M on home`, !/(?<!\d)40\s?M\b|4,000万|40 مليون/.test(text(home)));
 	},
+	// --- journey ---
+	(lang, home) => {
+		check(`[${lang}] journey section`, home.includes('id="journey"'));
+		check(`[${lang}] 6 milestones`, count(home, 'data-milestone') === 6);
+		check(`[${lang}] no hidden reveal state in static HTML`, !/class="[^"]*\bpending\b/.test(home));
+		check(`[${lang}] journey names employers`, home.includes('Monstarlab') && home.includes('Techfirm'));
+	},
 	// --- end checks ---
 ];
 

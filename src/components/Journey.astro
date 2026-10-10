@@ -1,0 +1,126 @@
+---
+import Icon from './Icon.astro';
+import { JOURNEY } from '../data/journey';
+import { HOME, type Lang } from '../i18n';
+
+interface Props {
+	lang: Lang;
+}
+const { lang } = Astro.props;
+const h = HOME[lang];
+---
+
+<section class="section" id="journey">
+	<div class="section-head">
+		<div>
+			<p class="eyebrow">{h.journeyEyebrow}</p>
+			<h2>{h.journeyTitle}</h2>
+		</div>
+	</div>
+	<ol class="timeline">
+		{JOURNEY.map((m) => (
+			<li class="milestone" data-milestone>
+				<span class="badge" aria-hidden="true"><Icon name={m.icon} size={20} /></span>
+				<article class="entry" data-reveal>
+					{m.period && <p class="period mono">{m.period[lang]}</p>}
+					<h3>{m.role[lang]}</h3>
+					<p class="org">{m.org[lang]}</p>
+					<p class="story">{m.story[lang]}</p>
+					<p class="theme">◆ {m.theme[lang]}</p>
+				</article>
+			</li>
+		))}
+	</ol>
+</section>
+
+<script is:inline>
+	// Progressive enhancement: cards are visible in the HTML; only when the
+	// observer exists (and motion is allowed) do we hide-then-reveal them.
+	(() => {
+		if (!('IntersectionObserver' in window)) return;
+		if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+		const io = new IntersectionObserver(
+			(entries) => {
+				for (const e of entries) {
+					if (!e.isIntersecting) continue;
+					e.target.classList.add('in');
+					io.unobserve(e.target);
+				}
+			},
+			{ rootMargin: '0px 0px -10% 0px' },
+		);
+		document.querySelectorAll('#journey [data-reveal]').forEach((el) => {
+			el.classList.add('pending');
+			io.observe(el);
+		});
+	})();
+</script>
+
+<style>
+	.timeline {
+		position: relative;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+	.timeline::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		inset-inline-start: 50%;
+		width: 2px;
+		margin-inline-start: -1px;
+		background: linear-gradient(var(--accent), var(--accent-2));
+	}
+	.milestone {
+		position: relative;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 88px minmax(0, 1fr);
+		align-items: center;
+		margin-bottom: 1.75rem;
+	}
+	.milestone:last-child { margin-bottom: 0; }
+	.badge {
+		grid-column: 2;
+		grid-row: 1;
+		justify-self: center;
+		width: 44px;
+		height: 44px;
+		border-radius: 50%;
+		display: grid;
+		place-items: center;
+		background: var(--bg);
+		border: 2px solid var(--accent);
+		color: var(--accent-text);
+		z-index: 1;
+	}
+	.entry {
+		grid-row: 1;
+		grid-column: 1;
+		text-align: end;
+		padding: 1.25rem 1.4rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--surface);
+		box-shadow: var(--shadow);
+		transition: opacity 0.5s ease, transform 0.5s ease;
+	}
+	.milestone:nth-child(even) .entry { grid-column: 3; text-align: start; }
+	.entry.pending { opacity: 0; transform: translateY(12px); }
+	.entry.pending.in { opacity: 1; transform: none; }
+	.period { margin: 0 0 0.35rem; color: var(--accent-text); font-weight: 600; }
+	h3 { margin: 0 0 0.15rem; font-size: 1.05rem; }
+	.org { margin: 0 0 0.6rem; font-size: 0.875rem; color: var(--muted); }
+	.story { margin: 0 0 0.6rem; font-size: 0.925rem; color: var(--text-2); }
+	.theme { margin: 0; font-size: 0.85rem; font-weight: 600; color: var(--accent-text); }
+
+	@media (max-width: 860px) {
+		.timeline::before { inset-inline-start: 16px; }
+		.milestone { grid-template-columns: 32px minmax(0, 1fr); gap: 1rem; align-items: start; }
+		.badge { grid-column: 1; width: 32px; height: 32px; }
+		.badge :global(svg) { width: 16px; height: 16px; }
+		.entry,
+		.milestone:nth-child(even) .entry { grid-column: 2; text-align: start; padding: 1rem 1.1rem; }
+	}
+</style>
