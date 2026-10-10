@@ -14,21 +14,24 @@
 	--font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 	--font-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-	--bg: #fafafa;
+	--bg: #f3f4f7;
 	--bg-elev: #ffffff;
 	--surface: #ffffff;
-	--surface-2: #f1f3f5;
-	--border: #e5e7eb;
-	--border-strong: #d1d5db;
+	--surface-2: #eceff3;
+	--border: #cfd5dd;
+	--border-strong: #b9c0ca;
 	--text: #111827;
 	--text-2: #4b5563;
-	--muted: #6b7280;
+	--muted: #5f6774;
 	--accent: #0ea5e9;
 	--accent-2: #6366f1;
 	--accent-text: #0369a1;
 	--accent-soft: rgba(14, 165, 233, 0.12);
-	--grid: rgba(17, 24, 39, 0.07);
+	--grid: rgba(17, 24, 39, 0.08);
 	--shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px -12px rgba(0, 0, 0, 0.12);
+	/* Resting lift for cards; light needs it, dark separates by surface color. */
+	--card-shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 2px 8px -2px rgba(16, 24, 40, 0.06);
+	--tag-bg: var(--surface);
 	--code-bg: #f3f4f6;
 
 	--radius: 12px;
@@ -62,6 +65,8 @@ html[lang="ar"] {
 	--accent-soft: rgba(56, 189, 248, 0.14);
 	--grid: rgba(255, 255, 255, 0.06);
 	--shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px -12px rgba(0, 0, 0, 0.6);
+	--card-shadow: none;
+	--tag-bg: var(--surface-2);
 	--code-bg: #0f1017;
 
 	color-scheme: dark;
@@ -245,7 +250,7 @@ th { color: var(--text-2); font-weight: 600; }
 	padding: 0.2rem 0.55rem;
 	border-radius: 6px;
 	border: 1px solid var(--border);
-	background: var(--surface-2);
+	background: var(--tag-bg);
 	color: var(--text-2);
 	white-space: nowrap;
 }
@@ -258,6 +263,7 @@ th { color: var(--text-2); font-weight: 600; }
 	border-radius: var(--radius);
 	border: 1px solid var(--border);
 	background: var(--surface);
+	box-shadow: var(--card-shadow);
 	color: inherit;
 	transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
 }
