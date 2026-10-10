@@ -35,6 +35,12 @@ const checks = [
 		check(`[${lang}] no stale "8 years" on home`, !stale.test(text(home)));
 		check(`[${lang}] no stale "8 years" on about`, !stale.test(text(about)));
 	},
+	// --- impact ---
+	(lang, home) => {
+		check(`[${lang}] impact section`, home.includes('id="impact"'));
+		check(`[${lang}] 4 impact stats`, count(home, 'data-impact') === 4);
+		check(`[${lang}] no 40M on home`, !/(?<!\d)40\s?M\b|4,000万|40 مليون/.test(text(home)));
+	},
 	// --- end checks ---
 ];
 

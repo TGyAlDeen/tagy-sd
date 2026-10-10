@@ -1,0 +1,56 @@
+---
+import { IMPACT } from '../data/impact';
+import { HOME, type Lang } from '../i18n';
+
+interface Props {
+	lang: Lang;
+}
+const { lang } = Astro.props;
+const h = HOME[lang];
+---
+
+<section class="section" id="impact">
+	<div class="section-head">
+		<div>
+			<p class="eyebrow">{h.impactEyebrow}</p>
+			<h2>{h.impactTitle}</h2>
+		</div>
+	</div>
+	<div class="stats">
+		{IMPACT.map((s) => (
+			<div class="stat" data-impact>
+				<p class="value">{s.value[lang]}</p>
+				<p class="label">{s.label[lang]}</p>
+			</div>
+		))}
+	</div>
+</section>
+
+<style>
+	.stats {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 1rem;
+	}
+	.stat {
+		padding: 1.25rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--surface);
+	}
+	.value {
+		margin: 0 0 0.4rem;
+		font-size: clamp(1.4rem, 2.6vw, 2rem);
+		font-weight: 700;
+		line-height: 1.15;
+		background: linear-gradient(90deg, var(--accent), var(--accent-2));
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+		overflow-wrap: anywhere;
+	}
+	.label { margin: 0; font-size: 0.9rem; color: var(--text-2); }
+	@media (max-width: 860px) {
+		.stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+	}
+</style>
