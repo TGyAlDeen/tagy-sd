@@ -2,7 +2,7 @@
 // employers are named, clients/projects are not.
 import type { Lang } from '../i18n';
 
-export type MilestoneIcon = 'rocket' | 'layers' | 'server' | 'code' | 'cap' | 'seedling';
+export type MilestoneIcon = 'rocket' | 'layers' | 'server' | 'code' | 'cap' | 'seedling' | 'briefcase';
 
 export interface Milestone {
 	period: Record<Lang, string> | null;
@@ -97,17 +97,29 @@ export const JOURNEY: Milestone[] = [
 		icon: 'cap',
 	},
 	{
-		period: span('2011 — 2017'),
+		period: span('2014 — 2017'),
+		role: { en: 'Co‑founder & Software Engineer', ja: '共同創業者 & ソフトウェアエンジニア', ar: 'شريك مؤسس ومهندس برمجيات' },
+		org: null,
+		story: {
+			en: 'Co-founded a software consultancy delivering web, mobile and POS-integrated payment systems. Outside work: information-security strategy for an Internet Society chapter, and organizing the SdNOG conference.',
+			ja: 'Web・モバイル・POS連携決済システムを手がけるソフトウェア会社を共同創業。仕事の外では、Internet Societyの支部で情報セキュリティ戦略を担い、SdNOGカンファレンスの運営にも携わりました。',
+			ar: 'شاركتُ في تأسيس شركة برمجيات تبني أنظمة ويب وجوّال ودفع متكاملة مع نقاط البيع. وخارج العمل: استراتيجية أمن المعلومات في أحد فروع Internet Society، وتنظيم مؤتمر SdNOG.',
+		},
+		theme: { en: 'Building a company', ja: '会社をつくる', ar: 'بناء شركة' },
+		icon: 'briefcase',
+	},
+	{
+		period: { en: 'Before 2014', ja: '2014年以前', ar: 'قبل 2014' },
 		role: {
-			en: 'Freelance Developer, System Analyst & Designer → Co‑founder & Software Engineer',
-			ja: 'フリーランス開発者・システムアナリスト・デザイナー → 共同創業者 & ソフトウェアエンジニア',
-			ar: 'مطوّر مستقل ومحلل أنظمة ومصمم ← شريك مؤسس ومهندس برمجيات',
+			en: 'Freelance Developer, System Analyst & Designer',
+			ja: 'フリーランス開発者・システムアナリスト・デザイナー',
+			ar: 'مطوّر مستقل ومحلل أنظمة ومصمم',
 		},
 		org: null,
 		story: {
-			en: 'Freelance development, system analysis and design first; then co-founded a software consultancy delivering web, mobile and POS-integrated payment systems. Outside work: information-security strategy for an Internet Society chapter, and organizing the SdNOG conference.',
-			ja: 'フリーランスとして開発・システム分析・デザインを手がけ、その後、Web・モバイル・POS連携決済システムを手がけるソフトウェア会社を共同創業。仕事の外では、Internet Societyの支部で情報セキュリティ戦略を担い、SdNOGカンファレンスの運営にも携わりました。',
-			ar: 'بدأتُ مطوّرًا مستقلًا في التطوير وتحليل الأنظمة والتصميم، ثم شاركتُ في تأسيس شركة برمجيات تبني أنظمة ويب وجوّال ودفع متكاملة مع نقاط البيع. وخارج العمل: استراتيجية أمن المعلومات في أحد فروع Internet Society، وتنظيم مؤتمر SdNOG.',
+			en: 'Freelance development, system analysis and design — the hands-on work that led to co-founding a consultancy.',
+			ja: 'フリーランスとして開発・システム分析・デザインを手がけました——その実践が、のちの会社の共同創業につながりました。',
+			ar: 'عملتُ مستقلًا في التطوير وتحليل الأنظمة والتصميم — وهي التجربة العملية التي قادتني إلى المشاركة في تأسيس شركة.',
 		},
 		theme: { en: 'Where it started', ja: 'すべての始まり', ar: 'حيث بدأ كل شيء' },
 		icon: 'seedling',
