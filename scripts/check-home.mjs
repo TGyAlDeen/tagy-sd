@@ -48,6 +48,11 @@ const checks = [
 		check(`[${lang}] no hidden reveal state in static HTML`, !/class="[^"]*\bpending\b/.test(home));
 		check(`[${lang}] journey names employers`, home.includes('Monstarlab') && home.includes('Techfirm'));
 	},
+	// --- services ---
+	(lang, home) => {
+		check(`[${lang}] services section`, home.includes('id="services"'));
+		check(`[${lang}] 3 services`, count(home, 'data-service') === 3);
+	},
 	// --- end checks ---
 ];
 
