@@ -43,8 +43,10 @@ We borrow the structure, not the styling (no purple gradients, no emoji, no prog
    | *(no dates)* | Master's, Information Engineering · Nagoya Institute of Technology · MEXT scholar | Research: ML & multi-agent systems |
    | 2011 — 2017 | Co-founder · software consultancy, Khartoum; ISOC Sudan & SdNOG | Where it started |
 
-   Stories are 2–3 lines each, drawn from the resume. Clients stay anonymous ("a national postal
-   operator", "a FinTech platform serving tens of millions"). Badges carry icons, not company logos.
+   Stories are 2–3 lines each, drawn from the resume. Employers are named (Monstarlab,
+   Techfirm); clients, projects and products stay anonymous with no identifying hints — describe the
+   domain only ("a FinTech platform serving tens of millions", "a logistics platform"). Badges carry
+   icons, not company logos.
 4. **What I do** — three cards, each with a short body and 3–4 key technologies:
    - Backend architecture & reliability — distributed systems, data consistency, multi-region DR.
    - Production AI — RAG and agent systems on AWS Bedrock / Azure, with evals.
