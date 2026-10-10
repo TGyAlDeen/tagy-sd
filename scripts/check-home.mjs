@@ -8,7 +8,12 @@ const page = (lang, sub = '') =>
 const count = (html, needle) => html.split(needle).length - 1;
 // Visible text only — asset hashes and inline scripts must not trip text checks.
 const text = (html) =>
-	html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, ' ').replace(/<[^>]+>/g, ' ');
+	html
+		.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, ' ')
+		.replace(/<[^>]+>/g, ' ')
+		.replace(/&#39;/g, "'")
+		.replace(/&quot;/g, '"')
+		.replace(/&amp;/g, '&');
 
 // Client names must never be committed: the regex lives in the gitignored
 // `.anonymize-terms` file (one line, e.g. `name1|name2`).
@@ -75,7 +80,10 @@ const checks = [
 		const stackTitle = { en: 'What I work with', ja: '使っている技術', ar: 'ما أعمل به' }[lang];
 		check(`[${lang}] stack section removed`, !home.includes(stackTitle));
 		check(`[${lang}] projects off home`, !home.includes('IDS-UNSW-NB15'));
-		check(`[${lang}] projects on about`, about.includes('IDS-UNSW-NB15'));
+		check(`[${lang}] old repos gone from about`, !about.includes('IDS-UNSW-NB15'));
+		check(`[${lang}] 2 product cards on about`, count(about, 'data-product') === 2);
+		check(`[${lang}] products on about`, about.includes('Kakoi') && about.includes('Gindeel Market'));
+		check(`[${lang}] no repo links on about`, !/github\.com\/TGyAlDeen\/[\w-]/.test(about));
 		if (leaks) {
 			check(`[${lang}] anonymization clean (home)`, !leaks.test(text(home)));
 			check(`[${lang}] anonymization clean (about)`, !leaks.test(text(about)));
@@ -85,6 +93,15 @@ const checks = [
 	(lang, home, about) => {
 		check(`[${lang}] about side projects is an h2`, /<h2[^>]*class="[^"]*eyebrow/.test(about));
 		check(`[${lang}] no 40M on about`, !/(?<!\d)40 million|4,000万|40 مليون/.test(text(about)));
+	},
+	// --- contact copy, about currently ---
+	(lang, home, about) => {
+		const t = { en: "Let's build together", ja: '一緒に作りましょう', ar: 'لنبنِ معًا' }[lang];
+		const speak = { en: 'speaking invitation', ja: '登壇', ar: 'دعوة للتحدث' }[lang];
+		const go = { en: 'production projects in Go', ja: 'Goで本番プロジェクト', ar: 'مشاريع إنتاجية بلغة Go' }[lang];
+		check(`[${lang}] contact title`, text(home).includes(t));
+		check(`[${lang}] contact mentions speaking`, text(home).includes(speak));
+		check(`[${lang}] about: production projects in Go`, text(about).includes(go));
 	},
 	// --- end checks ---
 ];

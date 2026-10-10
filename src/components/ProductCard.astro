@@ -1,0 +1,39 @@
+---
+import type { Product } from '../data/products';
+import type { Lang } from '../i18n';
+type Props = { product: Product; lang: Lang };
+const { product: p, lang } = Astro.props;
+---
+
+<article class="product" data-product>
+	<div class="top">
+		<h3>{p.name}</h3>
+		<span class="status mono">{p.status[lang]}</span>
+	</div>
+	<p>{p.description[lang]}</p>
+	<div class="tags">{p.tags.map((t) => <span class="tag">{t}</span>)}</div>
+</article>
+
+<style>
+	.product {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		padding: 1.25rem;
+		border: 1px solid var(--border);
+		border-radius: var(--radius);
+		background: var(--surface);
+	}
+	.top { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
+	h3 { margin: 0; font-size: 1.05rem; }
+	.status {
+		padding: 0.1rem 0.55rem;
+		border: 1px solid var(--border);
+		border-radius: 999px;
+		color: var(--accent-text);
+		white-space: nowrap;
+	}
+	:global([dir='rtl']) .status { font-family: var(--font-sans); }
+	p { margin: 0; flex: 1; font-size: 0.925rem; color: var(--text-2); }
+	.tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+</style>
