@@ -98,12 +98,16 @@ export const JOURNEY: Milestone[] = [
 	},
 	{
 		period: span('2011 — 2017'),
-		role: { en: 'Co-founder & Software Engineer', ja: '共同創業者 & ソフトウェアエンジニア', ar: 'شريك مؤسس ومهندس برمجيات' },
+		role: {
+			en: 'Freelance Developer, System Analyst & Designer → Co‑founder & Software Engineer',
+			ja: 'フリーランス開発者・システムアナリスト・デザイナー → 共同創業者 & ソフトウェアエンジニア',
+			ar: 'مطوّر مستقل ومحلل أنظمة ومصمم ← شريك مؤسس ومهندس برمجيات',
+		},
 		org: null,
 		story: {
-			en: 'Co-founded a software consultancy delivering web, mobile and POS-integrated payment systems. Outside work: information-security strategy for an Internet Society chapter, and organizing the SdNOG conference.',
-			ja: 'Web・モバイル・POS連携決済システムを手がけるソフトウェア会社を共同創業。仕事の外では、Internet Societyの支部で情報セキュリティ戦略を担い、SdNOGカンファレンスの運営にも携わりました。',
-			ar: 'شاركتُ في تأسيس شركة برمجيات تبني أنظمة ويب وجوّال ودفع متكاملة مع نقاط البيع. وخارج العمل: استراتيجية أمن المعلومات في أحد فروع Internet Society، وتنظيم مؤتمر SdNOG.',
+			en: 'Freelance development, system analysis and design first; then co-founded a software consultancy delivering web, mobile and POS-integrated payment systems. Outside work: information-security strategy for an Internet Society chapter, and organizing the SdNOG conference.',
+			ja: 'フリーランスとして開発・システム分析・デザインを手がけ、その後、Web・モバイル・POS連携決済システムを手がけるソフトウェア会社を共同創業。仕事の外では、Internet Societyの支部で情報セキュリティ戦略を担い、SdNOGカンファレンスの運営にも携わりました。',
+			ar: 'بدأتُ مطوّرًا مستقلًا في التطوير وتحليل الأنظمة والتصميم، ثم شاركتُ في تأسيس شركة برمجيات تبني أنظمة ويب وجوّال ودفع متكاملة مع نقاط البيع. وخارج العمل: استراتيجية أمن المعلومات في أحد فروع Internet Society، وتنظيم مؤتمر SdNOG.',
 		},
 		theme: { en: 'Where it started', ja: 'すべての始まり', ar: 'حيث بدأ كل شيء' },
 		icon: 'seedling',
