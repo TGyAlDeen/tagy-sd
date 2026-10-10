@@ -103,6 +103,11 @@ const checks = [
 		check(`[${lang}] contact mentions speaking`, text(home).includes(speak));
 		check(`[${lang}] about: production projects in Go`, text(about).includes(go));
 	},
+	// --- journey: freelance before co-founder ---
+	(lang, home) => {
+		const t = { en: 'Freelance Developer, System Analyst &amp; Designer', ja: 'フリーランス開発者・システムアナリスト・デザイナー', ar: 'مطوّر مستقل ومحلل أنظمة ومصمم' }[lang];
+		check(`[${lang}] journey: freelance role`, home.includes(t));
+	},
 	// --- end checks ---
 ];
 
