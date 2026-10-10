@@ -77,6 +77,11 @@ const checks = [
 			check(`[${lang}] anonymization clean (about)`, !leaks.test(text(about)));
 		}
 	},
+	// --- about ---
+	(lang, home, about) => {
+		check(`[${lang}] about side projects is an h2`, /<h2[^>]*class="[^"]*eyebrow/.test(about));
+		check(`[${lang}] no 40M on about`, !/(?<!\d)40 million|4,000万|40 مليون/.test(text(about)));
+	},
 	// --- end checks ---
 ];
 
