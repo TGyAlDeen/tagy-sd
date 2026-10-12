@@ -14,18 +14,19 @@
 	--font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 	--font-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-	--bg: #f2f6fa;
-	--bg-elev: #ffffff;
-	--surface: #ffffff;
-	--surface-2: #eceff3;
-	--border: #cfd5dd;
-	--border-strong: #b9c0ca;
-	--text: #111827;
-	--text-2: #4b5563;
-	--muted: #5f6774;
+	/* Drafting paper, not white: lower glare, text darkened to keep contrast. */
+	--bg: #e7ecf2;
+	--bg-elev: #f3f6f9;
+	--surface: #f3f6f9;
+	--surface-2: #e1e7ee;
+	--border: #c3ccd8;
+	--border-strong: #aeb9c7;
+	--text: #18202c;
+	--text-2: #3d4857;
+	--muted: #5a6576;
 	--accent: #0ea5e9;
 	--accent-2: #6366f1;
-	--accent-text: #0369a1;
+	--accent-text: #035a8c;
 	--accent-soft: rgba(14, 165, 233, 0.12);
 	--grid: rgba(17, 24, 39, 0.08);
 	--shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px -12px rgba(0, 0, 0, 0.12);
@@ -33,9 +34,9 @@
 	--card-shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 2px 8px -2px rgba(16, 24, 40, 0.06);
 	--tag-bg: var(--surface);
 	/* Blueprint graph paper: fine 24px grid, heavier line every 120px. */
-	--grid-minor: rgba(3, 105, 161, 0.055);
-	--grid-major: rgba(3, 105, 161, 0.11);
-	--code-bg: #f3f4f6;
+	--grid-minor: rgba(3, 90, 140, 0.045);
+	--grid-major: rgba(3, 90, 140, 0.085);
+	--code-bg: #dde4ec;
 
 	--radius: 6px;
 	--radius-sm: 4px;
@@ -301,6 +302,9 @@ th { color: var(--text-2); font-weight: 600; }
 ::selection { background: var(--accent-soft); }
 
 /* ---------- Blueprint ---------- */
+/* Long-form reading: keep the paper, drop the grid behind the prose. */
+body.reading { --grid-minor: transparent; --grid-major: transparent; }
+
 /* Spec-sheet cards: corner registration ticks that extend on hover. */
 .spec { position: relative; }
 .spec::before,
