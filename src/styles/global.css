@@ -33,6 +33,8 @@
 	/* Resting lift for cards; light needs it, dark separates by surface color. */
 	--card-shadow: 0 1px 2px rgba(16, 24, 40, 0.05), 0 2px 8px -2px rgba(16, 24, 40, 0.06);
 	--tag-bg: var(--surface);
+	/* Cards get a soft blueprint-blue wash so they read as filled panels. */
+	--card-bg: linear-gradient(160deg, #dde9f4 0%, #e9f0f7 45%, var(--surface) 100%);
 	/* Blueprint graph paper: fine 24px grid, heavier line every 120px. */
 	--grid-minor: rgba(3, 90, 140, 0.045);
 	--grid-major: rgba(3, 90, 140, 0.085);
@@ -71,6 +73,7 @@ html[lang="ar"] {
 	--shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px -12px rgba(0, 0, 0, 0.6);
 	--card-shadow: none;
 	--tag-bg: var(--surface-2);
+	--card-bg: var(--surface);
 	--grid-minor: rgba(125, 211, 252, 0.03);
 	--grid-major: rgba(125, 211, 252, 0.065);
 	--code-bg: #0f1017;
@@ -275,7 +278,7 @@ th { color: var(--text-2); font-weight: 600; }
 	padding: 1.25rem;
 	border-radius: var(--radius);
 	border: 1px solid var(--border);
-	background: var(--surface);
+	background: var(--card-bg);
 	box-shadow: var(--card-shadow);
 	color: inherit;
 	transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
